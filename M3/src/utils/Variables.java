@@ -90,15 +90,15 @@ public interface Variables {
 	public final int PLUS_ATTACK_PLASMACANNON_BY_TECHNOLOGY = 5;
 	
 	// fleet probability of generating waste
-	public final int CHANCE_GENERATNG_WASTE_LIGHTHUNTER = 55;
-	public final int CHANCE_GENERATNG_WASTE_HEAVYHUNTER = 65;
-	public final int CHANCE_GENERATNG_WASTE_BATTLESHIP = 80;
-	public final int CHANCE_GENERATNG_WASTE_ARMOREDSHIP = 90;
+	public final int CHANCE_GENERATING_WASTE_LIGHTHUNTER = 55;
+	public final int CHANCE_GENERATING_WASTE_HEAVYHUNTER = 65;
+	public final int CHANCE_GENERATING_WASTE_BATTLESHIP = 80;
+	public final int CHANCE_GENERATING_WASTE_ARMOREDSHIP = 90;
 	
 	// Defense probability of generating waste
-	public final int CHANCE_GENERATNG_WASTE_MISSILELAUNCHER = 55;
-	public final int CHANCE_GENERATNG_WASTE_IONCANNON = 65;
-	public final int CHANCE_GENERATNG_WASTE_PLASMACANNON = 75;
+	public final int CHANCE_GENERATING_WASTE_MISSILELAUNCHER = 55;
+	public final int CHANCE_GENERATING_WASTE_IONCANNON = 65;
+	public final int CHANCE_GENERATING_WASTE_PLASMACANNON = 75;
 	
 	// fleet chance to attack again
 	public final int CHANCE_ATTACK_AGAIN_LIGHTHUNTER = 3;
@@ -118,5 +118,5 @@ public interface Variables {
 	public final int[] CHANCE_ATTACK_ENEMY_UNITS = {10,20,30,40};
 	
 	// percentage of waste that will be generated with respect to the cost of the units
-	public final int PERCENTATGE_WASTE = 70;
+	public final int PERCENTAGE_WASTE = 70;
 }
