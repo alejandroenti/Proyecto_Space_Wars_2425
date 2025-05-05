@@ -18,8 +18,8 @@ public class Planet implements Variables {
 
 	private final int NUM_MILITARY_UNITS = 7;
 	private final int INIT_TECHNOLOGY_LEVEL = 0;
-	private final int INIT_METAL = 58500;
-	private final int INIT_DEUTERIUM = 28300;
+	private final int INIT_METAL = 199000;
+	private final int INIT_DEUTERIUM = 55900;
 	private final int MAX_LINE_SIZE = 64;
 	private final int MAX_NUMBER_SIZE = 10;
 	
@@ -319,7 +319,7 @@ public class Planet implements Variables {
 		
 		result += Printing.printTitle("Planet Stats:");
 		result += Printing.printTitle("technology".toUpperCase());
-		result += Printing.printStringSized("Attack Technology", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(technologyAttack, MAX_NUMBER_SIZE);
+		result += Printing.printStringSized("Attack Technology", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(technologyAttack, MAX_NUMBER_SIZE)+"\n";
 		result += Printing.printStringSized("Defense Technology", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(technologyDefense, MAX_NUMBER_SIZE) + "\n\n";
 		result += Printing.printTitle("defenses".toUpperCase());
 		for (int i = MilitaryUnitOrder.MISSILELAUNCHER.ordinal(); i <= MilitaryUnitOrder.PLASMACANNON.ordinal(); i++) {
@@ -332,7 +332,7 @@ public class Planet implements Variables {
 		}
 		result += "\n";
 		result += Printing.printTitle("resources".toUpperCase());
-		result += Printing.printStringSized("Metal", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(metal, MAX_NUMBER_SIZE);
+		result += Printing.printStringSized("Metal", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(metal, MAX_NUMBER_SIZE)+"\n";
 		result += Printing.printStringSized("Deuterium", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(deuterium, MAX_NUMBER_SIZE) + "\n\n";
 		
 		System.out.println(result);

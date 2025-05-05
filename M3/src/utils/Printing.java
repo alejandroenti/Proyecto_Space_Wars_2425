@@ -7,10 +7,10 @@ public class Printing {
 	}
 	
 	public static String printStringSized(String str, int numChars) {
-		return String.format("%"+numChars+"s", str);
+		return String.format("%-"+numChars+"s", str);
 	}
 	
 	public static String printNumberSized(int number, int numChars) {
-		return String.format("%-"+numChars+"d", number);
+		return String.format("%"+numChars+"d", number);
 	}
 }
