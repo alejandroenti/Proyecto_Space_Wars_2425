@@ -1,0 +1,70 @@
+# Created by https://www.toptal.com/developers/gitignore/api/eclipse
+# Edit at https://www.toptal.com/developers/gitignore?templates=eclipse
+
+### Eclipse ###
+M3/SpaceWars/.metadata
+M3/SpaceWars/bin/
+M3/SpaceWars/tmp/
+M3/SpaceWars/*.tmp
+M3/SpaceWars/*.bak
+M3/SpaceWars/*.swp
+M3/SpaceWars/*~.nib
+M3/SpaceWars/local.properties
+M3/SpaceWars/.settings/
+M3/SpaceWars/.loadpath
+M3/SpaceWars/.recommenders
+
+# External tool builders
+M3/SpaceWars/.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+M3/SpaceWars/*.launch
+
+# PyDev specific (Python IDE for Eclipse)
+M3/SpaceWars/*.pydevproject
+
+# CDT-specific (C/C++ Development Tooling)
+M3/SpaceWars/.cproject
+
+# CDT- autotools
+M3/SpaceWars/.autotools
+
+# Java annotation processor (APT)
+M3/SpaceWars/.factorypath
+
+# PDT-specific (PHP Development Tools)
+M3/SpaceWars/.buildpath
+
+# sbteclipse plugin
+M3/SpaceWars/.target
+
+# Tern plugin
+M3/SpaceWars/.tern-project
+
+# TeXlipse plugin
+M3/SpaceWars/.texlipse
+
+# STS (Spring Tool Suite)
+M3/SpaceWars/.springBeans
+
+# Code Recommenders
+M3/SpaceWars/.recommenders/
+
+# Annotation Processing
+M3/SpaceWars/.apt_generated/
+M3/SpaceWars/.apt_generated_test/
+
+# Scala IDE specific (Scala & Java development for Eclipse)
+M3/SpaceWars/.cache-main
+M3/SpaceWars/.scala_dependencies
+M3/SpaceWars/.worksheet
+
+# Uncomment this line if you wish to ignore the project description file.
+# Typically, this file would be tracked if it contains build/dependency configurations:
+#.project
+
+### Eclipse Patch ###
+# Spring Boot Tooling
+M3/SpaceWars/.sts4-cache/
+
+# End of https://www.toptal.com/developers/gitignore/api/eclipse
