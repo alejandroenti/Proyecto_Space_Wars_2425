@@ -2,6 +2,15 @@ package planets;
 
 import java.util.ArrayList;
 
+import exceptions.ResourceException;
+import ships.ArmoredShip;
+import ships.BattleShip;
+import ships.HeavyHunter;
+import ships.IonCannon;
+import ships.LightHunter;
+import ships.MilitaryUnit;
+import ships.MissileLauncher;
+import ships.PlasmaCannon;
 import utils.Printing;
 import utils.Variables;
 
@@ -32,7 +41,7 @@ public class Planet implements Variables {
 			"Missile Launcher",
 			"Ion Cannon",
 			"Plasma Cannon"
-	}
+	};
 	
 	private int technologyDefense;
 	private int technologyAttack;
@@ -40,8 +49,9 @@ public class Planet implements Variables {
 	private int deuterium;
 	private int upgradeDefenseTechnologyDeuteriumCost;
 	private int upgradeAttackTechnologyDeuteriumCost;
-	private ArrayList<MilitaryUnity>[] army;
+	private ArrayList<MilitaryUnit>[] army;
 	
+	@SuppressWarnings("unchecked")
 	public Planet() {
 		super();
 		
@@ -52,6 +62,8 @@ public class Planet implements Variables {
 		this.upgradeDefenseTechnologyDeuteriumCost = Variables.UPGRADE_BASE_DEFENSE_TECHNOLOGY_DEUTERIUM_COST;
 		this.upgradeAttackTechnologyDeuteriumCost = Variables.UPGRADE_BASE_ATTACK_TECHNOLOGY_DEUTERIUM_COST;
 		this.army = new ArrayList[NUM_MILITARY_UNITS];
+		
+		generateInitShips();
 	}
 	
 	public int getNUM_MILITARY_UNITS() {
@@ -75,19 +87,15 @@ public class Planet implements Variables {
 	public int getUpgradeAttackTechnologyDeuteriumCost() {
 		return upgradeAttackTechnologyDeuteriumCost;
 	}
-	public ArrayList<MilitaryUnity>[] getArmy() {
+	public ArrayList<MilitaryUnit>[] getArmy() {
 		return army;
 	}
 	
 	private void generateInitShips() {
 		
-		army[0] = new ArrayList<LightHunter>();
-		army[1] = new ArrayList<HeavyHunter>();
-		army[2] = new ArrayList<BattleShip>();
-		army[3] = new ArrayList<ArmoredShip>();
-		army[4] = new ArrayList<MissileLauncher>();
-		army[5] = new ArrayList<IonCannon>();
-		army[6] = new ArrayList<PlasmaCannon>();
+		for (int i = 0; i < NUM_MILITARY_UNITS; i++) {
+			army[i] = new ArrayList<MilitaryUnit>();
+		}
 		
 		newLightHunter(1);
 		newHeavytHunter(1);
@@ -107,27 +115,6 @@ public class Planet implements Variables {
 	
 	private int calculateNewUpgradePrice(int upgradeCost, int upgradePrecentage) {
 		return upgradeCost + (int)(upgradeCost * upgradePrecentage / 100);
-	}
-	
-	private void generateArmy(int metalCost, int deuteriumCost, MilitaryUnitOrder order, int initialArmour, int baseDamage, int n) {
-		
-		int unitsAdded = 0;
-		for (int i = 0; i < n; i++) {
-			try {
-				substractMaterials(metalCost, deuteriumCost);
-				if (order.ordinal() < MilitaryUnitOrder.MISSILELAUNCHER.ordinal()) {
-					army[order.ordinal()].add(new Ship(initialArmour, baseDamage));					
-				}
-				else {
-					army[order.ordinal()].add(new Defense(initialArmour, baseDamage));
-				}
-				unitsAdded++;
-			}
-			catch (ResourceException re) {
-				re.printStackTrace();
-				break;
-			}
-		}
 	}
 	
 	public void upgradeTechnologyDefense() {
@@ -153,87 +140,178 @@ public class Planet implements Variables {
 	}
 	
 	public void newLightHunter(int n) {
-		MilitaryUnitOrder order = MilitaryUnitOrder.LIGHTHUNTER;
-		int metalCost = Variables.METAL_COST_UNITS[order.ordinal()];
-		int deuteriumCost = Variables.DEUTERIUM_COST_UNITS[order.ordinal()];
+		
+		int order = MilitaryUnitOrder.LIGHTHUNTER.ordinal();
+		int metalCost = Variables.METAL_COST_UNITS[order];
+		int deuteriumCost = Variables.DEUTERIUM_COST_UNITS[order];
 		int unitsAdded = 0;
 		
 		int initialArmour = Variables.ARMOR_LIGHTHUNTER + (technologyDefense * Variables.PLUS_ARMOR_LIGHTHUNTER_BY_TECHNOLOGY) * Variables.ARMOR_LIGHTHUNTER / 100;
 		int baseDamage = Variables.BASE_DAMAGE_LIGHTHUNTER + (technologyDefense * Variables.PLUS_ATTACK_LIGHTHUNTER_BY_TECHNOLOGY) * Variables.BASE_DAMAGE_LIGHTHUNTER / 100;
 		
-		generateArmy(metalCost, deuteriumCost, order, initialArmour, baseDamage, n);
+		for (int i = 0; i < n; i++) {
+			try {
+				substractMaterials(metalCost, deuteriumCost);
+				army[order].add(new LightHunter(initialArmour, baseDamage));
+				unitsAdded++;
+			}
+			catch (ResourceException re) {
+				re.printStackTrace();
+				break;
+			}
+		}
+		
+		System.out.println("[*] " + unitsAdded + " " + militaryUnitNames[order] + " added to army!");
 	}
 	
 	public void newHeavytHunter(int n) {
-		MilitaryUnitOrder order = MilitaryUnitOrder.HEAVYHUNTER;
-		int metalCost = Variables.METAL_COST_UNITS[order.ordinal()];
-		int deuteriumCost = Variables.DEUTERIUM_COST_UNITS[order.ordinal()];
+		
+		int order = MilitaryUnitOrder.HEAVYHUNTER.ordinal();
+		int metalCost = Variables.METAL_COST_UNITS[order];
+		int deuteriumCost = Variables.DEUTERIUM_COST_UNITS[order];
 		int unitsAdded = 0;
 		
 		int initialArmour = Variables.ARMOR_HEAVYHUNTER + (technologyDefense * Variables.PLUS_ARMOR_HEAVYHUNTER_BY_TECHNOLOGY) * Variables.ARMOR_HEAVYHUNTER / 100;
 		int baseDamage = Variables.BASE_DAMAGE_HEAVYHUNTER + (technologyDefense * Variables.PLUS_ATTACK_HEAVYHUNTER_BY_TECHNOLOGY) * Variables.BASE_DAMAGE_HEAVYHUNTER / 100;
 		
-		generateArmy(metalCost, deuteriumCost, order, initialArmour, baseDamage, n);
+		for (int i = 0; i < n; i++) {
+			try {
+				substractMaterials(metalCost, deuteriumCost);
+				army[order].add(new HeavyHunter(initialArmour, baseDamage));
+				unitsAdded++;
+			}
+			catch (ResourceException re) {
+				re.printStackTrace();
+				break;
+			}
+		}
+		
+		System.out.println("[*] " + unitsAdded + " " + militaryUnitNames[order] + " added to army!");
 	}
 	
 	public void newBattleShip(int n) {
-		MilitaryUnitOrder order = MilitaryUnitOrder.BATTLESHIP;
-		int metalCost = Variables.METAL_COST_UNITS[order.ordinal()];
-		int deuteriumCost = Variables.DEUTERIUM_COST_UNITS[order.ordinal()];
+		
+		int order = MilitaryUnitOrder.BATTLESHIP.ordinal();
+		int metalCost = Variables.METAL_COST_UNITS[order];
+		int deuteriumCost = Variables.DEUTERIUM_COST_UNITS[order];
 		int unitsAdded = 0;
 		
 		int initialArmour = Variables.ARMOR_BATTLESHIP + (technologyDefense * Variables.PLUS_ARMOR_BATTLESHIP_BY_TECHNOLOGY) * Variables.ARMOR_BATTLESHIP / 100;
 		int baseDamage = Variables.BASE_DAMAGE_BATTLESHIP + (technologyDefense * Variables.PLUS_ATTACK_BATTLESHIP_BY_TECHNOLOGY) * Variables.BASE_DAMAGE_BATTLESHIP / 100;
 		
-		generateArmy(metalCost, deuteriumCost, order, initialArmour, baseDamage, n);
+		for (int i = 0; i < n; i++) {
+			try {
+				substractMaterials(metalCost, deuteriumCost);
+				army[order].add(new BattleShip(initialArmour, baseDamage));
+				unitsAdded++;
+			}
+			catch (ResourceException re) {
+				re.printStackTrace();
+				break;
+			}
+		}
+		
+		System.out.println("[*] " + unitsAdded + " " + militaryUnitNames[order] + " added to army!");
 	}
 	
 	public void newArmoredShip(int n) {
-		MilitaryUnitOrder order = MilitaryUnitOrder.ARMOREDSHIP;
-		int metalCost = Variables.METAL_COST_UNITS[order.ordinal()];
-		int deuteriumCost = Variables.DEUTERIUM_COST_UNITS[order.ordinal()];
+		
+		int order = MilitaryUnitOrder.ARMOREDSHIP.ordinal();
+		int metalCost = Variables.METAL_COST_UNITS[order];
+		int deuteriumCost = Variables.DEUTERIUM_COST_UNITS[order];
 		int unitsAdded = 0;
 		
 		int initialArmour = Variables.ARMOR_ARMOREDSHIP + (technologyDefense * Variables.PLUS_ARMOR_ARMOREDSHIP_BY_TECHNOLOGY) * Variables.ARMOR_ARMOREDSHIP / 100;
 		int baseDamage = Variables.BASE_DAMAGE_ARMOREDSHIP + (technologyDefense * Variables.PLUS_ATTACK_ARMOREDSHIP_BY_TECHNOLOGY) * Variables.BASE_DAMAGE_ARMOREDSHIP / 100;
 		
-		generateArmy(metalCost, deuteriumCost, order, initialArmour, baseDamage, n);
+		for (int i = 0; i < n; i++) {
+			try {
+				substractMaterials(metalCost, deuteriumCost);
+				army[order].add(new ArmoredShip(initialArmour, baseDamage));
+				unitsAdded++;
+			}
+			catch (ResourceException re) {
+				re.printStackTrace();
+				break;
+			}
+		}
+		
+		System.out.println("[*] " + unitsAdded + " " + militaryUnitNames[order] + " added to army!");
 	}
 	
 	public void newMissileLauncher(int n) {
-		MilitaryUnitOrder order = MilitaryUnitOrder.MISSILELAUNCHER;
-		int metalCost = Variables.METAL_COST_UNITS[order.ordinal()];
-		int deuteriumCost = Variables.DEUTERIUM_COST_UNITS[order.ordinal()];
+		
+		int order = MilitaryUnitOrder.MISSILELAUNCHER.ordinal();
+		int metalCost = Variables.METAL_COST_UNITS[order];
+		int deuteriumCost = Variables.DEUTERIUM_COST_UNITS[order];
 		int unitsAdded = 0;
 		
 		int initialArmour = Variables.ARMOR_MISSILELAUNCHER + (technologyDefense * Variables.PLUS_ARMOR_MISSILELAUNCHER_BY_TECHNOLOGY) * Variables.ARMOR_MISSILELAUNCHER / 100;
 		int baseDamage = Variables.BASE_DAMAGE_MISSILELAUNCHER + (technologyDefense * Variables.PLUS_ATTACK_MISSILELAUNCHER_BY_TECHNOLOGY) * Variables.BASE_DAMAGE_MISSILELAUNCHER / 100;
 		
-		generateArmy(metalCost, deuteriumCost, order, initialArmour, baseDamage, n);
+		for (int i = 0; i < n; i++) {
+			try {
+				substractMaterials(metalCost, deuteriumCost);
+				army[order].add(new MissileLauncher(initialArmour, baseDamage));
+				unitsAdded++;
+			}
+			catch (ResourceException re) {
+				re.printStackTrace();
+				break;
+			}
+		}
+		
+		System.out.println("[*] " + unitsAdded + " " + militaryUnitNames[order] + " added to army!");
 	}
 	
 	public void newIonCannon(int n) {
-		MilitaryUnitOrder order = MilitaryUnitOrder.IONCANNON;
-		int metalCost = Variables.METAL_COST_UNITS[order.ordinal()];
-		int deuteriumCost = Variables.DEUTERIUM_COST_UNITS[order.ordinal()];
+		
+		int order = MilitaryUnitOrder.IONCANNON.ordinal();
+		int metalCost = Variables.METAL_COST_UNITS[order];
+		int deuteriumCost = Variables.DEUTERIUM_COST_UNITS[order];
 		int unitsAdded = 0;
 		
 		int initialArmour = Variables.ARMOR_IONCANNON + (technologyDefense * Variables.PLUS_ARMOR_IONCANNON_BY_TECHNOLOGY) * Variables.ARMOR_IONCANNON / 100;
 		int baseDamage = Variables.BASE_DAMAGE_IONCANNON + (technologyDefense * Variables.PLUS_ATTACK_IONCANNON_BY_TECHNOLOGY) * Variables.BASE_DAMAGE_ARMOREDSHIP / 100;
 		
-		generateArmy(metalCost, deuteriumCost, order, initialArmour, baseDamage, n);
+		for (int i = 0; i < n; i++) {
+			try {
+				substractMaterials(metalCost, deuteriumCost);
+				army[order].add(new IonCannon(initialArmour, baseDamage));
+				unitsAdded++;
+			}
+			catch (ResourceException re) {
+				re.printStackTrace();
+				break;
+			}
+		}
+		
+		System.out.println("[*] " + unitsAdded + " " + militaryUnitNames[order] + " added to army!");
 	}
 	
 	public void newPlasmaCannon(int n) {
-		MilitaryUnitOrder order = MilitaryUnitOrder.PLASMACANNON;
-		int metalCost = Variables.METAL_COST_UNITS[order.ordinal()];
-		int deuteriumCost = Variables.DEUTERIUM_COST_UNITS[order.ordinal()];
+		
+		int order = MilitaryUnitOrder.PLASMACANNON.ordinal();
+		int metalCost = Variables.METAL_COST_UNITS[order];
+		int deuteriumCost = Variables.DEUTERIUM_COST_UNITS[order];
 		int unitsAdded = 0;
 		
 		int initialArmour = Variables.ARMOR_PLASMACANNON + (technologyDefense * Variables.PLUS_ARMOR_PLASMACANNON_BY_TECHNOLOGY) * Variables.ARMOR_PLASMACANNON / 100;
 		int baseDamage = Variables.BASE_DAMAGE_PLASMACANNON+ (technologyDefense * Variables.PLUS_ATTACK_PLASMACANNON_BY_TECHNOLOGY) * Variables.BASE_DAMAGE_PLASMACANNON / 100;
 		
-		generateArmy(metalCost, deuteriumCost, order, initialArmour, baseDamage, n);
+		for (int i = 0; i < n; i++) {
+			try {
+				substractMaterials(metalCost, deuteriumCost);
+				army[order].add(new PlasmaCannon(initialArmour, baseDamage));
+				unitsAdded++;
+			}
+			catch (ResourceException re) {
+				re.printStackTrace();
+				break;
+			}
+		}
+		
+		System.out.println("[*] " + unitsAdded + " " + militaryUnitNames[order] + " added to army!");
 	}
 	
 	public void printStats() {
