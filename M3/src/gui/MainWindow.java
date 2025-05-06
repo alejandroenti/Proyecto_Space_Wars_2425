@@ -64,9 +64,9 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		enemyPanel = new EnemyPanel();
 		buttonsPanel = new ButtonsPanel();
 		
+		mainPanel.add(buttonsPanel);
 		mainPanel.add(playerPanel);
 		mainPanel.add(enemyPanel);
-		mainPanel.add(buttonsPanel);
 
 		this.add(mainPanel);
 	}
