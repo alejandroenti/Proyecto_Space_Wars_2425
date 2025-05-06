@@ -86,4 +86,8 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		
 		timer.schedule(task, APPROACH_DELAY, (int)(APPROACH_TIME / APPROACH_STEPS));
 	}
+	
+	public void passArmiesToPlayerPanel(int[] playerArmy) {
+		playerPanel.setPlayerAmy(playerArmy);
+	}
 }
