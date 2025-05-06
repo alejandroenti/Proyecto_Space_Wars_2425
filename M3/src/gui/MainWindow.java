@@ -17,6 +17,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 	private JPanel mainPanel;
 	private PlayerPanel playerPanel;
 	private EnemyPanel enemyPanel;
+	private ButtonsPanel buttonsPanel;
 	private BufferedImage appLogo;
 	
 	public MainWindow() {
@@ -61,9 +62,11 @@ public class MainWindow extends JFrame implements VariablesWindow {
 
 		playerPanel = new PlayerPanel();
 		enemyPanel = new EnemyPanel();
+		buttonsPanel = new ButtonsPanel();
 		
 		mainPanel.add(playerPanel);
 		mainPanel.add(enemyPanel);
+		mainPanel.add(buttonsPanel);
 
 		this.add(mainPanel);
 	}
