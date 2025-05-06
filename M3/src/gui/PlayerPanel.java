@@ -4,12 +4,13 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
-public class PlayerPanel extends JPanel{
-	PlayerPanel(int width, int height){
+import utils.VariablesWindow;
+
+public class PlayerPanel extends JPanel implements VariablesWindow {
+	PlayerPanel(){
 		
-		setSize(width,height);
+		setSize((int)(FRAME_WIDTH / 2), FRAME_HEIGHT);
 		setBackground(Color.RED);
 		setLocation(0,0);
-		
 	}
 }

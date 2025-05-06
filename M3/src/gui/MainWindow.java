@@ -14,9 +14,6 @@ import utils.VariablesWindow;
 
 public class MainWindow extends JFrame implements VariablesWindow {
 	
-	private final String FRAME_TITLE = "Space Wars";
-	private final String URL_LOGO = "./src/art/logo.png";
-	
 	private JPanel mainPanel;
 	private EnemyPanel enemyPanel;
 	private BufferedImage appLogo;
@@ -34,7 +31,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 	private void setupFrame() {
 		
 		this.setTitle(FRAME_TITLE);
-		this.setSize(WIDTH, HEIGHT);
+		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
@@ -66,7 +63,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		 * 6. Llevar el Panel de Opciones al Centro Abajo de la Ventana 
 		 */
 		
-		enemyPanel = new EnemyPanel((int)(WIDTH / 2), HEIGHT);
+		enemyPanel = new EnemyPanel();
 		
 		mainPanel.add(enemyPanel);
 
@@ -80,12 +77,12 @@ public class MainWindow extends JFrame implements VariablesWindow {
 			public void run() {
 			 enemyPanel.enemyComing();
 			 
-			 if (enemyPanel.getPosX() <= (int)(WIDTH / 2)) {
+			 if (enemyPanel.getPosX() <= (int)(FRAME_WIDTH / 2)) {
 				 timer.cancel();
 			 }
 			}
 		};
 		
-		timer.schedule(task, DELAY, (int)(TIME / STEPS));
+		timer.schedule(task, APPROACH_DELAY, (int)(APPROACH_TIME / APPROACH_STEPS));
 	}
 }

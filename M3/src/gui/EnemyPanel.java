@@ -13,11 +13,11 @@ public class EnemyPanel extends JPanel implements VariablesWindow {
 	private int posX;
 	private int approaching_speed;
 	
-	EnemyPanel(int width, int height){
-		approaching_speed = (INIT_POS_X - width) / STEPS;
+	EnemyPanel(){
+		approaching_speed = (INIT_POS_X - (int)(FRAME_WIDTH / 2)) / APPROACH_STEPS;
 		posX = INIT_POS_X;
 		
-		setSize(width, height);
+		setSize((int)(FRAME_WIDTH / 2), FRAME_HEIGHT);
 		setBackground(Color.YELLOW);
 		setLocation(posX,POS_Y);
 		
