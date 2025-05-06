@@ -15,6 +15,7 @@ import utils.VariablesWindow;
 public class MainWindow extends JFrame implements VariablesWindow {
 	
 	private JPanel mainPanel;
+	private PlayerPanel playerPanel;
 	private EnemyPanel enemyPanel;
 	private BufferedImage appLogo;
 	
@@ -50,21 +51,18 @@ public class MainWindow extends JFrame implements VariablesWindow {
 	
 	private void initMainPanel() {
 		
-		mainPanel = new JPanel();
-		mainPanel.setLayout(null); // Hacemos el Layout completamente flexible y posicionamos de manera absoluta en cuanto a la Ventana
-
-		
 		/*
-		 * 1. Inicializar Panel del Jugador
-		 * 2. Inicializar Panel del Enemigo
-		 * 3. Llevar el Panel del Jugador a la posición 0,0
-		 * 4. Llevar el Panel del Enemigo a Parla
-		 * 5. Inicializar Panel de Opciones
-		 * 6. Llevar el Panel de Opciones al Centro Abajo de la Ventana 
+		 * Hacemos el Layout del Panel Principal completamente flexible y
+		 * posicionamos de manera absoluta en cuanto a la Ventana Principal
+		 * 
 		 */
-		
+		mainPanel = new JPanel();
+		mainPanel.setLayout(null);
+
+		playerPanel = new PlayerPanel();
 		enemyPanel = new EnemyPanel();
 		
+		mainPanel.add(playerPanel);
 		mainPanel.add(enemyPanel);
 
 		this.add(mainPanel);
@@ -76,7 +74,6 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		TimerTask task = new TimerTask() {
 			public void run() {
 			 enemyPanel.enemyComing();
-			 
 			 if (enemyPanel.getPosX() <= (int)(FRAME_WIDTH / 2)) {
 				 timer.cancel();
 			 }
