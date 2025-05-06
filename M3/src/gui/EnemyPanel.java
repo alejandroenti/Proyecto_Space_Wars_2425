@@ -4,14 +4,15 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
-public class EnemyPanel extends JPanel{
+public class EnemyPanel extends JPanel {
+	
 	private final int INIT_POS_X = 1500;
 	private final int POS_Y = 0;
 	private int posX;
 	private int approaching_speed;
 	
 	EnemyPanel(int width, int height){
-		approaching_speed = 5;
+		approaching_speed = (INIT_POS_X - width) / STEPS;
 		posX = INIT_POS_X;
 		
 		setSize(width, height);
