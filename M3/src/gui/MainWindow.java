@@ -21,6 +21,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 	private BufferedImage appLogo;
 	
 	public MainWindow() {
+		super();
 		
 		setupFrame();
 		initMainPanel();
