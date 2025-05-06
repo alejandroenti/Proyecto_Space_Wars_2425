@@ -4,7 +4,9 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
-public class EnemyPanel extends JPanel {
+import utils.VariablesWindow;
+
+public class EnemyPanel extends JPanel implements VariablesWindow {
 	
 	private final int INIT_POS_X = 1500;
 	private final int POS_Y = 0;

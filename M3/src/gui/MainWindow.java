@@ -10,6 +10,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import utils.VariablesWindow;
+
 public class MainWindow extends JFrame implements VariablesWindow {
 	
 	private final String FRAME_TITLE = "Space Wars";
