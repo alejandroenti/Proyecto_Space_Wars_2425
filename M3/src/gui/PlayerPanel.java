@@ -19,7 +19,7 @@ public class PlayerPanel extends JPanel implements VariablesWindow {
 		
 		setLayout(null);
 		setSize((int)(FRAME_WIDTH / 2), FRAME_HEIGHT);
-		setBackground(Color.RED);
+		setOpaque(false);
 		setLocation(0,0);
 		
 		planetPanel = new ImagePanel(BASE_URL + "planet00.png");

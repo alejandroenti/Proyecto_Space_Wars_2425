@@ -11,18 +11,25 @@ import javax.swing.JButton;
 public class ImageButton extends JButton {
 	
 	private BufferedImage iconImage;
-	private BufferedImage backgroungImage;
+	private BufferedImage backgroundImage;
 	
-	public ImageButton(BufferedImage iconImage, BufferedImage backgroungImage) {
+	public ImageButton(BufferedImage iconImage, BufferedImage backgroundImage) {
 		super();
 		
+		super.setOpaque(false);
+		super.setContentAreaFilled(false);
+		super.setBorderPainted(false);
+		
 		this.iconImage = iconImage;
-		this.backgroungImage = backgroungImage;
+		this.backgroundImage = backgroundImage;
 	}
 	
 	protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(backgroungImage.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH), 0, 0, this);
+        
+        if (backgroundImage != null) {
+        	g.drawImage(backgroundImage.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH), 0, 0, this);
+        }
         g.drawImage(iconImage.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH), 0, 0, this);
 	}
 }

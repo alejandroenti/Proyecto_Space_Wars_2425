@@ -14,7 +14,7 @@ import utils.VariablesWindow;
 
 public class MainWindow extends JFrame implements VariablesWindow {
 	
-	private JPanel mainPanel;
+	private ImagePanel mainPanel;
 	private PlayerPanel playerPanel;
 	private EnemyPanel enemyPanel;
 	private ButtonsPanel buttonsPanel;
@@ -58,7 +58,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		 * posicionamos de manera absoluta en cuanto a la Ventana Principal
 		 * 
 		 */
-		mainPanel = new JPanel();
+		mainPanel = new ImagePanel(BACKGROUND_IMAGE);
 		mainPanel.setLayout(null);
 
 		playerPanel = new PlayerPanel();
