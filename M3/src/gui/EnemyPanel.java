@@ -1,7 +1,5 @@
 package gui;
 
-import java.awt.Color;
-
 import javax.swing.JPanel;
 
 import utils.VariablesWindow;
@@ -18,7 +16,7 @@ public class EnemyPanel extends JPanel implements VariablesWindow {
 		posX = INIT_POS_X;
 		
 		setSize((int)(FRAME_WIDTH / 2), FRAME_HEIGHT);
-		setBackground(Color.YELLOW);
+		setOpaque(false);
 		setLocation(posX,POS_Y);
 		
 	}
