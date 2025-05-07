@@ -51,7 +51,6 @@ public class Planet implements Variables {
 	private int upgradeAttackTechnologyDeuteriumCost;
 	private ArrayList<MilitaryUnit>[] army;
 	
-	@SuppressWarnings("unchecked")
 	public Planet() {
 		super();
 		
