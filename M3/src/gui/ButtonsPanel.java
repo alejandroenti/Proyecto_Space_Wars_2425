@@ -14,14 +14,15 @@ import javax.swing.JPanel;
 
 import utils.VariablesWindow;
 
-public class ButtonsPanel extends JPanel implements VariablesWindow{
+public class ButtonsPanel extends ImagePanel implements VariablesWindow{
 	
 	private ImageButton buy, update, reports;
 	private BufferedImage backgroundImage;
 	
 	public ButtonsPanel() {
+		super(BASE_URL + "background_buttons_panel.png");
 		setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
-		setSize(200,80);
+		setSize(230,80);
 		setBackground(new Color(0,0,0,100));
 		setLocation((int)(FRAME_WIDTH/2)-getWidth()/2, FRAME_HEIGHT-getHeight()-100);
 		
@@ -38,11 +39,12 @@ public class ButtonsPanel extends JPanel implements VariablesWindow{
 		update.setMaximumSize(new Dimension(50,50));
 		reports.setMaximumSize(new Dimension(50,50));
 		
-		add(Box.createHorizontalStrut(15));
+		add(Box.createHorizontalStrut(30));
 		add(buy);
 		add(Box.createHorizontalStrut(10));
 		add(update);
 		add(Box.createHorizontalStrut(10));
 		add(reports);
+		add(Box.createHorizontalStrut(30));
 	}
 }
