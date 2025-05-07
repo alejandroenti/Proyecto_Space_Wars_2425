@@ -35,7 +35,6 @@ public class ImagePanel extends JPanel {
 		// https://stackoverflow.com/questions/37758061/rotate-a-buffered-image-in-java
 		double rads = Math.toRadians(theta);
 		
-		System.out.println(image.getType());
 		BufferedImage rotatedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
 		Graphics2D g2d = rotatedImage.createGraphics();
 		AffineTransform at = new AffineTransform();
