@@ -15,17 +15,11 @@ import javax.swing.JPanel;
 public class ImagePanel extends JPanel {
 
 	private BufferedImage image;
-	private boolean rotate;
 	
 	public ImagePanel(String urlImage) {
 		super();
 		setOpaque(false);
 		loadImage(urlImage);
-		this.rotate = false;
-	}
-	
-	public void setRotate(boolean rotate) {
-		this.rotate = rotate;
 	}
 	
 	public void rotateImage(double theta) {
