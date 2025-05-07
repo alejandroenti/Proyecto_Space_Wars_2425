@@ -88,6 +88,6 @@ public class MainWindow extends JFrame implements VariablesWindow {
 	}
 	
 	public void passArmiesToPlayerPanel(int[] playerArmy) {
-		playerPanel.setPlayerAmy(playerArmy);
+		playerPanel.setPlayerArmy(playerArmy);
 	}
 }

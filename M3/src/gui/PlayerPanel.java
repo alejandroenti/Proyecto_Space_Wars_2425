@@ -11,7 +11,7 @@ import utils.VariablesWindow;
 public class PlayerPanel extends JPanel implements VariablesWindow {
 	
 	private ImagePanel planetPanel, armyPanel;
-	private int[] playerAmy;
+	private int[] playerArmy;
 	private ArrayList<ImagePanel> armyPanels;
 	
 	public PlayerPanel(){
@@ -29,11 +29,11 @@ public class PlayerPanel extends JPanel implements VariablesWindow {
 	}
 
 	public int[] getPlayerAmy() {
-		return playerAmy;
+		return playerArmy;
 	}
 
-	public void setPlayerAmy(int[] playerAmy) {
-		this.playerAmy = playerAmy;
+	public void setPlayerArmy(int[] playerArmy) {
+		this.playerArmy = playerArmy;
 		loadArmy();
 	}
 	
@@ -41,8 +41,9 @@ public class PlayerPanel extends JPanel implements VariablesWindow {
 		
 		armyPanels.clear();
 		
-		for (int i = 0; i < playerAmy.length; i++) {
-			int spawn = playerAmy[i] / 10;
+		for (int i = 0; i < playerArmy.length; i++) {
+			int spawn = playerArmy[i] / 10;
+			spawn += playerArmy[i] % 10;
 			for (int j = 0; j < spawn; j++) {
 				int num = (int)(1 + Math.random() * 9);
 				//armyPanel.add(new ImagePanel(BASE_URL + "ships_" + i + "_" + num + ".png"));
