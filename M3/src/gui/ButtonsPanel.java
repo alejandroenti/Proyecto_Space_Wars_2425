@@ -3,6 +3,7 @@ package gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -14,18 +15,21 @@ import javax.swing.JPanel;
 import utils.VariablesWindow;
 
 public class ButtonsPanel extends JPanel implements VariablesWindow{
-	ImageButton buy, update, reports;
 	
-	ButtonsPanel(){
+	private ImageButton buy, update, reports;
+	private BufferedImage backgroundImage;
+	
+	public ButtonsPanel() {
 		setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
 		setSize(200,80);
 		setBackground(new Color(0,0,0,100));
 		setLocation((int)(FRAME_WIDTH/2)-getWidth()/2, FRAME_HEIGHT-getHeight()-100);
 		
 		try {
-			buy = new ImageButton(ImageIO.read(new File("./src/art/shoppingCart.png")));
-			update = new ImageButton(ImageIO.read(new File("./src/art/arrowUp.png")));
-			reports = new ImageButton(ImageIO.read(new File("./src/art/import.png")));
+			backgroundImage = ImageIO.read(new File(BASE_URL + "buttonPanelBackground.png"));
+			buy = new ImageButton(ImageIO.read(new File(BASE_URL + "shoppingCart.png")), backgroundImage);
+			update = new ImageButton(ImageIO.read(new File(BASE_URL + "arrowUp.png")), backgroundImage);
+			reports = new ImageButton(ImageIO.read(new File(BASE_URL + "import.png")), backgroundImage);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
