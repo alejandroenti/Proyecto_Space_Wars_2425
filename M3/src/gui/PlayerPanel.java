@@ -25,9 +25,9 @@ public class PlayerPanel extends JPanel implements VariablesWindow {
 		planetPanel = new ImagePanel(BASE_URL + "planet00.png");
 		planetPanel.setBounds((int)(-getWidth() / 2), 0, (int)(FRAME_WIDTH / 2), FRAME_HEIGHT);
 		
-		paint();
 		
 		add(planetPanel);
+		paint();
 	}
 
 	public int[] getPlayerAmy() {
@@ -71,18 +71,33 @@ public class PlayerPanel extends JPanel implements VariablesWindow {
 		s2.rotateImage(270);
 		
 		ImagePanel s3 = new ImagePanel(BASE_URL + "ships_2_1.png");
-		s3.setBounds(330, 337 - 64 * 2 - 50 * 2, 64, 64);
+		s3.setBounds(330, 337 - 64 * 3 - 50 * 2, 64, 64);
 		s3.rotateImage(270);
 		
 		ImagePanel s4 = new ImagePanel(BASE_URL + "ships_3_1.png");
-		s4.setBounds(330, 337 + 64 * 2 + 10,  64, 64);
+		s4.setBounds(330, 337 + 64 * 3 + 10,  64, 64);
 		s4.rotateImage(270);
+		
+		ImagePanel s5 = new ImagePanel(BASE_URL + "missilelauncher.png");
+		s5.setBounds(165, 100,  96, 96);
+		s5.rotateImage(270);
+		
+		ImagePanel s6 = new ImagePanel(BASE_URL + "ioncannon.png");
+		s6.setBounds(220, 337 - 80,  128, 128);
+		s6.rotateImage(270);
+		
+		ImagePanel s7 = new ImagePanel(BASE_URL + "plasmacannon.png");
+		s7.setBounds(180, 337 + 80,  128, 128);
+		s7.rotateImage(270);
 		
 		
 		add(s1);
 		add(s2);
 		add(s3);
 		add(s4);
+		add(s5);
+		add(s6);
+		add(s7);
 	}
 	
 }
