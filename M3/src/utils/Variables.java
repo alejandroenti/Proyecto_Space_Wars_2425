@@ -1,9 +1,20 @@
 package utils;
 
 public interface Variables {
+	
+	public enum MilitaryUnitOrder {
+		LIGHTHUNTER,
+		HEAVYHUNTER,
+		BATTLESHIP,
+		ARMOREDSHIP,
+		MISSILELAUNCHER,
+		IONCANNON,
+		PLASMACANNON
+	}
+	
 	// resources available to create the first enemy fleet
-	public final int DEUTERIUM_BASE_ENEMY_ARMY = 26000;
-	public final int METAL_BASE_ENEMY_ARMY = 180000;
+	public final int DEUTERIUM_BASE_ENEMY_ARMY = 260000000;
+	public final int METAL_BASE_ENEMY_ARMY = 1800000000;
 	
 	// percentage increase of resources available to create enemy fleet
 	public final int ENEMY_FLEET_INCREASE = 6;
