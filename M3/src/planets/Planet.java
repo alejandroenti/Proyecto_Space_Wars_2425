@@ -1,6 +1,8 @@
 package planets;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import exceptions.ResourceException;
 import ships.ArmoredShip;
@@ -63,6 +65,7 @@ public class Planet implements Variables {
 		this.army = new ArrayList[NUM_MILITARY_UNITS];
 		
 		generateInitShips();
+		generateResources();
 	}
 	
 	public int getNUM_MILITARY_UNITS() {
@@ -90,14 +93,29 @@ public class Planet implements Variables {
 		return army;
 	}
 	
+	public void setArmy(ArrayList<MilitaryUnit>[] army) {
+		this.army = army;
+	}
+	
+	private void generateResources() {
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			public void run() {
+				metal += PLANET_METAL_GENERATED;
+				deuterium += PLANET_DEUTERIUM_GENERATED;
+			 }
+		 };
+		 timer.schedule(task, 60000, 60000);
+	}
+	
 	private void generateInitShips() {
 		
 		for (int i = 0; i < NUM_MILITARY_UNITS; i++) {
 			army[i] = new ArrayList<MilitaryUnit>();
 		}
 		
-		newLightHunter(1);
-		newHeavytHunter(1);
+		newLightHunter(5);
+		newHeavytHunter(5);
 		newBattleShip(1);
 		newArmoredShip(1);
 		newMissileLauncher(1);

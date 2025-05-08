@@ -62,19 +62,19 @@ public class PlayerPanel extends JPanel implements VariablesWindow {
 	
 	
 	private void paint() {
-		ImagePanel s1 = new ImagePanel(BASE_URL + "ships_0_1.png");
+		ImagePanel s1 = new ImagePanel(BASE_URL + "ships_0_0.png");
 		s1.setBounds(400, 337 - 64 - 50, 64, 64);
 		s1.rotateImage(270);
 		
-		ImagePanel s2 = new ImagePanel(BASE_URL + "ships_1_1.png");
+		ImagePanel s2 = new ImagePanel(BASE_URL + "ships_1_0.png");
 		s2.setBounds(400, 337 + 64 - 50, 64, 64);
 		s2.rotateImage(270);
 		
-		ImagePanel s3 = new ImagePanel(BASE_URL + "ships_2_1.png");
+		ImagePanel s3 = new ImagePanel(BASE_URL + "ships_2_0.png");
 		s3.setBounds(330, 337 - 64 * 3 - 50 * 2, 64, 64);
 		s3.rotateImage(270);
 		
-		ImagePanel s4 = new ImagePanel(BASE_URL + "ships_3_1.png");
+		ImagePanel s4 = new ImagePanel(BASE_URL + "ships_3_0.png");
 		s4.setBounds(330, 337 + 64 * 3 + 10,  64, 64);
 		s4.rotateImage(270);
 		

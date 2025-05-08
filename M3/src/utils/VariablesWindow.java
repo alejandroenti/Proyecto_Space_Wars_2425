@@ -10,7 +10,7 @@ public interface VariablesWindow {
 	public final int FRAME_HEIGHT = 675;
 	
 	// timer parameters
-	public final int APPROACH_TIME = 180000;
+	public final int APPROACH_TIME = 1800;
 	public final int APPROACH_STEPS = 900;
 	public final int APPROACH_DELAY = 0;
 	
