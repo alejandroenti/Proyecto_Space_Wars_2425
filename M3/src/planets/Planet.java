@@ -25,26 +25,6 @@ public class Planet implements Variables {
 	private final int MAX_LINE_SIZE = 64;
 	private final int MAX_NUMBER_SIZE = 10;
 	
-	private enum MilitaryUnitOrder {
-		LIGHTHUNTER,
-		HEAVYHUNTER,
-		BATTLESHIP,
-		ARMOREDSHIP,
-		MISSILELAUNCHER,
-		IONCANNON,
-		PLASMACANNON
-	}
-	
-	private String[] militaryUnitNames = {
-			"Light Hunter",
-			"Heavy Hunter",
-			"Battle Ship",
-			"Armored Ship",
-			"Missile Launcher",
-			"Ion Cannon",
-			"Plasma Cannon"
-	};
-	
 	private int technologyDefense;
 	private int technologyAttack;
 	private int metal;
@@ -178,7 +158,7 @@ public class Planet implements Variables {
 			}
 		}
 		
-		System.out.println("[*] " + unitsAdded + " " + militaryUnitNames[order] + " added to army!");
+		System.out.println("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
 	}
 	
 	public void newHeavytHunter(int n) {
@@ -203,7 +183,7 @@ public class Planet implements Variables {
 			}
 		}
 		
-		System.out.println("[*] " + unitsAdded + " " + militaryUnitNames[order] + " added to army!");
+		System.out.println("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
 	}
 	
 	public void newBattleShip(int n) {
@@ -228,7 +208,7 @@ public class Planet implements Variables {
 			}
 		}
 		
-		System.out.println("[*] " + unitsAdded + " " + militaryUnitNames[order] + " added to army!");
+		System.out.println("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
 	}
 	
 	public void newArmoredShip(int n) {
@@ -253,7 +233,7 @@ public class Planet implements Variables {
 			}
 		}
 		
-		System.out.println("[*] " + unitsAdded + " " + militaryUnitNames[order] + " added to army!");
+		System.out.println("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
 	}
 	
 	public void newMissileLauncher(int n) {
@@ -278,7 +258,7 @@ public class Planet implements Variables {
 			}
 		}
 		
-		System.out.println("[*] " + unitsAdded + " " + militaryUnitNames[order] + " added to army!");
+		System.out.println("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
 	}
 	
 	public void newIonCannon(int n) {
@@ -303,7 +283,7 @@ public class Planet implements Variables {
 			}
 		}
 		
-		System.out.println("[*] " + unitsAdded + " " + militaryUnitNames[order] + " added to army!");
+		System.out.println("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
 	}
 	
 	public void newPlasmaCannon(int n) {
@@ -328,7 +308,7 @@ public class Planet implements Variables {
 			}
 		}
 		
-		System.out.println("[*] " + unitsAdded + " " + militaryUnitNames[order] + " added to army!");
+		System.out.println("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
 	}
 	
 	public void printStats() {
@@ -340,12 +320,12 @@ public class Planet implements Variables {
 		result += Printing.printStringSized("Defense Technology", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(technologyDefense, MAX_NUMBER_SIZE) + "\n\n";
 		result += Printing.printTitle("defenses".toUpperCase());
 		for (int i = MilitaryUnitOrder.MISSILELAUNCHER.ordinal(); i <= MilitaryUnitOrder.PLASMACANNON.ordinal(); i++) {
-			result += Printing.printStringSized(militaryUnitNames[i], MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(army[i].size(), MAX_NUMBER_SIZE) + "\n";			
+			result += Printing.printStringSized(MILITARY_UNIT_NAMES[i], MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(army[i].size(), MAX_NUMBER_SIZE) + "\n";			
 		}
 		result += "\n";
 		result += Printing.printTitle("fleet".toUpperCase());
 		for (int i = 0; i <= MilitaryUnitOrder.MISSILELAUNCHER.ordinal(); i++) {
-			result += Printing.printStringSized(militaryUnitNames[i], MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(army[i].size(), MAX_NUMBER_SIZE) + "\n";			
+			result += Printing.printStringSized(MILITARY_UNIT_NAMES[i], MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(army[i].size(), MAX_NUMBER_SIZE) + "\n";			
 		}
 		result += "\n";
 		result += Printing.printTitle("resources".toUpperCase());
