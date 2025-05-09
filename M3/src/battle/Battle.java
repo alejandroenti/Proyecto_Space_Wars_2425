@@ -3,6 +3,8 @@ package battle;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import gui.EnemyPanel;
+import gui.PlayerPanel;
 import ships.MilitaryUnit;
 import utils.Printing;
 import utils.Variables;
@@ -10,6 +12,9 @@ import utils.Variables;
 public class Battle implements Variables {
 	
 	private int battleNumber;
+	
+	private PlayerPanel playerPanel;
+	private EnemyPanel enemyPanel;
 
 	private ArrayList<MilitaryUnit>[] planetArmy, enemyArmy;
 	private ArrayList[][] armies;
@@ -23,11 +28,14 @@ public class Battle implements Variables {
 	private int actualNumberUnitsPlanet, actualNumberUnitsEnemy;
 	private int[] actualArmyPlanet, actualArmyEnemy;
 	
-	public Battle(ArrayList<MilitaryUnit>[] planetArmy, ArrayList<MilitaryUnit>[] enemyArmy) {
+	public Battle(ArrayList<MilitaryUnit>[] planetArmy, ArrayList<MilitaryUnit>[] enemyArmy, PlayerPanel playerPanel, EnemyPanel enemyPanel) {
 		super();
 		
 		this.planetArmy = planetArmy;
 		this.enemyArmy = enemyArmy;
+		
+		this.playerPanel = playerPanel;
+		this.enemyPanel = enemyPanel;
 		
 		// Juntamos en una variable ambos ejércitos
 		this.armies = new ArrayList[2][7];
