@@ -12,6 +12,16 @@ public interface Variables {
 		PLASMACANNON
 	}
 	
+	public final String[] MILITARY_UNIT_NAMES = {
+			"Light Hunter",
+			"Heavy Hunter",
+			"Battle Ship",
+			"Armored Ship",
+			"Missile Launcher",
+			"Ion Cannon",
+			"Plasma Cannon"
+	};
+	
 	// resources available to create the first enemy fleet
 	public final int DEUTERIUM_BASE_ENEMY_ARMY = 260000000;
 	public final int METAL_BASE_ENEMY_ARMY = 1800000000;
