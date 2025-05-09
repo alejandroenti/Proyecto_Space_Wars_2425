@@ -6,25 +6,30 @@ import planets.Planet;
 import ships.ArmoredShip;
 import ships.BattleShip;
 import ships.HeavyHunter;
+import ships.IonCannon;
 import ships.LightHunter;
 import ships.MilitaryUnit;
+import ships.MissileLauncher;
+import ships.PlasmaCannon;
 import utils.Variables;
 
 public class Main implements Variables {
-
+	
+	private Planet planet;
+	private MainWindow window;
+	
+	public Main() {
+		super();
+		
+		this.planet = new Planet();
+		this.window = new MainWindow();
+	}
+	
 	public static void main(String[] args) {
-		Planet planet = new Planet();
-		MainWindow window = new MainWindow();
 		
-		window.getPlayerPanel().setPlayerArmy(planet.getArmy());
+		Main instance = new Main();
 		
-		
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		instance.window.getPlayerPanel().setPlayerArmy(instance.planet.getArmy());
 		
 //		window.getPlayerPanel().addUnit(MilitaryUnitOrder.ARMOREDSHIP.ordinal(), new ArmoredShip());
 //		
@@ -52,4 +57,29 @@ public class Main implements Variables {
 //		//battle.startBattle();
 	}
 
+	public void buyMilitaryUnit(MilitaryUnit unit, int quantity) {
+		
+		if (unit instanceof LightHunter) {
+			planet.newLightHunter(quantity);
+		}
+		else if (unit instanceof HeavyHunter) {
+			planet.newHeavytHunter(quantity);
+		}
+		else if (unit instanceof BattleShip) {
+			planet.newBattleShip(quantity);
+		}
+		else if (unit instanceof ArmoredShip) {
+			planet.newArmoredShip(quantity);
+		}
+		else if (unit instanceof MissileLauncher) {
+			planet.newMissileLauncher(quantity);
+		}
+		else if (unit instanceof IonCannon) {
+			planet.newIonCannon(quantity);
+		}
+		else if (unit instanceof PlasmaCannon) {
+			planet.newPlasmaCannon(quantity);
+		}
+		
+	}
 }
