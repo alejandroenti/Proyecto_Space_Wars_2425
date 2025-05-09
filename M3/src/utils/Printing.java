@@ -1,6 +1,18 @@
 package utils;
 
 public class Printing {
+	
+	public static String printLineChar(char character, int numChars) {
+		String line = "";
+		
+		for (int i = 0; i < numChars; i++) {
+			line += character;
+		}
+		
+		line += "\n";
+		
+		return line;
+	}
 
 	public static String printTitle(String str) {
 		return String.format("%s\n\n", str);

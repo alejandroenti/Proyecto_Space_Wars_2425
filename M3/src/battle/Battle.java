@@ -9,7 +9,7 @@ import utils.Variables;
 
 public class Battle implements Variables {
 	
-	private int battleNumber;
+	private int battles; // Podemos recuperar este número de la base de datos (permitiremos mostrar el report resumen de la batalla que quieras pero el battleDevelopment solo de las ultimas 5 batallas)
 
 	private ArrayList<MilitaryUnit>[] planetArmy, enemyArmy;
 	private ArrayList[][] armies;
@@ -59,6 +59,10 @@ public class Battle implements Variables {
 	
 	public ArrayList<MilitaryUnit>[] getPlanetArmy() {
 		return armies[0];
+	}
+	
+	public ArrayList<MilitaryUnit>[] getEnemyArmy() {
+		return armies[1];
 	}
 	
 	private void calculateInitialCostFleet() {
@@ -125,11 +129,16 @@ public class Battle implements Variables {
 		int percentageArmyPlanetAlive = (int)((actualNumberUnitsPlanet / initialNumberUnitsPlanet) * 100);
 		int percentageArmyEnemyAlive = (int)((actualNumberUnitsEnemy / initialNumberUnitsEnemy) * 100);
 		
+		battleDevelopment = Printing.printStringCentred("THE BATTLE STARTS", '*', 60);
+		
 		do {
-			battleDevelopment += "*****************CHANGE ATTACKER*****************\n";
+			battleDevelopment += "\n" + Printing.printStringCentred("CHANGE ATTACKER", '*', 60) + "\n";
 			
 			MilitaryUnit attacker = null;
 			MilitaryUnit defender = null;
+			String attacker_name = null;
+			String defender_name = null;
+			
 			int[] probabilities;
 			
 			if (order % 2 == 0) {
@@ -148,30 +157,37 @@ public class Battle implements Variables {
 					if (numRandom < probabilities[MilitaryUnitOrder.LIGHTHUNTER.ordinal()] && armies[numAttacker][MilitaryUnitOrder.LIGHTHUNTER.ordinal()].size() > 0) {
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.LIGHTHUNTER.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.LIGHTHUNTER.ordinal()].get(shipRandom));
+						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.LIGHTHUNTER.ordinal()];
 					}
 					else if (numRandom < probabilities[MilitaryUnitOrder.HEAVYHUNTER.ordinal()] && armies[numAttacker][MilitaryUnitOrder.HEAVYHUNTER.ordinal()].size() > 0) {
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.HEAVYHUNTER.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.HEAVYHUNTER.ordinal()].get(shipRandom));
+						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.HEAVYHUNTER.ordinal()];
 					}
 					else if (numRandom < probabilities[MilitaryUnitOrder.BATTLESHIP.ordinal()] && armies[numAttacker][MilitaryUnitOrder.BATTLESHIP.ordinal()].size() > 0) {
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.BATTLESHIP.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.BATTLESHIP.ordinal()].get(shipRandom));
+						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.BATTLESHIP.ordinal()];
 					}
 					else if (numRandom < probabilities[MilitaryUnitOrder.ARMOREDSHIP.ordinal()] && armies[numAttacker][MilitaryUnitOrder.ARMOREDSHIP.ordinal()].size() > 0) {
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.ARMOREDSHIP.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.ARMOREDSHIP.ordinal()].get(shipRandom));
+						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.ARMOREDSHIP.ordinal()];
 					}
 					else if (numRandom < probabilities[MilitaryUnitOrder.MISSILELAUNCHER.ordinal()] && armies[numAttacker][MilitaryUnitOrder.MISSILELAUNCHER.ordinal()].size() > 0) {
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.MISSILELAUNCHER.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.MISSILELAUNCHER.ordinal()].get(shipRandom));
+						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.MISSILELAUNCHER.ordinal()];
 					}
 					else if (numRandom < probabilities[MilitaryUnitOrder.IONCANNON.ordinal()] && armies[numAttacker][MilitaryUnitOrder.IONCANNON.ordinal()].size() > 0) {
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.IONCANNON.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.IONCANNON.ordinal()].get(shipRandom));
+						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.IONCANNON.ordinal()];
 					}
 					else if (numRandom < probabilities[MilitaryUnitOrder.PLASMACANNON.ordinal()] && armies[numAttacker][MilitaryUnitOrder.PLASMACANNON.ordinal()].size() > 0) {
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.PLASMACANNON.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.PLASMACANNON.ordinal()].get(shipRandom));
+						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.PLASMACANNON.ordinal()];
 					}
 					numRandom = (int)(1 + Math.random() * 100);
 				} while (attacker == null);
@@ -190,29 +206,33 @@ public class Battle implements Variables {
 							type = MilitaryUnitOrder.LIGHTHUNTER.ordinal();
 							shipRandom = (int)(Math.random() * armies[numDefender][MilitaryUnitOrder.LIGHTHUNTER.ordinal()].size());
 							defender = ((MilitaryUnit) armies[numDefender][MilitaryUnitOrder.LIGHTHUNTER.ordinal()].get(shipRandom));
+							defender_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.LIGHTHUNTER.ordinal()];
 						}
 						else if (numRandom <= probabilities[MilitaryUnitOrder.HEAVYHUNTER.ordinal()] && armies[numDefender][MilitaryUnitOrder.HEAVYHUNTER.ordinal()].size() > 0) {
 							type = MilitaryUnitOrder.HEAVYHUNTER.ordinal();
 							shipRandom = (int)(Math.random() * armies[numDefender][MilitaryUnitOrder.HEAVYHUNTER.ordinal()].size());
 							defender = ((MilitaryUnit) armies[numDefender][MilitaryUnitOrder.HEAVYHUNTER.ordinal()].get(shipRandom));
+							defender_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.HEAVYHUNTER.ordinal()];
 						}
 						else if (numRandom <= probabilities[MilitaryUnitOrder.BATTLESHIP.ordinal()] && armies[numDefender][MilitaryUnitOrder.BATTLESHIP.ordinal()].size() > 0) {
 							type = MilitaryUnitOrder.BATTLESHIP.ordinal();
 							shipRandom = (int)(Math.random() * armies[numDefender][MilitaryUnitOrder.BATTLESHIP.ordinal()].size());
 							defender = ((MilitaryUnit) armies[numDefender][MilitaryUnitOrder.BATTLESHIP.ordinal()].get(shipRandom));
+							defender_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.BATTLESHIP.ordinal()];
 						}
 						else if (numRandom <= probabilities[MilitaryUnitOrder.ARMOREDSHIP.ordinal()] && armies[numDefender][MilitaryUnitOrder.ARMOREDSHIP.ordinal()].size() > 0) {
 							type = MilitaryUnitOrder.ARMOREDSHIP.ordinal();
 							shipRandom = (int)(Math.random() * armies[numDefender][MilitaryUnitOrder.ARMOREDSHIP.ordinal()].size());
 							defender = ((MilitaryUnit) armies[numDefender][MilitaryUnitOrder.ARMOREDSHIP.ordinal()].get(shipRandom));
+							defender_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.ARMOREDSHIP.ordinal()];
 						}
 						numRandom = (int)(1 + Math.random() * 100);
 					} while (defender == null);
 										
-					battleDevelopment += "Attacks Planet: " + attacker.getClass().getName() + " attacks " + defender.getClass().getName() + "\n";
-					battleDevelopment += attacker.getClass().getName() + " generates the damage = " + attacker.attack() + "\n";
+					battleDevelopment += "Attacks Planet: " + attacker_name + " attacks " + defender_name + "\n";
+					battleDevelopment += attacker_name + " generates the damage = " + attacker.attack() + "\n";
 					defender.takeDamage(attacker.attack());
-					battleDevelopment += defender.getClass().getName() + " stays with armor = " + defender.getActualArmor() + "\n";
+					battleDevelopment += defender_name + " stays with armor = " + defender.getActualArmor() + "\n";
 					
 					if (defender.getActualArmor() <= 0) {
 						numRandom = (int)(1 + Math.random() * 100);
@@ -229,8 +249,9 @@ public class Battle implements Variables {
 						armies[numDefender][type].remove(shipRandom);
 
 						actualNumberUnitsEnemy = calculateUnitNumber(numDefender);
+						actualArmyEnemy = calculateActualArmy(numDefender);
 						
-						battleDevelopment += "We eliminate" + defender.getClass().getName() + "\n";
+						battleDevelopment += "We eliminate " + defender_name + "\n";
 					}
 					
 					if (actualNumberUnitsEnemy == 0) {
@@ -263,18 +284,22 @@ public class Battle implements Variables {
 					if (numRandom <= probabilities[MilitaryUnitOrder.LIGHTHUNTER.ordinal()] && armies[numAttacker][MilitaryUnitOrder.LIGHTHUNTER.ordinal()].size() > 0) {
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.LIGHTHUNTER.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.LIGHTHUNTER.ordinal()].get(shipRandom));
+						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.LIGHTHUNTER.ordinal()];
 					}
 					else if (numRandom <= probabilities[MilitaryUnitOrder.HEAVYHUNTER.ordinal()] && armies[numAttacker][MilitaryUnitOrder.HEAVYHUNTER.ordinal()].size() > 0) {
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.HEAVYHUNTER.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.HEAVYHUNTER.ordinal()].get(shipRandom));
+						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.HEAVYHUNTER.ordinal()];
 					}
 					else if (numRandom <= probabilities[MilitaryUnitOrder.BATTLESHIP.ordinal()] && armies[numAttacker][MilitaryUnitOrder.BATTLESHIP.ordinal()].size() > 0) {
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.BATTLESHIP.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.BATTLESHIP.ordinal()].get(shipRandom));
+						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.BATTLESHIP.ordinal()];
 					}
 					else if (numRandom <= probabilities[MilitaryUnitOrder.ARMOREDSHIP.ordinal()] && armies[numAttacker][MilitaryUnitOrder.ARMOREDSHIP.ordinal()].size() > 0) {
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.ARMOREDSHIP.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.ARMOREDSHIP.ordinal()].get(shipRandom));
+						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.ARMOREDSHIP.ordinal()];
 					}
 					
 					numRandom = (int)(1 + Math.random() * 100);
@@ -295,45 +320,52 @@ public class Battle implements Variables {
 							type = MilitaryUnitOrder.LIGHTHUNTER.ordinal();
 							shipRandom = (int)(Math.random() * armies[numDefender][MilitaryUnitOrder.LIGHTHUNTER.ordinal()].size());
 							defender = ((MilitaryUnit) armies[numDefender][MilitaryUnitOrder.LIGHTHUNTER.ordinal()].get(shipRandom));
+							defender_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.LIGHTHUNTER.ordinal()];
 						}
 						else if (numRandom < probabilities[MilitaryUnitOrder.HEAVYHUNTER.ordinal()] && armies[numDefender][MilitaryUnitOrder.HEAVYHUNTER.ordinal()].size() > 0) {
 							type = MilitaryUnitOrder.HEAVYHUNTER.ordinal();
 							shipRandom = (int)(Math.random() * armies[numDefender][MilitaryUnitOrder.HEAVYHUNTER.ordinal()].size());
 							defender = ((MilitaryUnit) armies[numDefender][MilitaryUnitOrder.HEAVYHUNTER.ordinal()].get(shipRandom));
+							defender_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.HEAVYHUNTER.ordinal()];
 						}
 						else if (numRandom < probabilities[MilitaryUnitOrder.BATTLESHIP.ordinal()] && armies[numDefender][MilitaryUnitOrder.BATTLESHIP.ordinal()].size() > 0) {
 							type = MilitaryUnitOrder.BATTLESHIP.ordinal();
 							shipRandom = (int)(Math.random() * armies[numDefender][MilitaryUnitOrder.BATTLESHIP.ordinal()].size());
 							defender = ((MilitaryUnit) armies[numDefender][MilitaryUnitOrder.BATTLESHIP.ordinal()].get(shipRandom));
+							defender_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.BATTLESHIP.ordinal()];
 						}
 						else if (numRandom < probabilities[MilitaryUnitOrder.ARMOREDSHIP.ordinal()] && armies[numDefender][MilitaryUnitOrder.ARMOREDSHIP.ordinal()].size() > 0) {
 							type = MilitaryUnitOrder.ARMOREDSHIP.ordinal();
 							shipRandom = (int)(Math.random() * armies[numDefender][MilitaryUnitOrder.ARMOREDSHIP.ordinal()].size());
 							defender = ((MilitaryUnit) armies[numDefender][MilitaryUnitOrder.ARMOREDSHIP.ordinal()].get(shipRandom));
+							defender_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.ARMOREDSHIP.ordinal()];
 						}
 						else if (numRandom < probabilities[MilitaryUnitOrder.MISSILELAUNCHER.ordinal()] && armies[numDefender][MilitaryUnitOrder.MISSILELAUNCHER.ordinal()].size() > 0) {
 							type = MilitaryUnitOrder.MISSILELAUNCHER.ordinal();
 							shipRandom = (int)(Math.random() * armies[numDefender][MilitaryUnitOrder.MISSILELAUNCHER.ordinal()].size());
 							defender = ((MilitaryUnit) armies[numDefender][MilitaryUnitOrder.MISSILELAUNCHER.ordinal()].get(shipRandom));
+							defender_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.MISSILELAUNCHER.ordinal()];
 						}
 						else if (numRandom < probabilities[MilitaryUnitOrder.IONCANNON.ordinal()] && armies[numDefender][MilitaryUnitOrder.IONCANNON.ordinal()].size() > 0) {
 							type = MilitaryUnitOrder.IONCANNON.ordinal();
 							shipRandom = (int)(Math.random() * armies[numDefender][MilitaryUnitOrder.IONCANNON.ordinal()].size());
 							defender = ((MilitaryUnit) armies[numDefender][MilitaryUnitOrder.IONCANNON.ordinal()].get(shipRandom));
+							defender_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.IONCANNON.ordinal()];
 						}
 						else if (numRandom < probabilities[MilitaryUnitOrder.PLASMACANNON.ordinal()] && armies[numDefender][MilitaryUnitOrder.PLASMACANNON.ordinal()].size() > 0) {
 							type = MilitaryUnitOrder.PLASMACANNON.ordinal();
 							shipRandom = (int)(Math.random() * armies[numDefender][MilitaryUnitOrder.PLASMACANNON.ordinal()].size());
 							defender = ((MilitaryUnit) armies[numDefender][MilitaryUnitOrder.PLASMACANNON.ordinal()].get(shipRandom));
+							defender_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.PLASMACANNON.ordinal()];
 						}
 						
 						numRandom = (int)(1 + Math.random() * 100);
 					} while (defender == null);
 					
-					battleDevelopment += "Attacks fleet enemy: " + attacker.getClass().getName() + " attacks " + defender.getClass().getName() + "\n";
-					battleDevelopment += attacker.getClass().getName() + " generates the damage = " + attacker.attack() + "\n";
+					battleDevelopment += "Attacks fleet enemy: " + attacker_name + " attacks " + defender_name + "\n";
+					battleDevelopment += attacker_name + " generates the damage = " + attacker.attack() + "\n";
 					defender.takeDamage(attacker.attack());
-					battleDevelopment += defender.getClass().getName() + " stays with armor = " + defender.getActualArmor() + "\n";
+					battleDevelopment += defender_name + " stays with armor = " + defender.getActualArmor() + "\n";
 
 					
 					if (defender.getActualArmor() <= 0) {
@@ -348,11 +380,12 @@ public class Battle implements Variables {
 						planetDrops[1] += defender.getDeuteriumCost();
 						
 						
-						armies[numDefender][type].remove(shipRandom);
+						armies[numDefender][type].remove(shipRandom); // A veces peta 
 
 						actualNumberUnitsPlanet = calculateUnitNumber(numDefender);
+						actualArmyPlanet = calculateActualArmy(numDefender);
 						
-						battleDevelopment += "Enemy eliminates" + defender.getClass().getName() + "\n";
+						battleDevelopment += "Enemy eliminates " + defender_name + "\n";
 					}
 					
 					if (actualNumberUnitsPlanet == 0) {
@@ -381,18 +414,68 @@ public class Battle implements Variables {
 		System.out.println("Planet Losses: " + resourcesLosses[0][2] + " vs Enemy Losses: " + resourcesLosses[1][2]);
 		
 		if (resourcesLosses[0][2] <= resourcesLosses[1][2]) {
-			battleDevelopment += "Player Wins";
+			battleDevelopment += "\n" + Printing.printStringCentred("PLAYER WINS!!", '=', 60);
 		}
 		else {
-			battleDevelopment += "Enemy Wins";
+			battleDevelopment += "\n" + Printing.printStringCentred("ENEMY WINS!!", '=', 60);
 		}
 		
-		System.out.println(battleDevelopment);
+		System.out.println(getBattleDevelopment());
+		System.out.println(getBattleReport(battles));
 	}
 	
 	// FUNCIÓN RESETEAR ARMADURA UNIDADES PLANETA
 	
 	// FUNCIÓN REPORTE DE LA BATALLA
+	// Reporte resumen
+	public String getBattleReport(int battles) {
+		String summary = "BATTLE NUMBER: " + battles + "\n" + "\n" + "BATTLE STATISTICS" + "\n" + "\n";
+		
+		summary += String.format("%-27s%10s%10s      %-27s%10s%10s", "PLANET ARMY", "Units", "Drops", "ENEMY ARMY","Units","Drops") + "\n" + "\n";
+		summary += String.format("%-27s%10d%10d      %-27s%10d%10d", MILITARY_UNIT_NAMES[MilitaryUnitOrder.LIGHTHUNTER.ordinal()],initialArmies[0][MilitaryUnitOrder.LIGHTHUNTER.ordinal()],initialArmies[0][MilitaryUnitOrder.LIGHTHUNTER.ordinal()]-actualArmyPlanet[MilitaryUnitOrder.LIGHTHUNTER.ordinal()],MILITARY_UNIT_NAMES[MilitaryUnitOrder.LIGHTHUNTER.ordinal()],initialArmies[1][MilitaryUnitOrder.LIGHTHUNTER.ordinal()],initialArmies[1][MilitaryUnitOrder.LIGHTHUNTER.ordinal()]-actualArmyEnemy[MilitaryUnitOrder.LIGHTHUNTER.ordinal()]) + "\n";
+		summary += String.format("%-27s%10d%10d      %-27s%10d%10d", MILITARY_UNIT_NAMES[MilitaryUnitOrder.HEAVYHUNTER.ordinal()],initialArmies[0][MilitaryUnitOrder.HEAVYHUNTER.ordinal()],initialArmies[0][MilitaryUnitOrder.HEAVYHUNTER.ordinal()]-actualArmyPlanet[MilitaryUnitOrder.HEAVYHUNTER.ordinal()],MILITARY_UNIT_NAMES[MilitaryUnitOrder.HEAVYHUNTER.ordinal()],initialArmies[1][MilitaryUnitOrder.HEAVYHUNTER.ordinal()],initialArmies[1][MilitaryUnitOrder.HEAVYHUNTER.ordinal()]-actualArmyEnemy[MilitaryUnitOrder.HEAVYHUNTER.ordinal()]) + "\n";
+		summary += String.format("%-27s%10d%10d      %-27s%10d%10d", MILITARY_UNIT_NAMES[MilitaryUnitOrder.BATTLESHIP.ordinal()],initialArmies[0][MilitaryUnitOrder.BATTLESHIP.ordinal()],initialArmies[0][MilitaryUnitOrder.BATTLESHIP.ordinal()]-actualArmyPlanet[MilitaryUnitOrder.BATTLESHIP.ordinal()],MILITARY_UNIT_NAMES[MilitaryUnitOrder.BATTLESHIP.ordinal()],initialArmies[1][MilitaryUnitOrder.BATTLESHIP.ordinal()],initialArmies[1][MilitaryUnitOrder.BATTLESHIP.ordinal()]-actualArmyEnemy[MilitaryUnitOrder.BATTLESHIP.ordinal()]) + "\n";
+		summary += String.format("%-27s%10d%10d      %-27s%10d%10d", MILITARY_UNIT_NAMES[MilitaryUnitOrder.ARMOREDSHIP.ordinal()],initialArmies[0][MilitaryUnitOrder.ARMOREDSHIP.ordinal()],initialArmies[0][MilitaryUnitOrder.ARMOREDSHIP.ordinal()]-actualArmyPlanet[MilitaryUnitOrder.ARMOREDSHIP.ordinal()],MILITARY_UNIT_NAMES[MilitaryUnitOrder.ARMOREDSHIP.ordinal()],initialArmies[1][MilitaryUnitOrder.ARMOREDSHIP.ordinal()],initialArmies[1][MilitaryUnitOrder.ARMOREDSHIP.ordinal()]-actualArmyEnemy[MilitaryUnitOrder.ARMOREDSHIP.ordinal()]) + "\n";
+		summary += String.format("%-27s%10d%10d", MILITARY_UNIT_NAMES[MilitaryUnitOrder.MISSILELAUNCHER.ordinal()],initialArmies[0][MilitaryUnitOrder.MISSILELAUNCHER.ordinal()],initialArmies[0][MilitaryUnitOrder.MISSILELAUNCHER.ordinal()]-actualArmyPlanet[MilitaryUnitOrder.MISSILELAUNCHER.ordinal()]) + "\n";
+		summary += String.format("%-27s%10d%10d", MILITARY_UNIT_NAMES[MilitaryUnitOrder.IONCANNON.ordinal()],initialArmies[0][MilitaryUnitOrder.IONCANNON.ordinal()],initialArmies[0][MilitaryUnitOrder.IONCANNON.ordinal()]-actualArmyPlanet[MilitaryUnitOrder.IONCANNON.ordinal()]) + "\n";
+		summary += String.format("%-27s%10d%10d", MILITARY_UNIT_NAMES[MilitaryUnitOrder.PLASMACANNON.ordinal()],initialArmies[0][MilitaryUnitOrder.PLASMACANNON.ordinal()],initialArmies[0][MilitaryUnitOrder.PLASMACANNON.ordinal()]-actualArmyPlanet[MilitaryUnitOrder.PLASMACANNON.ordinal()]) + "\n" + "\n";
+		
+		
+		summary += Printing.printLineChar('*', 100);
+		summary += String.format("%-47s      %-47s", "Cost Planet Army", "Cost Enemy Army") + "\n" + "\n";
+		summary += String.format("%-15s%15d%23s%-15s%15d", "Metal:", initialCostFleet[0][0], "", "Metal:",initialCostFleet[1][0])+"\n";
+		summary += String.format("%-15s%15d%23s%-15s%15d", "Deuterium:", initialCostFleet[0][1], "", "Deuterium:",initialCostFleet[1][1])+"\n"+"\n";
+		
+		summary += Printing.printLineChar('*', 100);
+		summary += String.format("%-47s      %-47s", "Losses Planet Army", "Losses Enemy Army") + "\n" + "\n";
+		summary += String.format("%-15s%15d%23s%-15s%15d", "Metal:", resourcesLosses[0][0], "", "Metal:",resourcesLosses[1][0])+"\n";
+		summary += String.format("%-15s%15d%23s%-15s%15d", "Deuterium:", resourcesLosses[0][1], "", "Deuterium:",resourcesLosses[1][1])+"\n";
+		summary += String.format("%-15s%15d%23s%-15s%15d", "Weighted:", resourcesLosses[0][2], "", "Weighted:",resourcesLosses[1][2])+"\n"+"\n";
+		
+		summary += Printing.printLineChar('*', 100);
+		summary += "Waste Generated:\n";
+		summary += String.format("%-15s%15d", "Metal:", wasteMetalDeuterium[0])+"\n";
+		summary += String.format("%-15s%15d", "Deuterium:", wasteMetalDeuterium[1])+"\n";
+		
+		if (resourcesLosses[0][2] <= resourcesLosses[1][2]) {
+			summary += "\n" + "Battle winned by PLANET. We collect rubble." + "\n";
+		}
+		else {
+			summary += "\n" + "Battle winned by ENEMY. We do not collect rubble." + "\n";
+			summary += "\n" + Printing.printStringCentred("ENEMY WINS!!", '=', 60);
+		}
+		
+		return summary;
+		
+	}
+	
+	// Reporte BattleDevelopment
+	public String getBattleDevelopment() {
+		return battleDevelopment;
+	}
+	// Podríamos tener un array de 5 posiciones que cojan los 5 battleDevelopment que haya en la BBDD (solo guardaremos 5 en la BBDD)
+	// Despues cuando hagamos la primera batalla, guardaremos el battleDevelopment en la ultima posicion del array y moveremos todos los battles a una posicion anterior (eliminaremos la primera)
+	// Cuando se apague el juego, tendriamos que guardar en la BBDD los battleDevelopment que haya en el array (sustituyendo los que había en la BBDD)
 	
 	// FUNCIÓN QUE ACTUALICE LA BBDD
 	
