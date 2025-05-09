@@ -3,6 +3,7 @@ package gui;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -10,6 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import ships.MilitaryUnit;
 import utils.VariablesWindow;
 
 public class MainWindow extends JFrame implements VariablesWindow {
@@ -31,6 +33,14 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		this.setVisible(true);
 	}
 	
+	public PlayerPanel getPlayerPanel() {
+		return playerPanel;
+	}
+
+	public EnemyPanel getEnemyPanel() {
+		return enemyPanel;
+	}
+
 	private void setupFrame() {
 		
 		this.setTitle(FRAME_TITLE);
@@ -85,9 +95,5 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		};
 		
 		timer.schedule(task, APPROACH_DELAY, (int)(APPROACH_TIME / APPROACH_STEPS));
-	}
-	
-	public void passArmiesToPlayerPanel(int[] playerArmy) {
-		playerPanel.setPlayerArmy(playerArmy);
 	}
 }
