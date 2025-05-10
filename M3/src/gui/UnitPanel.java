@@ -15,6 +15,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+import controller.InterfaceController;
 import events.MouseButtonsListener;
 import utils.Variables;
 import utils.VariablesWindow;
@@ -37,7 +38,7 @@ public class UnitPanel extends JPanel implements Variables, VariablesWindow {
 		this.setMaximumSize(new Dimension((int)(FRAME_WIDTH / 2) - 32, FRAME_HEIGHT));
 		
 		this.unitType = unitType;
-		this.actualUnits = 1;
+		this.actualUnits = InterfaceController.instance.getPlayerUnitNumber(unitType);
 		this.buyUnits = 0;
 		
 		this.unitPanel = new ImagePanel(BASE_URL + "ships_" + unitType + "_0.png");
@@ -76,6 +77,14 @@ public class UnitPanel extends JPanel implements Variables, VariablesWindow {
 		this.add(Box.createHorizontalStrut(8));
 		this.add(btnAddUnit);
 		this.add(Box.createHorizontalStrut(64));
+	}
+	
+	public int getBuyUnits() {
+		return buyUnits;
+	}
+	
+	public int getUnitType() {
+		return unitType;
 	}
 	
 	protected void paintComponent(Graphics g) {

@@ -41,6 +41,8 @@ public class ImageButton extends JButton {
         if (backgroundImage != null) {
         	g.drawImage(backgroundImage.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH), 0, 0, this);
         }
-        g.drawImage(iconImage.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH), 0, 0, this);
+        if (iconImage != null) {
+        	g.drawImage(iconImage.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH), 0, 0, this);
+        }
 	}
 }

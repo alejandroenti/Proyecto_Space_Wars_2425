@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import controller.InterfaceController;
 import exceptions.ResourceException;
 import ships.ArmoredShip;
 import ships.BattleShip;
@@ -44,7 +45,10 @@ public class Planet implements Variables {
 		this.upgradeAttackTechnologyDeuteriumCost = Variables.UPGRADE_BASE_ATTACK_TECHNOLOGY_DEUTERIUM_COST;
 		this.army = new ArrayList[NUM_MILITARY_UNITS];
 		
-		generateInitShips();
+		for (int i = 0; i < NUM_MILITARY_UNITS; i++) {
+			army[i] = new ArrayList<MilitaryUnit>();
+		}
+		
 		generateResources();
 	}
 	
@@ -88,14 +92,10 @@ public class Planet implements Variables {
 		 timer.schedule(task, 60000, 60000);
 	}
 	
-	private void generateInitShips() {
-		
-		for (int i = 0; i < NUM_MILITARY_UNITS; i++) {
-			army[i] = new ArrayList<MilitaryUnit>();
-		}
-		
-		newLightHunter(5);
-		newHeavytHunter(5);
+	public void generateInitShips() {
+
+		newLightHunter(1);
+		newHeavytHunter(1);
 		newBattleShip(1);
 		newArmoredShip(1);
 		newMissileLauncher(1);
@@ -153,12 +153,12 @@ public class Planet implements Variables {
 				unitsAdded++;
 			}
 			catch (ResourceException re) {
-				re.printStackTrace();
+				InterfaceController.instance.addBuyInfo(re.getMessage() + MILITARY_UNIT_NAMES[order] + "!");
 				break;
 			}
 		}
 		
-		System.out.println("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
+		InterfaceController.instance.addBuyInfo("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
 	}
 	
 	public void newHeavytHunter(int n) {
@@ -178,12 +178,12 @@ public class Planet implements Variables {
 				unitsAdded++;
 			}
 			catch (ResourceException re) {
-				re.printStackTrace();
+				InterfaceController.instance.addBuyInfo(re.getMessage() + MILITARY_UNIT_NAMES[order] + "!");
 				break;
 			}
 		}
 		
-		System.out.println("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
+		InterfaceController.instance.addBuyInfo("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
 	}
 	
 	public void newBattleShip(int n) {
@@ -203,12 +203,12 @@ public class Planet implements Variables {
 				unitsAdded++;
 			}
 			catch (ResourceException re) {
-				re.printStackTrace();
+				InterfaceController.instance.addBuyInfo(re.getMessage() + MILITARY_UNIT_NAMES[order] + "!");
 				break;
 			}
 		}
 		
-		System.out.println("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
+		InterfaceController.instance.addBuyInfo("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
 	}
 	
 	public void newArmoredShip(int n) {
@@ -228,12 +228,12 @@ public class Planet implements Variables {
 				unitsAdded++;
 			}
 			catch (ResourceException re) {
-				re.printStackTrace();
+				InterfaceController.instance.addBuyInfo(re.getMessage() + MILITARY_UNIT_NAMES[order] + "!");
 				break;
 			}
 		}
 		
-		System.out.println("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
+		InterfaceController.instance.addBuyInfo("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
 	}
 	
 	public void newMissileLauncher(int n) {
@@ -253,12 +253,12 @@ public class Planet implements Variables {
 				unitsAdded++;
 			}
 			catch (ResourceException re) {
-				re.printStackTrace();
+				InterfaceController.instance.addBuyInfo(re.getMessage() + MILITARY_UNIT_NAMES[order] + "!");
 				break;
 			}
 		}
 		
-		System.out.println("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
+		InterfaceController.instance.addBuyInfo("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
 	}
 	
 	public void newIonCannon(int n) {
@@ -278,12 +278,12 @@ public class Planet implements Variables {
 				unitsAdded++;
 			}
 			catch (ResourceException re) {
-				re.printStackTrace();
+				InterfaceController.instance.addBuyInfo(re.getMessage() + MILITARY_UNIT_NAMES[order] + "!");
 				break;
 			}
 		}
 		
-		System.out.println("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
+		InterfaceController.instance.addBuyInfo("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
 	}
 	
 	public void newPlasmaCannon(int n) {
@@ -303,12 +303,12 @@ public class Planet implements Variables {
 				unitsAdded++;
 			}
 			catch (ResourceException re) {
-				re.printStackTrace();
+				InterfaceController.instance.addBuyInfo(re.getMessage() + MILITARY_UNIT_NAMES[order] + "!");
 				break;
 			}
 		}
 		
-		System.out.println("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
+		InterfaceController.instance.addBuyInfo("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
 	}
 	
 	public void printStats() {
@@ -324,7 +324,7 @@ public class Planet implements Variables {
 		}
 		result += "\n";
 		result += Printing.printTitle("fleet".toUpperCase());
-		for (int i = 0; i <= MilitaryUnitOrder.MISSILELAUNCHER.ordinal(); i++) {
+		for (int i = 0; i < MilitaryUnitOrder.MISSILELAUNCHER.ordinal(); i++) {
 			result += Printing.printStringSized(MILITARY_UNIT_NAMES[i], MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(army[i].size(), MAX_NUMBER_SIZE) + "\n";			
 		}
 		result += "\n";

@@ -3,7 +3,7 @@ package exceptions;
 public class ResourceException extends Exception {
 
 	public ResourceException() {
-		super("[!] ERROR buying an item!");
+		super("[!] ERROR buying ");
 	}
 	
 	public ResourceException(String mensaje) {
