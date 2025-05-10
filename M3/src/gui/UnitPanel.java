@@ -1,0 +1,100 @@
+package gui;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+
+import controller.InterfaceController;
+import events.MouseButtonsListener;
+import utils.Variables;
+import utils.VariablesWindow;
+
+public class UnitPanel extends JPanel implements Variables, VariablesWindow {
+	
+	private ImagePanel unitPanel;
+	private ImageButton btnAddUnit, btnRemoveUnit;
+	private BufferedImage backgroundImageBtn;
+	
+	private int unitType;
+	private int actualUnits;
+	private int buyUnits;
+
+	public UnitPanel(int unitType) {
+		super();
+		
+		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		this.setBackground(Color.GREEN);
+		this.setMaximumSize(new Dimension((int)(FRAME_WIDTH / 2) - 32, FRAME_HEIGHT));
+		
+		this.unitType = unitType;
+		this.actualUnits = InterfaceController.instance.getPlayerUnitNumber(unitType);
+		this.buyUnits = 0;
+		
+		this.unitPanel = new ImagePanel(BASE_URL + "ships_" + unitType + "_0.png");
+		try {
+			backgroundImageBtn = ImageIO.read(new File(BASE_URL + "buttonPanelBackground.png"));
+			this.btnAddUnit = new ImageButton(ImageIO.read(new File(BASE_URL + "shoppingCart.png")), backgroundImageBtn);
+			this.btnRemoveUnit = new ImageButton(ImageIO.read(new File(BASE_URL + "import.png")), backgroundImageBtn);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		this.btnAddUnit.addMouseListener(new MouseButtonsListener() {
+			public void mouseClicked(MouseEvent e) {
+				buyUnits++;
+				repaint();
+			}
+		});
+		
+		this.btnRemoveUnit.addMouseListener(new MouseButtonsListener() {
+			public void mouseClicked(MouseEvent e) {
+				if (buyUnits == 0) return;
+				buyUnits--;
+				repaint();
+			}
+		});
+		
+		this.unitPanel.setMaximumSize(new Dimension(48, 48));
+		this.btnAddUnit.setMaximumSize(new Dimension(32, 32));
+		this.btnRemoveUnit.setMaximumSize(new Dimension(32, 32));
+		
+		this.add(Box.createHorizontalStrut(256));
+		this.add(btnRemoveUnit);
+		this.add(Box.createHorizontalStrut(8));
+		this.add(unitPanel);
+		this.add(Box.createHorizontalStrut(8));
+		this.add(btnAddUnit);
+		this.add(Box.createHorizontalStrut(64));
+	}
+	
+	public int getBuyUnits() {
+		return buyUnits;
+	}
+	
+	public int getUnitType() {
+		return unitType;
+	}
+	
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		
+		Graphics2D g2d = (Graphics2D) g;
+		
+		g2d.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 14));
+		g2d.drawString("Actual " + MILITARY_UNIT_NAMES[unitType] + ": " + actualUnits, 16, (int)(getHeight() / 2) + 6);
+		g2d.drawString("Buy: " + buyUnits, 448, (int)(getHeight() / 2) + 6);
+	}
+
+}

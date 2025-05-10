@@ -3,6 +3,8 @@ package gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,13 +12,15 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import events.MouseButtonsListener;
 import utils.VariablesWindow;
 
 public class ButtonsPanel extends ImagePanel implements VariablesWindow{
 	
-	private ImageButton buy, update, reports;
+	private ImageButton btnBuy, btnUpdate, btnReports;
 	private BufferedImage backgroundImage;
 	
 	public ButtonsPanel() {
@@ -28,23 +32,29 @@ public class ButtonsPanel extends ImagePanel implements VariablesWindow{
 		
 		try {
 			backgroundImage = ImageIO.read(new File(BASE_URL + "buttonPanelBackground.png"));
-			buy = new ImageButton(ImageIO.read(new File(BASE_URL + "shoppingCart.png")), backgroundImage);
-			update = new ImageButton(ImageIO.read(new File(BASE_URL + "arrowUp.png")), backgroundImage);
-			reports = new ImageButton(ImageIO.read(new File(BASE_URL + "import.png")), backgroundImage);
+			btnBuy = new ImageButton(ImageIO.read(new File(BASE_URL + "shoppingCart.png")), backgroundImage);
+			btnUpdate = new ImageButton(ImageIO.read(new File(BASE_URL + "arrowUp.png")), backgroundImage);
+			btnReports = new ImageButton(ImageIO.read(new File(BASE_URL + "import.png")), backgroundImage);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		buy.setMaximumSize(new Dimension(50,50));
-		update.setMaximumSize(new Dimension(50,50));
-		reports.setMaximumSize(new Dimension(50,50));
+		btnBuy.setMaximumSize(new Dimension(50,50));
+		btnUpdate.setMaximumSize(new Dimension(50,50));
+		btnReports.setMaximumSize(new Dimension(50,50));
+		
+		btnBuy.addMouseListener(new MouseButtonsListener() {
+			public void mouseClicked(MouseEvent e) {
+				new BuyWindow();
+			}
+		});
 		
 		add(Box.createHorizontalStrut(30));
-		add(buy);
+		add(btnBuy);
 		add(Box.createHorizontalStrut(10));
-		add(update);
+		add(btnUpdate);
 		add(Box.createHorizontalStrut(10));
-		add(reports);
+		add(btnReports);
 		add(Box.createHorizontalStrut(30));
 	}
 }
