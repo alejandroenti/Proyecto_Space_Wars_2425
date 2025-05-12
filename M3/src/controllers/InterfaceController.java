@@ -1,5 +1,6 @@
 package controllers;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -8,6 +9,7 @@ import battle.Battle;
 import exceptions.ResourceException;
 import gui.BuyWindow;
 import gui.EnemyPanel;
+import gui.ImagePanel;
 import gui.MainWindow;
 import gui.PlayerPanel;
 import planets.Planet;
@@ -55,6 +57,15 @@ public class InterfaceController implements Variables, VariablesWindow {
 	
 	public ArrayList<MilitaryUnit>[] getEnemyArmy() {
 		return mainWindow.getEnemyPanel().getEnemyArmy();
+	}
+	
+	public void removePlanetArmyUnit(int unitType, MilitaryUnit unit) {
+		getPlanetArmy()[unitType].remove(unit);
+		playerPanel.removeUnit(unitType, unit);
+	}
+	
+	public void removeEnemyArmyUnit(int unitType, MilitaryUnit unit) {
+		enemyPanel.removeUnit(unitType, unit);
 	}
 	
 	public int getPlanetDefenseTechnology() {
@@ -137,7 +148,9 @@ public class InterfaceController implements Variables, VariablesWindow {
 	}
 	
 	public void startBattle() {
+		mainWindow.getButtonsPanel().hidePanel();
 		battle.createBattle(getPlanetArmy(), getEnemyArmy());
+		mainWindow.getButtonsPanel().showPanel();
 	}
 	
 	public void createEnemyArmy() {
@@ -200,6 +213,51 @@ public class InterfaceController implements Variables, VariablesWindow {
 			}
 		} while (canBuyUnit);
 		
-		mainWindow.getEnemyPanel().setEnemyArmy(army);
+		enemyPanel.setEnemyArmy(army);
+	}
+	
+	public void selectAttacker(int army, int unitType) {
+		int posX = 0, posY = 0;
+		
+		if (army == 0) {
+			posX = PLAYER_SHIPS_POSITIONS[unitType][0] + (int)(SHIPS_SIZES[unitType] / 2) - 24;
+			posY = PLAYER_SHIPS_POSITIONS[unitType][1] - 48;
+		}
+		else {
+			posX = (int)(FRAME_WIDTH / 2) + ENEMY_SHIPS_POSITIONS[unitType][0] + (int)(SHIPS_SIZES[unitType] / 2) - 24;
+			posY = ENEMY_SHIPS_POSITIONS[unitType][1] - 48;
+		}
+		
+		mainWindow.getAttackerSelectorPanel().setBounds(posX, posY, 48, 48);
+		mainWindow.repaint();
+		
+		sleepThread(1000);
+	}
+	
+	public void selectDefender(int army, int unitType) {
+		int posX = 0, posY = 0;
+		
+		if (army == 0) {
+			posX = PLAYER_SHIPS_POSITIONS[unitType][0] + (int)(SHIPS_SIZES[unitType] / 2) - 24;
+			posY = PLAYER_SHIPS_POSITIONS[unitType][1] - 48;
+		}
+		else {
+			posX = (int)(FRAME_WIDTH / 2) + ENEMY_SHIPS_POSITIONS[unitType][0] + (int)(SHIPS_SIZES[unitType] / 2) - 24;
+			posY = ENEMY_SHIPS_POSITIONS[unitType][1] - 48;
+		}
+		
+		mainWindow.getDefendeerSelectorPanel().setBounds(posX, posY, 48, 48);
+		mainWindow.repaint();
+		
+		sleepThread(1000);
+	}
+	
+	private void sleepThread(int milisecs) {
+		try {
+			Thread.sleep(milisecs);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -107,7 +107,12 @@ public class Battle implements Variables {
 		int total = 0;
 		
 		for (int i = 0; i < armies[armyNumber].length; i++) {
-			total +=  armies[armyNumber][i].size();
+			try {
+				total +=  armies[armyNumber][i].size();
+			} catch (NullPointerException e) {
+				// ENEMY ARMY ONLY INITIALIZE UNTIL 4TH POSITION
+				continue;
+			}
 		}
 		
 		return total;
@@ -127,7 +132,12 @@ public class Battle implements Variables {
 		int[] actualArmy = new int[7];
 		
 		for (int i = 0; i < armies[armyNumber].length; i++) {
-			actualArmy[i] =  armies[armyNumber][i].size();
+			try {
+				actualArmy[i] =  armies[armyNumber][i].size();
+			} catch (NullPointerException e) {
+				// ENEMY ARMY ONLY INITIALIZE UNTIL 4TH POSITION
+				continue;
+			}
 		}
 		
 		return actualArmy;
@@ -156,7 +166,7 @@ public class Battle implements Variables {
 			
 			if (order % 2 == 0) {
 				int numAttacker = 0, numDefender = 1;
-				int numRandom = (int)(1 + Math.random() * 100);
+				int numRandom;
 				probabilities = new int[7];
 				probabilities[0] = CHANCE_ATTACK_PLANET_UNITS[0];
 				int type = 0;
@@ -167,47 +177,59 @@ public class Battle implements Variables {
 				}
 				
 				do {
+					numRandom = (int)(1 + Math.random() * 100);
 					if (numRandom < probabilities[MilitaryUnitOrder.LIGHTHUNTER.ordinal()] && armies[numAttacker][MilitaryUnitOrder.LIGHTHUNTER.ordinal()].size() > 0) {
+						type = MilitaryUnitOrder.LIGHTHUNTER.ordinal();
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.LIGHTHUNTER.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.LIGHTHUNTER.ordinal()].get(shipRandom));
 						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.LIGHTHUNTER.ordinal()];
 					}
 					else if (numRandom < probabilities[MilitaryUnitOrder.HEAVYHUNTER.ordinal()] && armies[numAttacker][MilitaryUnitOrder.HEAVYHUNTER.ordinal()].size() > 0) {
+						type = MilitaryUnitOrder.HEAVYHUNTER.ordinal();
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.HEAVYHUNTER.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.HEAVYHUNTER.ordinal()].get(shipRandom));
 						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.HEAVYHUNTER.ordinal()];
 					}
 					else if (numRandom < probabilities[MilitaryUnitOrder.BATTLESHIP.ordinal()] && armies[numAttacker][MilitaryUnitOrder.BATTLESHIP.ordinal()].size() > 0) {
+						type = MilitaryUnitOrder.BATTLESHIP.ordinal();
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.BATTLESHIP.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.BATTLESHIP.ordinal()].get(shipRandom));
 						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.BATTLESHIP.ordinal()];
 					}
 					else if (numRandom < probabilities[MilitaryUnitOrder.ARMOREDSHIP.ordinal()] && armies[numAttacker][MilitaryUnitOrder.ARMOREDSHIP.ordinal()].size() > 0) {
+						type = MilitaryUnitOrder.ARMOREDSHIP.ordinal();
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.ARMOREDSHIP.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.ARMOREDSHIP.ordinal()].get(shipRandom));
 						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.ARMOREDSHIP.ordinal()];
 					}
 					else if (numRandom < probabilities[MilitaryUnitOrder.MISSILELAUNCHER.ordinal()] && armies[numAttacker][MilitaryUnitOrder.MISSILELAUNCHER.ordinal()].size() > 0) {
+						type = MilitaryUnitOrder.MISSILELAUNCHER.ordinal();
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.MISSILELAUNCHER.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.MISSILELAUNCHER.ordinal()].get(shipRandom));
 						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.MISSILELAUNCHER.ordinal()];
 					}
 					else if (numRandom < probabilities[MilitaryUnitOrder.IONCANNON.ordinal()] && armies[numAttacker][MilitaryUnitOrder.IONCANNON.ordinal()].size() > 0) {
+						type = MilitaryUnitOrder.IONCANNON.ordinal();
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.IONCANNON.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.IONCANNON.ordinal()].get(shipRandom));
 						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.IONCANNON.ordinal()];
 					}
 					else if (numRandom < probabilities[MilitaryUnitOrder.PLASMACANNON.ordinal()] && armies[numAttacker][MilitaryUnitOrder.PLASMACANNON.ordinal()].size() > 0) {
+						type = MilitaryUnitOrder.PLASMACANNON.ordinal();
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.PLASMACANNON.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.PLASMACANNON.ordinal()].get(shipRandom));
 						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.PLASMACANNON.ordinal()];
 					}
-					numRandom = (int)(1 + Math.random() * 100);
 				} while (attacker == null);
+				
+				InterfaceController.instance.selectAttacker(numAttacker, type);
 				
 				do {
 					numRandom = (int)(1 + Math.random() * 100);
 					probabilities = new int[4];
+					
+					System.out.println(String.format("[%d, %d, %d, %d]", armies[numDefender][0].size(), armies[numDefender][1].size(), armies[numDefender][2].size(), armies[numDefender][3].size()));
+					
 					probabilities[0] = (int)(100 * armies[numDefender][0].size() / actualNumberUnitsEnemy);
 					
 					for (int i = 1; i < probabilities.length; i++) {
@@ -241,12 +263,14 @@ public class Battle implements Variables {
 						}
 						numRandom = (int)(1 + Math.random() * 100);
 					} while (defender == null);
-										
+					
+					InterfaceController.instance.selectDefender(numDefender, type);
+					
 					battleDevelopment += "Attacks Planet: " + attacker_name + " attacks " + defender_name + "\n";
 					battleDevelopment += attacker_name + " generates the damage = " + attacker.attack() + "\n";
 					defender.takeDamage(attacker.attack());
 					battleDevelopment += defender_name + " stays with armor = " + defender.getActualArmor() + "\n";
-					
+										
 					if (defender.getActualArmor() <= 0) {
 						numRandom = (int)(1 + Math.random() * 100);
 						
@@ -258,8 +282,13 @@ public class Battle implements Variables {
 						enemyDrops[0] += defender.getMetalCost();
 						enemyDrops[1] += defender.getDeuteriumCost();
 						
+						armies[numDefender][type].remove(defender);
+						InterfaceController.instance.removeEnemyArmyUnit(type, defender);
 						
-						armies[numDefender][type].remove(shipRandom);
+						// For any reason, when an enemy ArrayList arrives to 0, it converts in null, we create another empty ArrayList
+						if (armies[numDefender][type] == null) {
+							armies[numDefender][type] = new ArrayList<MilitaryUnit>();
+						}
 
 						actualNumberUnitsEnemy = calculateUnitNumber(numDefender);
 						actualArmyEnemy = calculateActualArmy(numDefender);
@@ -276,13 +305,11 @@ public class Battle implements Variables {
 				} while (numRandom <= attacker.getChanceAttackAgain());
 				
 				
-				percentageArmyEnemyAlive = (int)((100 * actualNumberUnitsEnemy / initialNumberUnitsEnemy));
-				System.out.println("Initial: " + initialNumberUnitsEnemy + " - Alive: " + actualNumberUnitsEnemy + " - Percentage: " + percentageArmyEnemyAlive);
-				
+				percentageArmyEnemyAlive = (int)((100 * actualNumberUnitsEnemy / initialNumberUnitsEnemy));				
 			}
 			else {
 				int numAttacker = 1, numDefender = 0;
-				int numRandom = (int)(1 + Math.random() * 100);
+				int numRandom;
 				int type = 0;
 				int shipRandom = 0;
 				
@@ -293,30 +320,37 @@ public class Battle implements Variables {
 					probabilities[i] = probabilities[i - 1] + CHANCE_ATTACK_ENEMY_UNITS[i];
 				}
 				
-				do {					
+				do {	
+					
+					numRandom = (int)(1 + Math.random() * 100);
+					
 					if (numRandom <= probabilities[MilitaryUnitOrder.LIGHTHUNTER.ordinal()] && armies[numAttacker][MilitaryUnitOrder.LIGHTHUNTER.ordinal()].size() > 0) {
+						type = MilitaryUnitOrder.LIGHTHUNTER.ordinal();
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.LIGHTHUNTER.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.LIGHTHUNTER.ordinal()].get(shipRandom));
 						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.LIGHTHUNTER.ordinal()];
 					}
 					else if (numRandom <= probabilities[MilitaryUnitOrder.HEAVYHUNTER.ordinal()] && armies[numAttacker][MilitaryUnitOrder.HEAVYHUNTER.ordinal()].size() > 0) {
+						type = MilitaryUnitOrder.HEAVYHUNTER.ordinal();
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.HEAVYHUNTER.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.HEAVYHUNTER.ordinal()].get(shipRandom));
 						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.HEAVYHUNTER.ordinal()];
 					}
 					else if (numRandom <= probabilities[MilitaryUnitOrder.BATTLESHIP.ordinal()] && armies[numAttacker][MilitaryUnitOrder.BATTLESHIP.ordinal()].size() > 0) {
+						type = MilitaryUnitOrder.BATTLESHIP.ordinal();
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.BATTLESHIP.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.BATTLESHIP.ordinal()].get(shipRandom));
 						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.BATTLESHIP.ordinal()];
 					}
 					else if (numRandom <= probabilities[MilitaryUnitOrder.ARMOREDSHIP.ordinal()] && armies[numAttacker][MilitaryUnitOrder.ARMOREDSHIP.ordinal()].size() > 0) {
+						type = MilitaryUnitOrder.ARMOREDSHIP.ordinal();
 						shipRandom = (int)(Math.random() * armies[numAttacker][MilitaryUnitOrder.ARMOREDSHIP.ordinal()].size());
 						attacker = ((MilitaryUnit) armies[numAttacker][MilitaryUnitOrder.ARMOREDSHIP.ordinal()].get(shipRandom));
 						attacker_name = MILITARY_UNIT_NAMES[MilitaryUnitOrder.ARMOREDSHIP.ordinal()];
 					}
-					
-					numRandom = (int)(1 + Math.random() * 100);
 				} while (attacker == null);
+				
+				InterfaceController.instance.selectAttacker(numAttacker, type);
 				
 				do {
 					numRandom = (int)(1 + Math.random() * 100);
@@ -375,12 +409,13 @@ public class Battle implements Variables {
 						numRandom = (int)(1 + Math.random() * 100);
 					} while (defender == null);
 					
+					InterfaceController.instance.selectDefender(numDefender, type);
+					
 					battleDevelopment += "Attacks fleet enemy: " + attacker_name + " attacks " + defender_name + "\n";
 					battleDevelopment += attacker_name + " generates the damage = " + attacker.attack() + "\n";
 					defender.takeDamage(attacker.attack());
 					battleDevelopment += defender_name + " stays with armor = " + defender.getActualArmor() + "\n";
-
-					
+										
 					if (defender.getActualArmor() <= 0) {
 						numRandom = (int)(1 + Math.random() * 100);
 						
@@ -393,7 +428,8 @@ public class Battle implements Variables {
 						planetDrops[1] += defender.getDeuteriumCost();
 						
 						
-						armies[numDefender][type].remove(shipRandom); // A veces peta 
+						armies[numDefender][type].remove(defender); // A veces peta 
+						InterfaceController.instance.removePlanetArmyUnit(type, defender);
 
 						actualNumberUnitsPlanet = calculateUnitNumber(numDefender);
 						actualArmyPlanet = calculateActualArmy(numDefender);
@@ -410,8 +446,6 @@ public class Battle implements Variables {
 				} while (numRandom <= attacker.getChanceAttackAgain());
 				
 				percentageArmyPlanetAlive = (int)((100 * actualNumberUnitsPlanet / initialNumberUnitsPlanet));
-				
-				System.out.println("Initial: " + initialNumberUnitsPlanet + " - Alive: " + actualNumberUnitsPlanet + " - Percentage: " + percentageArmyPlanetAlive);
 			}	
 			order++;			
 		} while (percentageArmyPlanetAlive > 20 && percentageArmyEnemyAlive > 20);
