@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Bloque con iluminación</title>
+  <style>
+    body {
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .bloque {
+      position: relative;
+      width: 300px;
+      height: 200px;
+      background: #222;
+      color: white;
+      font-size: 24px;
+      text-align: center;
+      line-height: 200px;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .bloque:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgb(224, 229, 238);
+    }
+
+    .bloque:hover .resplandor {
+      opacity: 1;
+    }
+
+    .resplandor {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bloque">
+    Iluminado
+    <div class="resplandor"></div>
+  </div>
+
+</body>
+</html>
+
+<!-- posible animacion -->
