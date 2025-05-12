@@ -15,7 +15,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import controller.InterfaceController;
+import controllers.InterfaceController;
 import events.MouseButtonsListener;
 import utils.Variables;
 import utils.VariablesWindow;

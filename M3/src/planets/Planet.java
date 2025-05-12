@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import controller.InterfaceController;
+import controllers.InterfaceController;
 import exceptions.ResourceException;
 import ships.ArmoredShip;
 import ships.BattleShip;

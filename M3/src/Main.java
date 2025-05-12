@@ -1,4 +1,4 @@
-import controller.InterfaceController;
+import controllers.InterfaceController;
 import gui.MainWindow;
 import planets.Planet;
 
