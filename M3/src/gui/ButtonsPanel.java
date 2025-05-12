@@ -69,4 +69,12 @@ public class ButtonsPanel extends ImagePanel implements VariablesWindow{
 		add(btnReports);
 		add(Box.createHorizontalStrut(30));
 	}
+	
+	public void hidePanel() {
+		this.setVisible(false);
+	}
+	
+	public void showPanel() {
+		this.setVisible(true);
+	}
 }
