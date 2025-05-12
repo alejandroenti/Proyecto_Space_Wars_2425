@@ -1,12 +1,8 @@
-<<<<<<< Updated upstream
-import controllers.InterfaceController;
-=======
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import controller.InterfaceController;
->>>>>>> Stashed changes
+import controllers.InterfaceController;
 import gui.MainWindow;
 import planets.Planet;
 
