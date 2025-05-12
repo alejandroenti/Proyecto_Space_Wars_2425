@@ -26,6 +26,19 @@ public class DatabaseController implements Variables{
 	private String query;
 	
 	
+	
+	private int battle_id; 
+	
+	public int getBattle_id() {
+		return battle_id;
+	}
+
+	public void setBattle_id(int battle_id) {
+		this.battle_id = battle_id;
+	}
+	
+	
+
 	public DatabaseController() {
 		this.instance = this;
 		
@@ -185,6 +198,12 @@ public class DatabaseController implements Variables{
 				ps.setInt(3, wasteMetalDeuterium[1]);
 				ps.executeUpdate();
 				
+				rs = stmnt.executeQuery("SELECT battle_id FROM battle_stats");
+				rs.last();
+				int battle_id = rs.getInt(1);
+				
+				this.setBattle_id(battle_id);
+				
 			} catch (SQLException e) {
 				System.err.println("uploadBattleStats() failed!");
 				e.printStackTrace();
@@ -206,7 +225,9 @@ public class DatabaseController implements Variables{
 	}
 	
 	// METODOS BATTLE_LOG
-	public void uploadBattleLog(int planet_id, int battle_id, String battleDevelopment) {
+	public void uploadBattleLog(int planet_id, String battleDevelopment) {
+		int battle_id = this.getBattle_id();
+		
 		String line = "";
 		int last_new_line = 0;
 		
@@ -239,7 +260,9 @@ public class DatabaseController implements Variables{
 	
 	// METODOS PLANET_BATTLE_DEFENSE
 	// Creamos una entrada para las defensas del planeta en la batalla (al final de la batalla)
-	public void uploadPlanetBattleDefense(int planet_id, int battle_id, int[][] initialArmies, ArrayList[][] armies) {
+	public void uploadPlanetBattleDefense(int planet_id, int[][] initialArmies, ArrayList[][] armies) {
+		int battle_id = this.getBattle_id();
+		
 		query = "INSERT INTO planet_battle_defense (planet_id, battle_id, missile_launcher_built, missile_launcher_destroyed, ion_cannon_built, ion_cannon_destroyed, plasma_canon_built, plasma_canon_destroyed) VALUES (?,?,?,?,?,?,?,?)";
 		
 
@@ -263,7 +286,9 @@ public class DatabaseController implements Variables{
 	
 	// METODOS PLANET_BATTLE_ARMY
 	// Creamos una entrada para la flota del planeta en la batalla (al final de la batalla)
-	public void uploadPlanetBattleArmy(int planet_id, int battle_id, int[][] initialArmies, ArrayList[][] armies) {
+	public void uploadPlanetBattleArmy(int planet_id, int[][] initialArmies, ArrayList[][] armies) {
+		int battle_id = this.getBattle_id();
+		
 		query = "INSERT INTO planet_battle_army (planet_id, battle_id, light_hunter_built, light_hunter_destroyed, heavy_hunter_built, heavy_hunter_destroyed, battleship_built, battleship_destroyed, armored_ship_built, armored_ship_destroyed) VALUES (?,?,?,?,?,?,?,?,?,?)";
 		
 
@@ -288,7 +313,8 @@ public class DatabaseController implements Variables{
 	}
 	
 	// METODOS ENEMY_ARMY
-	public void uploadEnemyArmy(int planet_id, int battle_id, int[][] initialArmies, ArrayList[][] armies) {
+	public void uploadEnemyArmy(int planet_id, int[][] initialArmies, ArrayList[][] armies) {
+		int battle_id = this.getBattle_id();
 		query = "INSERT INTO enemy_army (planet_id, battle_id, light_hunter_threat, light_hunter_destroyed, heavy_hunter_threat, heavy_hunter_destroyed, battleship_threat, battleship_destroyed, armored_ship_threat, armored_ship_destroyed) VALUES (?,?,?,?,?,?,?,?,?,?)";
 		
 
