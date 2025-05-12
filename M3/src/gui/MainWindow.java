@@ -9,6 +9,7 @@ import java.util.TimerTask;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import controllers.InterfaceController;
 import utils.VariablesWindow;
 
 public class MainWindow extends JFrame implements VariablesWindow {
@@ -24,8 +25,6 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		
 		setupFrame();
 		initMainPanel();
-		
-		approachEnemy();
 		
 		this.setVisible(true);
 	}
@@ -87,10 +86,24 @@ public class MainWindow extends JFrame implements VariablesWindow {
 			 enemyPanel.enemyComing();
 			 if (enemyPanel.getPosX() <= (int)(FRAME_WIDTH / 2)) {
 				 timer.cancel();
+				 startBattle();
 			 }
 			}
 		};
 		
 		timer.schedule(task, APPROACH_DELAY, (int)(APPROACH_TIME / APPROACH_STEPS));
+		InterfaceController.instance.createEnemyArmy();
+	}
+	
+	public void startBattle() {
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			public void run() {
+				timer.cancel();
+				InterfaceController.instance.startBattle();
+			}
+		};
+		
+		timer.schedule(task, 6000, 1000);
 	}
 }
