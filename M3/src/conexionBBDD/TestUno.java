@@ -18,6 +18,7 @@ public class TestUno {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
+			System.out.println("Driver cargado correctamente :) ");
 
 			Connection conn = DriverManager.getConnection(urlDatos, usuario, pass); 
 			System.out.println("Conexion creada con exito :)");
