@@ -48,7 +48,7 @@ public class PlayerPanel extends JPanel implements VariablesWindow {
 			
 			if (playerArmy[i].size() > 0) {
 				ImagePanel unit = new ImagePanel(BASE_URL + "ships_" + i + "_0.png");
-				unit.setBounds(PLAYER_SHIPS_POSITIONS[i][0], PLAYER_SHIPS_POSITIONS[i][1], PLAYER_SHIPS_SIZES[i], PLAYER_SHIPS_SIZES[i]);
+				unit.setBounds(PLAYER_SHIPS_POSITIONS[i][0], PLAYER_SHIPS_POSITIONS[i][1], SHIPS_SIZES[i], SHIPS_SIZES[i]);
 				unit.rotateImage(INITAL_PLAYER_SHIP_ROTATION);
 				armyPanels[i] = unit;	
 				add(unit);
@@ -62,7 +62,7 @@ public class PlayerPanel extends JPanel implements VariablesWindow {
 		
 		if (playerArmy[unitType].size() == 0) {
 			ImagePanel unitPanel = new ImagePanel(BASE_URL + "ships_" + unitType + "_0.png");
-			unitPanel.setBounds(PLAYER_SHIPS_POSITIONS[unitType][0], PLAYER_SHIPS_POSITIONS[unitType][1], PLAYER_SHIPS_SIZES[unitType], PLAYER_SHIPS_SIZES[unitType]);
+			unitPanel.setBounds(PLAYER_SHIPS_POSITIONS[unitType][0], PLAYER_SHIPS_POSITIONS[unitType][1], SHIPS_SIZES[unitType], SHIPS_SIZES[unitType]);
 			unitPanel.rotateImage(INITAL_PLAYER_SHIP_ROTATION);
 			armyPanels[unitType] = unitPanel;
 			add(unitPanel);
