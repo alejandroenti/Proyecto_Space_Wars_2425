@@ -34,6 +34,8 @@ public class Planet implements Variables {
 	private int upgradeAttackTechnologyDeuteriumCost;
 	private ArrayList<MilitaryUnit>[] army;
 	
+	private int planet_id;
+	
 	public Planet() {
 		super();
 		
@@ -81,6 +83,14 @@ public class Planet implements Variables {
 		this.army = army;
 	}
 	
+	public int getPlanet_id() {
+		return planet_id;
+	}
+
+	public void setPlanet_id(int planet_id) {
+		this.planet_id = planet_id;
+	}
+
 	private void generateResources() {
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
