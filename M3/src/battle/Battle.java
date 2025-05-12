@@ -3,6 +3,7 @@ package battle;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import controllers.InterfaceController;
 import ships.MilitaryUnit;
 import utils.Printing;
 import utils.Variables;
@@ -23,8 +24,16 @@ public class Battle implements Variables {
 	private int actualNumberUnitsPlanet, actualNumberUnitsEnemy;
 	private int[] actualArmyPlanet, actualArmyEnemy;
 	
-	public Battle(ArrayList<MilitaryUnit>[] planetArmy, ArrayList<MilitaryUnit>[] enemyArmy) {
+	public Battle() {
 		super();
+		
+	}
+	
+	public int getBattles() {
+		return battles;
+	}
+
+	public void createBattle(ArrayList<MilitaryUnit>[] planetArmy, ArrayList<MilitaryUnit>[] enemyArmy) {
 		
 		this.planetArmy = planetArmy;
 		this.enemyArmy = enemyArmy;
@@ -55,6 +64,8 @@ public class Battle implements Variables {
 		calculateInitialArmy();
 		this.actualArmyPlanet = initialArmies[0];
 		this.actualArmyEnemy = initialArmies[1];
+		
+		startBattle();
 	}
 	
 	public ArrayList<MilitaryUnit>[] getPlanetArmy() {
@@ -123,6 +134,8 @@ public class Battle implements Variables {
 	}
 	
 	public void startBattle() {
+		
+		battles++;
 		
 		int order = (int)(Math.random() * 2);
 		
