@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.InterfaceController;
@@ -19,27 +20,28 @@ import utils.VariablesWindow;
 
 public class UpdatePanel extends JPanel implements VariablesWindow{
 	private JPanel mainPanel;
+	private StatsPanel statsPanel;
 	private JButton btnUpdate;
 	
 	private int attackLevel;
 	private int defenseLevel;
 	private String type;
 	
-	private boolean update;
 	
 	UpdatePanel(String type){
-		this.update = true;
+		this.setLayout(new BorderLayout());
 		
 		this.type = type;
 		
 		this.attackLevel = InterfaceController.instance.getPlanetAttackTechnology();
 		this.defenseLevel = InterfaceController.instance.getPlanetDefenseTechnology();
 		
-		mainPanel = new JPanel();
+		this.mainPanel = new JPanel();
+		this.mainPanel.setLayout(new BorderLayout());
 		
-		btnUpdate = new JButton("Update");
+		this.btnUpdate = new JButton("Update");
 		
-		btnUpdate.addMouseListener(new MouseButtonsListener() {
+		this.btnUpdate.addMouseListener(new MouseButtonsListener() {
 			public void mouseEntered(MouseEvent e) {
 			}
 			public void mouseExited(MouseEvent e) {
@@ -53,9 +55,7 @@ public class UpdatePanel extends JPanel implements VariablesWindow{
 						attackLevel ++;
 						repaint();
 					}catch(ResourceException exc) {
-						btnUpdate.setEnabled(false);
-						update = false;
-						repaint();
+						JOptionPane.showMessageDialog(null, "[!] Not enough resources to update", "Update alert", JOptionPane.INFORMATION_MESSAGE);
 					}
 					
 				}else {
@@ -64,9 +64,7 @@ public class UpdatePanel extends JPanel implements VariablesWindow{
 						defenseLevel ++;
 						repaint();
 					}catch(ResourceException exc) {
-						btnUpdate.setEnabled(false);
-						update = false;
-						repaint();
+						JOptionPane.showMessageDialog(null, "[!] Not enough resources to update", "Update alert", JOptionPane.INFORMATION_MESSAGE);
 					}
 					
 				}
@@ -74,34 +72,41 @@ public class UpdatePanel extends JPanel implements VariablesWindow{
 			}
 		});
 		
-		add(mainPanel);
+		statsPanel = new StatsPanel(type);
 		
-		btnUpdate.setLocation(100,getHeight()-100);
-		mainPanel.add(btnUpdate);	
+		this.mainPanel.add(statsPanel,BorderLayout.CENTER);
+		this.mainPanel.add(btnUpdate,BorderLayout.SOUTH);	
+		this.add(mainPanel);
+		
 	}
 	
-	protected void paintComponent(Graphics g) {
+
+	class StatsPanel extends JPanel{
+		private String type;
 		
-		super.paintComponent(g);
-		
-		Graphics2D g2d = (Graphics2D) g;
-		
-		g2d.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 14));
-		
-		if (type.contentEquals("attack")) {
-			g2d.drawString("ATTACK TECHNOLOGY: ", 60, (int)(getHeight() / 4) + 6);
-			g2d.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 100));
-			g2d.drawString(""+attackLevel, 120, (int)(getHeight() / 2) + 50);
-		}else {
-			g2d.drawString("DEFENSE TECHNOLOGY: ", 60, (int)(getHeight() / 4) + 6);
-			g2d.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 100));
-			g2d.drawString(""+defenseLevel, 120, (int)(getHeight() / 2) + 50);
+		StatsPanel(String type){
+			this.type = type;
 		}
 		
-		if (!update) {
+		protected void paintComponent(Graphics g) {
+			
+			super.paintComponent(g);
+			
+			Graphics2D g2d = (Graphics2D) g;
+			
 			g2d.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 14));
-			g2d.setColor(Color.RED);
-			g2d.drawString("You don't have the resources needed ", 15, (int)(getHeight()*3 / 4) + 6);
+			
+			if (type.contentEquals("attack")) {
+				g2d.drawString("ATTACK TECHNOLOGY: ", (int)(getWidth() / 4), (int)(getHeight() / 4) + 6);
+				g2d.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 100));
+				g2d.drawString(""+attackLevel, (int)(getWidth()*2/5), (int)(getHeight() / 2) + 50);
+			}else {
+				g2d.drawString("DEFENSE TECHNOLOGY: ", (int)(getWidth() / 4), (int)(getHeight() / 4) + 6);
+				g2d.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 100));
+				g2d.drawString(""+defenseLevel, (int)(getWidth()*2/5), (int)(getHeight() / 2) + 50);
+			}
+			
 		}
 	}
+	
 }

@@ -55,20 +55,26 @@ public class UpdateWindow extends JFrame implements VariablesWindow{
 	private void initMainPanel() {
 
 		mainPanel = new JPanel();
-		mainPanel.setBackground(Color.ORANGE);
+		mainPanel.setBackground(Color.BLACK);
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
 		
 		attackUpdatePanel = new UpdatePanel("attack");
+		
+		mainPanel.add(Box.createHorizontalStrut(20));
 		mainPanel.add(attackUpdatePanel);
+		mainPanel.add(Box.createHorizontalStrut(10));
+		
 		attackUpdatePanel.setLocation(0, 0);
-		attackUpdatePanel.setBackground(Color.BLUE);
 		
-		defenseUpdatePanel = new UpdatePanel("defense");	
+		defenseUpdatePanel = new UpdatePanel("defense");
+		
+		mainPanel.add(Box.createHorizontalStrut(10));
 		mainPanel.add(defenseUpdatePanel);
-		defenseUpdatePanel.setLocation(getWidth()/2, 0);
-		defenseUpdatePanel.setBackground(Color.YELLOW);
+		mainPanel.add(Box.createHorizontalStrut(20));
 		
+		defenseUpdatePanel.setLocation(getWidth()/2, 0);
 		
 		this.add(mainPanel);
 	}
+	
 }
