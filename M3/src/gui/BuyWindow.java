@@ -58,7 +58,7 @@ public class BuyWindow extends JFrame implements Variables, VariablesWindow {
 	private void initMainPanel() {
 
 		mainPanel = new JPanel();
-		mainPanel.setBackground(Color.RED);
+		mainPanel.setBackground(new Color(24, 21, 20, 225));
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		
 		mainPanel.add(Box.createVerticalStrut(16));
@@ -75,7 +75,6 @@ public class BuyWindow extends JFrame implements Variables, VariablesWindow {
 		}
 		
 		btnBuy = new JButton("Buy");
-		//btnBuy.setMaximumSize(new Dimension(256, 256));
 		btnBuy.setAlignmentX(CENTER_ALIGNMENT);
 		btnBuy.addMouseListener(new MouseButtonsListener() {
 			public void mouseEntered(MouseEvent e) {
