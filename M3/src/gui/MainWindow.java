@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -9,11 +10,12 @@ import java.util.TimerTask;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import controllers.InterfaceController;
 import utils.VariablesWindow;
 
 public class MainWindow extends JFrame implements VariablesWindow {
 	
-	private ImagePanel mainPanel;
+	private ImagePanel mainPanel, attackerSelectorPanel, defenderSelectorPanel;
 	private PlayerPanel playerPanel;
 	private EnemyPanel enemyPanel;
 	private ButtonsPanel buttonsPanel;
@@ -25,8 +27,6 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		setupFrame();
 		initMainPanel();
 		
-		approachEnemy();
-		
 		this.setVisible(true);
 	}
 	
@@ -36,6 +36,18 @@ public class MainWindow extends JFrame implements VariablesWindow {
 
 	public EnemyPanel getEnemyPanel() {
 		return enemyPanel;
+	}
+	
+	public ImagePanel getAttackerSelectorPanel() {
+		return attackerSelectorPanel;
+	}
+	
+	public ImagePanel getDefendeerSelectorPanel() {
+		return defenderSelectorPanel;
+	}
+	
+	public ButtonsPanel getButtonsPanel() {
+		return buttonsPanel;
 	}
 
 	private void setupFrame() {
@@ -72,9 +84,19 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		enemyPanel = new EnemyPanel();
 		buttonsPanel = new ButtonsPanel();
 		
+		attackerSelectorPanel = new ImagePanel(BASE_URL + "selector_attacker.png");
+		attackerSelectorPanel.setMaximumSize(new Dimension(48, 48));
+		attackerSelectorPanel.setLocation(-1000, 0);
+		
+		defenderSelectorPanel = new ImagePanel(BASE_URL + "selector_defender.png");
+		defenderSelectorPanel.setMaximumSize(new Dimension(48, 48));
+		defenderSelectorPanel.setLocation(-1000, 0);
+		
+		mainPanel.add(defenderSelectorPanel);
 		mainPanel.add(buttonsPanel);
 		mainPanel.add(playerPanel);
 		mainPanel.add(enemyPanel);
+		mainPanel.add(attackerSelectorPanel);
 
 		this.add(mainPanel);
 	}
@@ -87,10 +109,24 @@ public class MainWindow extends JFrame implements VariablesWindow {
 			 enemyPanel.enemyComing();
 			 if (enemyPanel.getPosX() <= (int)(FRAME_WIDTH / 2)) {
 				 timer.cancel();
+				 startBattle();
 			 }
 			}
 		};
 		
 		timer.schedule(task, APPROACH_DELAY, (int)(APPROACH_TIME / APPROACH_STEPS));
+		InterfaceController.instance.createEnemyArmy();
+	}
+	
+	public void startBattle() {
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			public void run() {
+				timer.cancel();
+				InterfaceController.instance.startBattle();
+			}
+		};
+		
+		timer.schedule(task, 6000, 1000);
 	}
 }

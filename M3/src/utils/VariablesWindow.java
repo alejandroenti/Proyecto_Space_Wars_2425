@@ -11,7 +11,7 @@ public interface VariablesWindow {
 	public final int FRAME_HEIGHT = 675;
 	
 	// timer parameters
-	public final int APPROACH_TIME = 180000;
+	public final int APPROACH_TIME = 1800;
 	public final int APPROACH_STEPS = 900;
 	public final int APPROACH_DELAY = 0;
 	
@@ -30,7 +30,15 @@ public interface VariablesWindow {
 			{ 180, 417 }
 	};
 	
-	public final int[] PLAYER_SHIPS_SIZES = {
+	// Enemy Ships Position
+	public final int[][] ENEMY_SHIPS_POSITIONS = {
+			{ 140, 337 - 64 - 50 },
+			{ 140, 337 + 64 - 50 },
+			{ 210, 337 - 64 * 3 - 50 * 2 },
+			{ 210, 337 + 64 * 3 + 10 }
+	};
+	
+	public final int[] SHIPS_SIZES = {
 			64, 64, 64, 64, 96, 128, 128
 	};
 }

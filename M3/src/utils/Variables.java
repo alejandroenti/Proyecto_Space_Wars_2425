@@ -23,8 +23,8 @@ public interface Variables {
 	};
 	
 	// resources available to create the first enemy fleet
-	public final int DEUTERIUM_BASE_ENEMY_ARMY = 260000000;
-	public final int METAL_BASE_ENEMY_ARMY = 1800000000;
+	public final int DEUTERIUM_BASE_PLANET_ARMY = 260000;
+	public final int METAL_BASE_PLANET_ARMY = 18000;
 	
 	// percentage increase of resources available to create enemy fleet
 	public final int ENEMY_FLEET_INCREASE = 6;
@@ -138,6 +138,12 @@ public interface Variables {
 	// LIGTHHUNTER, HEAVYHUNTER, BATTLESHIP, ARMOREDSHIP
 	public final int[] CHANCE_ATTACK_ENEMY_UNITS = {10,20,30,40};
 	
+	// CHANCE GENERATE ENEMY ARMY
+	public final int[] CHANGE_GENERATE_ENEMY_UNIT = { 35, 25, 20, 20 };
+	
 	// percentage of waste that will be generated with respect to the cost of the units
 	public final int PERCENTAGE_WASTE = 70;
+	
+	// INCREMENT OF ENEMY RESOURCE
+	public final int PERCENTAGE_INCREMENT_ENEMY_RESOURCE = 5;
 }
