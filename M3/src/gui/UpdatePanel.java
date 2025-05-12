@@ -13,7 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import controller.InterfaceController;
+import controllers.InterfaceController;
 import events.MouseButtonsListener;
 import exceptions.ResourceException;
 import utils.VariablesWindow;

@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import controller.InterfaceController;
+import controllers.InterfaceController;
 import events.MouseButtonsListener;
 import utils.VariablesWindow;
 
