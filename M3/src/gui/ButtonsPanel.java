@@ -49,6 +49,18 @@ public class ButtonsPanel extends ImagePanel implements VariablesWindow{
 			}
 		});
 		
+		btnUpdate.addMouseListener(new MouseButtonsListener() {
+			public void mouseClicked(MouseEvent e) {
+				new UpdateWindow();
+			}
+		});
+		
+		btnReports.addMouseListener(new MouseButtonsListener() {
+			public void mouseClicked(MouseEvent e) {
+				new ReportsWindow();
+			}
+		});
+		
 		add(Box.createHorizontalStrut(30));
 		add(btnBuy);
 		add(Box.createHorizontalStrut(10));

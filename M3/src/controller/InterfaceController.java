@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import battle.Battle;
+import exceptions.ResourceException;
 import gui.BuyWindow;
 import gui.EnemyPanel;
 import gui.MainWindow;
@@ -57,12 +58,22 @@ public class InterfaceController implements Variables, VariablesWindow {
 		return getPlanetArmy()[unitType].size();
 	}
 	
-	public void upgradePlanetDefenseTechnology() {
+	public void upgradePlanetDefenseTechnology() throws ResourceException{
+		int currentDefenseLevel = getPlanetDefenseTechnology();
 		planet.upgradeTechnologyDefense();
+		
+		if (currentDefenseLevel == getPlanetDefenseTechnology()) {
+			throw new ResourceException();
+		}
 	}
 	
-	public void upgradePlanetAttackTechnology() {
+	public void upgradePlanetAttackTechnology() throws ResourceException{
+		int currentAttackLevel = getPlanetAttackTechnology();
 		planet.upgradeTechnologyAttack();
+		
+		if (currentAttackLevel == getPlanetAttackTechnology()) {
+			throw new ResourceException();
+		}
 	}
 
 	public void addArmiesPanels(PlayerPanel playerPanel, EnemyPanel enemyPanel) {
