@@ -9,7 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import planets.Planet;
+import utils.Printing;
 import utils.Variables;
+import utils.Variables.MilitaryUnitOrder;
 
 public class DatabaseController implements Variables{
 	public static DatabaseController instance;
@@ -92,13 +94,13 @@ public class DatabaseController implements Variables{
 	}
 	
 	// Actualizamos metal
-	public void updateMetal(Planet planet) {
+	public void updateMetal(int planet_id, int metal_quantity) {
 		query = "UPDATE planet_stats SET resource_metal_amount = ? WHERE planet_id = ?";
 		
 		try {
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, planet.getMetal());
-			ps.setInt(2, planet.getPlanet_id());
+			ps.setInt(1, metal_quantity);
+			ps.setInt(2, planet_id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println("updateMetal() failed!");
@@ -107,13 +109,13 @@ public class DatabaseController implements Variables{
 	}
 	
 	// Actualizamos deuterio
-	public void updateDeuterium(Planet planet) {
+	public void updateDeuterium(int planet_id, int deuterium_quantity) {
 		query = "UPDATE planet_stats SET resource_deuterion_amount = ? WHERE planet_id = ?";
 		
 		try {
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, planet.getDeuterium());
-			ps.setInt(2, planet.getPlanet_id());
+			ps.setInt(1, deuterium_quantity);
+			ps.setInt(2, planet_id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println("updateDeuterium() failed!");
@@ -338,4 +340,76 @@ public class DatabaseController implements Variables{
 		}
 	}
 	
+	// METODOS REPORT
+	public String getBattleLog(int planet_id) {
+		int battle_id = this.getBattle_id();
+		String battle_log = "";
+		
+		try {
+			rs = stmnt.executeQuery("SELECT * FROM battle_log WHERE planet_id = " + planet_id + " AND battle_id = " + battle_id);
+			while(rs.next()) {
+				battle_log += rs.getString(1);
+			}
+			
+		} catch (SQLException e) {
+			System.err.println("getBattleLog() failed!");
+			e.printStackTrace();
+		}
+		
+		return battle_log;
+	}
+	
+	public String getBattleSummary(int planet_id) {
+		int battle_id = this.getBattle_id();
+		String battle_summary = "";
+		int battles_counter = 0;
+		
+		try {
+			rs = stmnt.executeQuery("SELECT battles_counter FROM planet_stats WHERE planet_id = " + planet_id);
+			rs.next();
+			battles_counter = rs.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		battle_summary = "BATTLE NUMBER: " + battles_counter + "\n" + "\n" + "BATTLE STATISTICS" + "\n" + "\n";
+		
+		battle_summary += String.format("%-27s%10s%10s      %-27s%10s%10s", "PLANET ARMY", "Units", "Drops", "ENEMY ARMY","Units","Drops") + "\n" + "\n";
+		
+		/*summary += String.format("%-27s%10d%10d      %-27s%10d%10d", MILITARY_UNIT_NAMES[MilitaryUnitOrder.LIGHTHUNTER.ordinal()],initialArmies[0][MilitaryUnitOrder.LIGHTHUNTER.ordinal()],initialArmies[0][MilitaryUnitOrder.LIGHTHUNTER.ordinal()]-actualArmyPlanet[MilitaryUnitOrder.LIGHTHUNTER.ordinal()],MILITARY_UNIT_NAMES[MilitaryUnitOrder.LIGHTHUNTER.ordinal()],initialArmies[1][MilitaryUnitOrder.LIGHTHUNTER.ordinal()],initialArmies[1][MilitaryUnitOrder.LIGHTHUNTER.ordinal()]-actualArmyEnemy[MilitaryUnitOrder.LIGHTHUNTER.ordinal()]) + "\n";
+		summary += String.format("%-27s%10d%10d      %-27s%10d%10d", MILITARY_UNIT_NAMES[MilitaryUnitOrder.HEAVYHUNTER.ordinal()],initialArmies[0][MilitaryUnitOrder.HEAVYHUNTER.ordinal()],initialArmies[0][MilitaryUnitOrder.HEAVYHUNTER.ordinal()]-actualArmyPlanet[MilitaryUnitOrder.HEAVYHUNTER.ordinal()],MILITARY_UNIT_NAMES[MilitaryUnitOrder.HEAVYHUNTER.ordinal()],initialArmies[1][MilitaryUnitOrder.HEAVYHUNTER.ordinal()],initialArmies[1][MilitaryUnitOrder.HEAVYHUNTER.ordinal()]-actualArmyEnemy[MilitaryUnitOrder.HEAVYHUNTER.ordinal()]) + "\n";
+		summary += String.format("%-27s%10d%10d      %-27s%10d%10d", MILITARY_UNIT_NAMES[MilitaryUnitOrder.BATTLESHIP.ordinal()],initialArmies[0][MilitaryUnitOrder.BATTLESHIP.ordinal()],initialArmies[0][MilitaryUnitOrder.BATTLESHIP.ordinal()]-actualArmyPlanet[MilitaryUnitOrder.BATTLESHIP.ordinal()],MILITARY_UNIT_NAMES[MilitaryUnitOrder.BATTLESHIP.ordinal()],initialArmies[1][MilitaryUnitOrder.BATTLESHIP.ordinal()],initialArmies[1][MilitaryUnitOrder.BATTLESHIP.ordinal()]-actualArmyEnemy[MilitaryUnitOrder.BATTLESHIP.ordinal()]) + "\n";
+		summary += String.format("%-27s%10d%10d      %-27s%10d%10d", MILITARY_UNIT_NAMES[MilitaryUnitOrder.ARMOREDSHIP.ordinal()],initialArmies[0][MilitaryUnitOrder.ARMOREDSHIP.ordinal()],initialArmies[0][MilitaryUnitOrder.ARMOREDSHIP.ordinal()]-actualArmyPlanet[MilitaryUnitOrder.ARMOREDSHIP.ordinal()],MILITARY_UNIT_NAMES[MilitaryUnitOrder.ARMOREDSHIP.ordinal()],initialArmies[1][MilitaryUnitOrder.ARMOREDSHIP.ordinal()],initialArmies[1][MilitaryUnitOrder.ARMOREDSHIP.ordinal()]-actualArmyEnemy[MilitaryUnitOrder.ARMOREDSHIP.ordinal()]) + "\n";
+		summary += String.format("%-27s%10d%10d", MILITARY_UNIT_NAMES[MilitaryUnitOrder.MISSILELAUNCHER.ordinal()],initialArmies[0][MilitaryUnitOrder.MISSILELAUNCHER.ordinal()],initialArmies[0][MilitaryUnitOrder.MISSILELAUNCHER.ordinal()]-actualArmyPlanet[MilitaryUnitOrder.MISSILELAUNCHER.ordinal()]) + "\n";
+		summary += String.format("%-27s%10d%10d", MILITARY_UNIT_NAMES[MilitaryUnitOrder.IONCANNON.ordinal()],initialArmies[0][MilitaryUnitOrder.IONCANNON.ordinal()],initialArmies[0][MilitaryUnitOrder.IONCANNON.ordinal()]-actualArmyPlanet[MilitaryUnitOrder.IONCANNON.ordinal()]) + "\n";
+		summary += String.format("%-27s%10d%10d", MILITARY_UNIT_NAMES[MilitaryUnitOrder.PLASMACANNON.ordinal()],initialArmies[0][MilitaryUnitOrder.PLASMACANNON.ordinal()],initialArmies[0][MilitaryUnitOrder.PLASMACANNON.ordinal()]-actualArmyPlanet[MilitaryUnitOrder.PLASMACANNON.ordinal()]) + "\n" + "\n";
+		
+		
+		summary += Printing.printLineChar('*', 100);
+		summary += String.format("%-47s      %-47s", "Cost Planet Army", "Cost Enemy Army") + "\n" + "\n";
+		summary += String.format("%-15s%15d%23s%-15s%15d", "Metal:", initialCostFleet[0][0], "", "Metal:",initialCostFleet[1][0])+"\n";
+		summary += String.format("%-15s%15d%23s%-15s%15d", "Deuterium:", initialCostFleet[0][1], "", "Deuterium:",initialCostFleet[1][1])+"\n"+"\n";
+		
+		summary += Printing.printLineChar('*', 100);
+		summary += String.format("%-47s      %-47s", "Losses Planet Army", "Losses Enemy Army") + "\n" + "\n";
+		summary += String.format("%-15s%15d%23s%-15s%15d", "Metal:", resourcesLosses[0][0], "", "Metal:",resourcesLosses[1][0])+"\n";
+		summary += String.format("%-15s%15d%23s%-15s%15d", "Deuterium:", resourcesLosses[0][1], "", "Deuterium:",resourcesLosses[1][1])+"\n";
+		summary += String.format("%-15s%15d%23s%-15s%15d", "Weighted:", resourcesLosses[0][2], "", "Weighted:",resourcesLosses[1][2])+"\n"+"\n";
+		
+		summary += Printing.printLineChar('*', 100);
+		summary += "Waste Generated:\n";
+		summary += String.format("%-15s%15d", "Metal:", wasteMetalDeuterium[0])+"\n";
+		summary += String.format("%-15s%15d", "Deuterium:", wasteMetalDeuterium[1])+"\n";
+		
+		if (resourcesLosses[0][2] <= resourcesLosses[1][2]) {
+			summary += "\n" + "Battle winned by PLANET. We collect rubble." + "\n";
+		}
+		else {
+			summary += "\n" + "Battle winned by ENEMY. We do not collect rubble." + "\n";
+			summary += "\n" + Printing.printStringCentred("ENEMY WINS!!", '=', 60);
+		}*/
+		
+		return battle_summary;
+	}
 }

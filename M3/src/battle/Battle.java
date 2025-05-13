@@ -3,6 +3,7 @@ package battle;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import controllers.DatabaseController;
 import controllers.InterfaceController;
 import ships.MilitaryUnit;
 import utils.Printing;
@@ -147,15 +148,17 @@ public class Battle implements Variables {
 		
 		battles++;
 		
+		DatabaseController.instance.updateBattlesCounter(InterfaceController.instance.getPlanetId(), battles);
+		
 		int order = (int)(Math.random() * 2);
 		
 		int percentageArmyPlanetAlive = (int)((actualNumberUnitsPlanet / initialNumberUnitsPlanet) * 100);
 		int percentageArmyEnemyAlive = (int)((actualNumberUnitsEnemy / initialNumberUnitsEnemy) * 100);
 		
-		battleDevelopment = Printing.printStringCentred("THE BATTLE STARTS", '*', 60);
+		battleDevelopment = Printing.printStringCentred("THE BATTLE STARTS", '*', 60) + "\n";
 		
 		do {
-			battleDevelopment += "\n" + Printing.printStringCentred("CHANGE ATTACKER", '*', 60) + "\n";
+			battleDevelopment += Printing.printStringCentred("CHANGE ATTACKER", '*', 60) + "\n";
 			
 			MilitaryUnit attacker = null;
 			MilitaryUnit defender = null;
@@ -461,11 +464,22 @@ public class Battle implements Variables {
 		System.out.println("Planet Losses: " + resourcesLosses[0][2] + " vs Enemy Losses: " + resourcesLosses[1][2]);
 		
 		if (resourcesLosses[0][2] <= resourcesLosses[1][2]) {
-			battleDevelopment += "\n" + Printing.printStringCentred("PLAYER WINS!!", '=', 60);
+			battleDevelopment += Printing.printStringCentred("PLAYER WINS!!", '=', 60);
+			
+			InterfaceController.instance.collectRubble(wasteMetalDeuterium);
+			DatabaseController.instance.uploadBattleStats(InterfaceController.instance.getPlanetId(), wasteMetalDeuterium, true);
 		}
 		else {
-			battleDevelopment += "\n" + Printing.printStringCentred("ENEMY WINS!!", '=', 60);
+			battleDevelopment += Printing.printStringCentred("ENEMY WINS!!", '=', 60);
+			DatabaseController.instance.uploadBattleStats(InterfaceController.instance.getPlanetId(), wasteMetalDeuterium, false);
 		}
+		
+		DatabaseController.instance.updateRemainingUnits(armies, InterfaceController.instance.getPlanetId());
+		
+		DatabaseController.instance.uploadPlanetBattleDefense(InterfaceController.instance.getPlanetId(), initialArmies, armies);
+		DatabaseController.instance.uploadPlanetBattleArmy(InterfaceController.instance.getPlanetId(), initialArmies, armies);
+		DatabaseController.instance.uploadEnemyArmy(InterfaceController.instance.getPlanetId(), initialArmies, armies);
+		DatabaseController.instance.uploadBattleLog(InterfaceController.instance.getPlanetId(), battleDevelopment);
 		
 		System.out.println(getBattleDevelopment());
 		System.out.println(getBattleReport(battles));

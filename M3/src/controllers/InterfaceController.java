@@ -68,6 +68,10 @@ public class InterfaceController implements Variables, VariablesWindow {
 		enemyPanel.removeUnit(unitType, unit);
 	}
 	
+	public int getPlanetId() {
+		return planet.getPlanet_id();
+	}
+	
 	public int getPlanetDefenseTechnology() {
 		return planet.getTechnologyDefense();
 	}
@@ -252,11 +256,15 @@ public class InterfaceController implements Variables, VariablesWindow {
 		sleepThread(1000);
 	}
 	
+	public void collectRubble(int[] wasteMetalDeuterium) {
+		planet.setMetal(planet.getMetal() + wasteMetalDeuterium[0]);
+		planet.setDeuterium(planet.getDeuterium() + wasteMetalDeuterium[1]);
+	}
+	
 	private void sleepThread(int milisecs) {
 		try {
 			Thread.sleep(milisecs);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
