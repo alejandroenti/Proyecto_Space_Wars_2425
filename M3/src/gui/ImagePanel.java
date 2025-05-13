@@ -40,6 +40,16 @@ public class ImagePanel extends JPanel {
 		image = rotatedImage;
 	}
 	
+	public void changeImage(String urlImage) {
+		try {
+            image = ImageIO.read(new File(urlImage));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+		repaint();
+	}
+	
 	private void loadImage(String urlImage) {
 		
 		try {

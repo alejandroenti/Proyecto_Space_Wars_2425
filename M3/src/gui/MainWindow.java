@@ -15,7 +15,7 @@ import utils.VariablesWindow;
 
 public class MainWindow extends JFrame implements VariablesWindow {
 	
-	private ImagePanel mainPanel, attackerSelectorPanel, defenderSelectorPanel;
+	private ImagePanel mainPanel, attackerSelectorPanel, defenderSelectorPanel, bulletPanel;
 	private PlayerPanel playerPanel;
 	private EnemyPanel enemyPanel;
 	private ButtonsPanel buttonsPanel;
@@ -48,6 +48,10 @@ public class MainWindow extends JFrame implements VariablesWindow {
 	
 	public ButtonsPanel getButtonsPanel() {
 		return buttonsPanel;
+	}
+	
+	public ImagePanel getBullPanel() {
+		return bulletPanel;
 	}
 
 	private void setupFrame() {
@@ -92,11 +96,16 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		defenderSelectorPanel.setMaximumSize(new Dimension(48, 48));
 		defenderSelectorPanel.setLocation(-1000, 0);
 		
+		bulletPanel = new ImagePanel(BASE_URL + "selector_attacker.png");
+		bulletPanel.setMaximumSize(new Dimension(24, 24));
+		bulletPanel.setLocation(-1000, 0);
+		
 		mainPanel.add(defenderSelectorPanel);
 		mainPanel.add(buttonsPanel);
 		mainPanel.add(playerPanel);
 		mainPanel.add(enemyPanel);
 		mainPanel.add(attackerSelectorPanel);
+		mainPanel.add(bulletPanel);
 
 		this.add(mainPanel);
 	}
