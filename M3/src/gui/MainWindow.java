@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -15,11 +16,12 @@ import utils.VariablesWindow;
 
 public class MainWindow extends JFrame implements VariablesWindow {
 	
-	private ImagePanel mainPanel, attackerSelectorPanel, defenderSelectorPanel, bulletPanel;
+	private ImagePanel mainPanel, attackerSelectorPanel, defenderSelectorPanel, bulletPanel, explosionPanel;
 	private PlayerPanel playerPanel;
 	private EnemyPanel enemyPanel;
 	private ButtonsPanel buttonsPanel;
 	private BufferedImage appLogo;
+	private ArrayList<BufferedImage> explosionSprites;
 	
 	public MainWindow() {
 		super();
@@ -52,6 +54,14 @@ public class MainWindow extends JFrame implements VariablesWindow {
 	
 	public ImagePanel getBullPanel() {
 		return bulletPanel;
+	}
+	
+	public ImagePanel getExplosionPanel() {
+		return explosionPanel;
+	}
+	
+	public ArrayList<BufferedImage> getExplosionSprites() {
+		return explosionSprites;
 	}
 
 	private void setupFrame() {
@@ -100,11 +110,31 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		bulletPanel.setMaximumSize(new Dimension(24, 24));
 		bulletPanel.setLocation(-1000, 0);
 		
+		try {
+			BufferedImage img = ImageIO.read(new File(BASE_URL + "SpriteExplosion.png"));
+			explosionSprites = new ArrayList<BufferedImage>();
+			//BufferedImage sprite = img.getSubimage(x, y, width, height);
+			// cargamos las 48 imágenes de la hoja de sprites en un arrayList
+			for (int j = 0; j<6; j++) {
+				for (int i = 0; i < 8; i++) {
+					explosionSprites.add(img.getSubimage(256*i, j*248, 256, 248 ));
+				}
+			}
+		} catch (IOException e) {
+			System.out.println("problema cargando la imagen");
+			e.printStackTrace();
+		}
+		
+		explosionPanel = new ImagePanel(explosionSprites.get(0));
+		explosionPanel.setMaximumSize(new Dimension(48, 48));
+		explosionPanel.setLocation(-1000, 0);
+		
+		mainPanel.add(explosionPanel);
 		mainPanel.add(defenderSelectorPanel);
+		mainPanel.add(attackerSelectorPanel);
 		mainPanel.add(buttonsPanel);
 		mainPanel.add(playerPanel);
 		mainPanel.add(enemyPanel);
-		mainPanel.add(attackerSelectorPanel);
 		mainPanel.add(bulletPanel);
 
 		this.add(mainPanel);

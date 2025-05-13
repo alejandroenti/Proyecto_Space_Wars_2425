@@ -1,15 +1,13 @@
 package controllers;
 
-import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 import battle.Battle;
 import exceptions.ResourceException;
-import gui.BuyWindow;
 import gui.EnemyPanel;
-import gui.ImagePanel;
 import gui.MainWindow;
 import gui.PlayerPanel;
 import planets.Planet;
@@ -20,7 +18,6 @@ import ships.LightHunter;
 import ships.MilitaryUnit;
 import utils.Variables;
 import utils.VariablesWindow;
-import utils.Variables.MilitaryUnitOrder;
 
 public class InterfaceController implements Variables, VariablesWindow {
 	
@@ -270,18 +267,29 @@ public class InterfaceController implements Variables, VariablesWindow {
 		int[] initialPosition = new int[2];
 		int[] finalPosition = new int[2];
 		
+		// Reset current Bullet rotation
+		mainWindow.getBullPanel().rotateImage(-mainWindow.getBullPanel().getCurrentRotation());
+		
+		// Calculate Initial and Final Position and Changing Bullet and Explosion Type
 		if (attackerArmy == 0) {
 			initialPosition[0] = PLAYER_SHIPS_POSITIONS[attackerUnitType][0] + SHIPS_SIZES[attackerUnitType] + 12;
 			initialPosition[1] = PLAYER_SHIPS_POSITIONS[attackerUnitType][1] + (int)(SHIPS_SIZES[attackerUnitType] / 2);
-			finalPosition[0] = (int)(FRAME_WIDTH / 2) + ENEMY_SHIPS_POSITIONS[defenderUnitType][0] - 12;
+			finalPosition[0] = (int)(FRAME_WIDTH / 2) + ENEMY_SHIPS_POSITIONS[defenderUnitType][0] + (int)(SHIPS_SIZES[defenderUnitType] / 2);
 			finalPosition[1] = ENEMY_SHIPS_POSITIONS[defenderUnitType][1] + (int)(SHIPS_SIZES[defenderUnitType] / 2);
+			mainWindow.getBullPanel().changeImage(BASE_URL + "bullet_" + attackerUnitType + "_player.png");
+			mainWindow.getBullPanel().rotateImage(INITAL_PLAYER_SHIP_ROTATION);
+			mainWindow.getExplosionPanel().changeImage(BASE_URL + "explosion_enemy.png");
 		}
 		else {
 			initialPosition[0] = (int)(FRAME_WIDTH / 2) + ENEMY_SHIPS_POSITIONS[attackerUnitType][0] - 12;
 			initialPosition[1] = ENEMY_SHIPS_POSITIONS[attackerUnitType][1] + (int)(SHIPS_SIZES[attackerUnitType] / 2);
-			finalPosition[0] = PLAYER_SHIPS_POSITIONS[defenderUnitType][0] + SHIPS_SIZES[defenderUnitType] + 12;
+			finalPosition[0] = PLAYER_SHIPS_POSITIONS[defenderUnitType][0] + (int)(SHIPS_SIZES[defenderUnitType] / 2);
 			finalPosition[1] = PLAYER_SHIPS_POSITIONS[defenderUnitType][1] + (int)(SHIPS_SIZES[defenderUnitType] / 2);
+			mainWindow.getBullPanel().changeImage(BASE_URL + "bullet_" + attackerUnitType + "_enemy.png");
+			mainWindow.getBullPanel().rotateImage(INITAL_ENEMY_SHIP_ROTATION);
+			mainWindow.getExplosionPanel().changeImage(BASE_URL + "explosion_player.png");
 		}
+		
 		
 		// Calculate Unitary Direction
 		int[] direction = { finalPosition[0] - initialPosition[0], finalPosition[1] - initialPosition[1] };
@@ -308,9 +316,11 @@ public class InterfaceController implements Variables, VariablesWindow {
          */
         if (attackerArmy == 0) {
         	mainWindow.getPlayerPanel().getArmyPanels()[attackerUnitType].rotateImage(angleDeg * -1);
+        	mainWindow.getBullPanel().rotateImage(angleDeg * -1);
         }
 		else {
 			mainWindow.getEnemyPanel().getArmyPanels()[attackerUnitType].rotateImage(angleDeg);
+			mainWindow.getBullPanel().rotateImage(angleDeg);
 		}
         
         double posX = initialPosition[0];
@@ -348,6 +358,20 @@ public class InterfaceController implements Variables, VariablesWindow {
 		}
         
         sleepThread(500);
+        
+        // Calculate position of Explosion
+        int posExplosionX = finalPosition[0] - 32;
+        int posExplosionY = finalPosition[1] - 32;
+        
+        // Animate Explosion through different sprites
+        mainWindow.getExplosionPanel().setBounds(posExplosionX, posExplosionY, 64, 64);
+        for (BufferedImage image : mainWindow.getExplosionSprites()) {
+        	mainWindow.getExplosionPanel().changeImage(image);
+        	mainWindow.repaint();
+        	sleepThread(10);
+        }
+        mainWindow.getExplosionPanel().setBounds(-1000, 0, 24, 24);
+        mainWindow.repaint();
 	}
 	
 	public void collectRubble(int[] wasteMetalDeuterium) {
