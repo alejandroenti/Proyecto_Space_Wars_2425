@@ -72,6 +72,10 @@ public class EnemyPanel extends JPanel implements VariablesWindow {
 		this.enemyArmy = enemyArmy;
 		loadArmy();
 	}
+	
+	public ImagePanel[] getArmyPanels() {
+		return armyPanels;
+	}
 
 	public void enemyComing() {
 		posX -= approaching_speed;

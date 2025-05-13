@@ -37,6 +37,10 @@ public class PlayerPanel extends JPanel implements VariablesWindow {
 		return playerArmy;
 	}
 
+	public ImagePanel[] getArmyPanels() {
+		return armyPanels;
+	}
+	
 	public void setPlayerArmy(ArrayList<MilitaryUnit>[] playerArmy) {
 		this.playerArmy = playerArmy;
 		loadArmy();

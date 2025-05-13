@@ -1,15 +1,13 @@
 package controllers;
 
-import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 import battle.Battle;
 import exceptions.ResourceException;
-import gui.BuyWindow;
 import gui.EnemyPanel;
-import gui.ImagePanel;
 import gui.MainWindow;
 import gui.PlayerPanel;
 import planets.Planet;
@@ -20,7 +18,6 @@ import ships.LightHunter;
 import ships.MilitaryUnit;
 import utils.Variables;
 import utils.VariablesWindow;
-import utils.Variables.MilitaryUnitOrder;
 
 public class InterfaceController implements Variables, VariablesWindow {
 	
@@ -221,39 +218,160 @@ public class InterfaceController implements Variables, VariablesWindow {
 	}
 	
 	public void selectAttacker(int army, int unitType) {
-		int posX = 0, posY = 0;
+
+		int[] position = new int[2];
 		
 		if (army == 0) {
-			posX = PLAYER_SHIPS_POSITIONS[unitType][0] + (int)(SHIPS_SIZES[unitType] / 2) - 24;
-			posY = PLAYER_SHIPS_POSITIONS[unitType][1] - 48;
+			position[0] = PLAYER_SHIPS_POSITIONS[unitType][0] + (int)(SHIPS_SIZES[unitType] / 2) - 24;
+			position[1] = PLAYER_SHIPS_POSITIONS[unitType][1] - 48;
 		}
 		else {
-			posX = (int)(FRAME_WIDTH / 2) + ENEMY_SHIPS_POSITIONS[unitType][0] + (int)(SHIPS_SIZES[unitType] / 2) - 24;
-			posY = ENEMY_SHIPS_POSITIONS[unitType][1] - 48;
+			position[0] = (int)(FRAME_WIDTH / 2) + ENEMY_SHIPS_POSITIONS[unitType][0] + (int)(SHIPS_SIZES[unitType] / 2) - 24;
+			position[1] = ENEMY_SHIPS_POSITIONS[unitType][1] - 48;
 		}
 		
-		mainWindow.getAttackerSelectorPanel().setBounds(posX, posY, 48, 48);
+		mainWindow.getAttackerSelectorPanel().setBounds(position[0], position[1], 48, 48);
 		mainWindow.repaint();
 		
-		sleepThread(1000);
+		sleepThread(500);
 	}
 	
 	public void selectDefender(int army, int unitType) {
-		int posX = 0, posY = 0;
+
+		int[] position = new int[2];
 		
 		if (army == 0) {
-			posX = PLAYER_SHIPS_POSITIONS[unitType][0] + (int)(SHIPS_SIZES[unitType] / 2) - 24;
-			posY = PLAYER_SHIPS_POSITIONS[unitType][1] - 48;
+			position[0] = PLAYER_SHIPS_POSITIONS[unitType][0] + (int)(SHIPS_SIZES[unitType] / 2) - 24;
+			position[1] = PLAYER_SHIPS_POSITIONS[unitType][1] - 48;
 		}
 		else {
-			posX = (int)(FRAME_WIDTH / 2) + ENEMY_SHIPS_POSITIONS[unitType][0] + (int)(SHIPS_SIZES[unitType] / 2) - 24;
-			posY = ENEMY_SHIPS_POSITIONS[unitType][1] - 48;
+			position[0] = (int)(FRAME_WIDTH / 2) + ENEMY_SHIPS_POSITIONS[unitType][0] + (int)(SHIPS_SIZES[unitType] / 2) - 24;
+			position[1] = ENEMY_SHIPS_POSITIONS[unitType][1] - 48;
 		}
 		
-		mainWindow.getDefendeerSelectorPanel().setBounds(posX, posY, 48, 48);
+		mainWindow.getDefendeerSelectorPanel().setBounds(position[0], position[1], 48, 48);
 		mainWindow.repaint();
 		
-		sleepThread(1000);
+		sleepThread(500);
+	}
+	
+	public void hideSelectors() {
+		
+		mainWindow.getAttackerSelectorPanel().setBounds(-1000, 0, 48, 48);
+		mainWindow.getDefendeerSelectorPanel().setBounds(-1000, 0, 48, 48);
+		mainWindow.repaint();
+	}
+	
+	public void shootBullet(int attackerArmy, int attackerUnitType, int defenderUnitType) {
+		
+		int[] initialPosition = new int[2];
+		int[] finalPosition = new int[2];
+		
+		// Reset current Bullet rotation
+		mainWindow.getBullPanel().rotateImage(-mainWindow.getBullPanel().getCurrentRotation());
+		
+		// Calculate Initial and Final Position and Changing Bullet and Explosion Type
+		if (attackerArmy == 0) {
+			initialPosition[0] = PLAYER_SHIPS_POSITIONS[attackerUnitType][0] + SHIPS_SIZES[attackerUnitType] + 12;
+			initialPosition[1] = PLAYER_SHIPS_POSITIONS[attackerUnitType][1] + (int)(SHIPS_SIZES[attackerUnitType] / 2);
+			finalPosition[0] = (int)(FRAME_WIDTH / 2) + ENEMY_SHIPS_POSITIONS[defenderUnitType][0] + (int)(SHIPS_SIZES[defenderUnitType] / 2);
+			finalPosition[1] = ENEMY_SHIPS_POSITIONS[defenderUnitType][1] + (int)(SHIPS_SIZES[defenderUnitType] / 2);
+			mainWindow.getBullPanel().changeImage(BASE_URL + "bullet_" + attackerUnitType + "_player.png");
+			mainWindow.getBullPanel().rotateImage(INITAL_PLAYER_SHIP_ROTATION);
+			mainWindow.getExplosionPanel().changeImage(BASE_URL + "explosion_enemy.png");
+		}
+		else {
+			initialPosition[0] = (int)(FRAME_WIDTH / 2) + ENEMY_SHIPS_POSITIONS[attackerUnitType][0] - 12;
+			initialPosition[1] = ENEMY_SHIPS_POSITIONS[attackerUnitType][1] + (int)(SHIPS_SIZES[attackerUnitType] / 2);
+			finalPosition[0] = PLAYER_SHIPS_POSITIONS[defenderUnitType][0] + (int)(SHIPS_SIZES[defenderUnitType] / 2);
+			finalPosition[1] = PLAYER_SHIPS_POSITIONS[defenderUnitType][1] + (int)(SHIPS_SIZES[defenderUnitType] / 2);
+			mainWindow.getBullPanel().changeImage(BASE_URL + "bullet_" + attackerUnitType + "_enemy.png");
+			mainWindow.getBullPanel().rotateImage(INITAL_ENEMY_SHIP_ROTATION);
+			mainWindow.getExplosionPanel().changeImage(BASE_URL + "explosion_player.png");
+		}
+		
+		
+		// Calculate Unitary Direction
+		int[] direction = { finalPosition[0] - initialPosition[0], finalPosition[1] - initialPosition[1] };
+		double magnitudeDirection = Math.sqrt(Math.pow(direction[0], 2) + Math.pow(direction[1], 2));
+		double[] unitaryDirection = { (direction[0] / magnitudeDirection), (direction[1] / magnitudeDirection) };
+		
+		// Calculate Dot Product
+		double dot = initialPosition[0] * finalPosition[0] + initialPosition[1] * finalPosition[1];
+		double magnitudeInitialPosition = Math.sqrt(Math.pow(initialPosition[0], 2) + Math.pow(initialPosition[1], 2));
+		double magnitudeFinalPosition = Math.sqrt(Math.pow(finalPosition[0], 2) + Math.pow(finalPosition[1], 2));
+		double cosTheta = dot / (magnitudeInitialPosition * magnitudeFinalPosition);
+        cosTheta = Math.max(-1.0, Math.min(1.0, cosTheta));
+        double angleRad = Math.acos(cosTheta);
+        double angleDeg = Math.toDegrees(angleRad);
+        
+        // Change angle if Defender Ship is above us
+        if (finalPosition[1] > initialPosition[1]) {
+        	angleDeg *= -1;
+        }
+        
+        /*
+         * Apply rotation
+         *  - Player Ships rotate on opposite way than Enemy Ships
+         */
+        if (attackerArmy == 0) {
+        	mainWindow.getPlayerPanel().getArmyPanels()[attackerUnitType].rotateImage(angleDeg * -1);
+        	mainWindow.getBullPanel().rotateImage(angleDeg * -1);
+        }
+		else {
+			mainWindow.getEnemyPanel().getArmyPanels()[attackerUnitType].rotateImage(angleDeg);
+			mainWindow.getBullPanel().rotateImage(angleDeg);
+		}
+        
+        double posX = initialPosition[0];
+        double posY = initialPosition[1];
+        boolean hit = false;
+        
+        do {
+        	// Paint Bullet in the correct position
+        	mainWindow.getBullPanel().setBounds((int)posX, (int)posY, 24, 24);        	
+        	mainWindow.repaint();
+        	
+        	// Update position
+        	posX += unitaryDirection[0] * 0.005;
+        	posY += unitaryDirection[1] * 0.005;
+        	
+        	// Check if Bullet has impacted in Defender
+        	if (attackerArmy == 0) {
+            	hit = posX > finalPosition[0];
+            }
+    		else {
+    			hit = posX < finalPosition[0];
+    		}
+        } while (!hit);
+        
+        // Position Bullet out of the view
+    	mainWindow.getBullPanel().setBounds(-1000, 0, 24, 24);
+    	mainWindow.repaint();
+        
+    	// Rotate again Attacker to its Initial Position
+        if (attackerArmy == 0) {
+        	mainWindow.getPlayerPanel().getArmyPanels()[attackerUnitType].rotateImage(angleDeg);
+        }
+		else {
+			mainWindow.getEnemyPanel().getArmyPanels()[attackerUnitType].rotateImage(angleDeg * -1);
+		}
+        
+        sleepThread(500);
+        
+        // Calculate position of Explosion
+        int posExplosionX = finalPosition[0] - 32;
+        int posExplosionY = finalPosition[1] - 32;
+        
+        // Animate Explosion through different sprites
+        mainWindow.getExplosionPanel().setBounds(posExplosionX, posExplosionY, 64, 64);
+        for (BufferedImage image : mainWindow.getExplosionSprites()) {
+        	mainWindow.getExplosionPanel().changeImage(image);
+        	mainWindow.repaint();
+        	sleepThread(10);
+        }
+        mainWindow.getExplosionPanel().setBounds(-1000, 0, 24, 24);
+        mainWindow.repaint();
 	}
 	
 	public void collectRubble(int[] wasteMetalDeuterium) {

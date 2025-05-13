@@ -15,11 +15,23 @@ import javax.swing.JPanel;
 public class ImagePanel extends JPanel {
 
 	private BufferedImage image;
+	private double currentRotation = 0;
 	
 	public ImagePanel(String urlImage) {
 		super();
 		setOpaque(false);
 		loadImage(urlImage);
+	}
+	
+	public ImagePanel(BufferedImage image) {
+		super();
+		
+		setOpaque(false);
+		this.image = image;
+	}
+	
+	public double getCurrentRotation() {
+		return currentRotation;
 	}
 	
 	public void rotateImage(double theta) {
@@ -28,6 +40,7 @@ public class ImagePanel extends JPanel {
 		
 		// https://stackoverflow.com/questions/37758061/rotate-a-buffered-image-in-java
 		double rads = Math.toRadians(theta);
+		currentRotation += rads;
 		
 		BufferedImage rotatedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
 		Graphics2D g2d = rotatedImage.createGraphics();
@@ -38,6 +51,23 @@ public class ImagePanel extends JPanel {
 		g2d.dispose();
 		
 		image = rotatedImage;
+	}
+	
+	public void changeImage(String urlImage) {
+		try {
+            image = ImageIO.read(new File(urlImage));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+		repaint();
+	}
+	
+	public void changeImage(BufferedImage image) {
+
+		this.image = image;
+		
+		repaint();
 	}
 	
 	private void loadImage(String urlImage) {
