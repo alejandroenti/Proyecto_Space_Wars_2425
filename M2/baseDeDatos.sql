@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS planet_stats(
 	planet_id INT PRIMARY KEY AUTO_INCREMENT,
     name_planet VARCHAR(20),
     resource_metal_amount INT,
-    resource_deuterion_amount INT,
+    resource_deuterium_amount INT,
     technology_defense_level INT,
     technology_attack_level INT,
     battles_counter INT,
@@ -29,11 +29,12 @@ CREATE TABLE IF NOT EXISTS battle_stats(
 	planet_id INT NOT NULL,
     num_battle INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     resource_metal_acquired INT,
-    resource_deuterion_acquired INT,
+    resource_deuterium_acquired INT,
+    waste_metal_generated INT,
+    waste_deuterium_generated INT,
     FOREIGN KEY (planet_id) REFERENCES planet_stats(planet_id) ON DELETE CASCADE
 );
 
-SELECT * FROM battle_stats;
 /* DROP TABLE battle_stats; */ 
 
 -- -------------------------------------------- * --------------------------------------------
@@ -52,7 +53,6 @@ CREATE TABLE IF NOT EXISTS planet_battle_defense(
     FOREIGN KEY (planet_id,num_battle) REFERENCES battle_stats(planet_id,num_battle) ON DELETE CASCADE
 );
 
-SELECT * FROM planet_battle_defense;
 /* DROP TABLE planet_battle_defense; */ 
 
 -- -------------------------------------------- * --------------------------------------------
@@ -73,7 +73,6 @@ CREATE TABLE IF NOT EXISTS planet_battle_army(
     FOREIGN KEY (planet_id,num_battle) REFERENCES battle_stats(planet_id,num_battle) ON DELETE CASCADE
 );
 
-SELECT * FROM planet_battle_army;
 /* DROP TABLE planet_battle_army; */ 
 
 -- -------------------------------------------- * --------------------------------------------
@@ -94,7 +93,6 @@ CREATE TABLE  IF NOT EXISTS enemy_army(
     FOREIGN KEY (planet_id,num_battle) REFERENCES battle_stats(planet_id,num_battle) ON DELETE CASCADE
 );
 
-SELECT * FROM enemy_army;
 /* DROP TABLE enemy_army; */ 
 
 -- -------------------------------------------- * --------------------------------------------
@@ -108,13 +106,12 @@ CREATE TABLE IF NOT EXISTS battle_log(
 	FOREIGN KEY (planet_id,num_battle) REFERENCES battle_stats(planet_id,num_battle) ON DELETE CASCADE
 );
 
-SELECT * FROM battle_log;
 /* DROP TABLE enemy_army; */ 
 
 -- -------------------------------------------- INSERTS DE PRUEBA --------------------------------------------
 
 -- PLANET_STATS
-INSERT INTO planet_stats (name_planet, resource_metal_amount, resource_deuterion_amount, technology_defense_level, technology_attack_level, battles_counter, missile_launcher_remaining, ion_canon_remaining, plasma_canon_remaining, light_hunter_remaining, heavy_hunter_remaining, battleship_remaining, armored_ship_remaining)
+INSERT INTO planet_stats (name_planet, resource_metal_amount, resource_deuterium_amount, technology_defense_level, technology_attack_level, battles_counter, missile_launcher_remaining, ion_canon_remaining, plasma_canon_remaining, light_hunter_remaining, heavy_hunter_remaining, battleship_remaining, armored_ship_remaining)
 VALUES
 ('Terra', 50000, 20000, 3, 5, 12, 100, 50, 30, 200, 150, 80, 60),
 ('Mars', 30000, 15000, 2, 4, 10, 120, 40, 25, 180, 130, 70, 50),
@@ -126,13 +123,13 @@ SELECT * FROM planet_stats;
 
 
 -- BATTLE_STATS
-INSERT INTO battle_stats (planet_id, resource_metal_acquired, resource_deuterion_acquired)
+INSERT INTO battle_stats (planet_id, resource_metal_acquired, resource_deuterium_acquired, waste_metal_generated, waste_deuterium_generated  )
 VALUES
-(1, 5000, 2000),
-(2, 3000, 1500),
-(3, 7000, 2500),
-(4, 9000, 3000),
-(5, 8000, 2200);
+(1, 5000, 2000, 300,400),
+(2, 3000, 1500, 400,500),
+(3, 7000, 2500, 360,600),
+(4, 9000, 3000, 700,900),
+(5, 8000, 2200, 200,500);
 -- VER FUNCIONAMIENTO CLAVES FORANEAS EN JAVA 
 
 SELECT * FROM battle_stats;
@@ -192,6 +189,7 @@ INSERT INTO battle_log (planet_id, num_battle, log_entry) VALUES
 (5, 5, 'Saturn interceptó la flota enemiga antes de su aproximación. Se logró una victoria contundente con pocas bajas.');
 
 SELECT * FROM battle_log;
+
 
 
 
