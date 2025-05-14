@@ -84,6 +84,7 @@ public class EnemyPanel extends JPanel implements Variables, VariablesWindow {
 	
 	public void setEnemyArmy(ArrayList<MilitaryUnit>[] enemyArmy) {
 		this.enemyArmy = enemyArmy;
+		cleanPanels();
 		loadArmy();
 	}
 	
@@ -102,6 +103,8 @@ public class EnemyPanel extends JPanel implements Variables, VariablesWindow {
 		
 		int num = (int)(1+ Math.random() * 9);
 		planetPanel.changeImage(BASE_URL + "planet0" + num + ".png");
+		
+		colorArmy = (int)(1 + Math.random() * 5);
 	}
 	
 	public void loadArmy() {
@@ -199,5 +202,14 @@ public class EnemyPanel extends JPanel implements Variables, VariablesWindow {
 		result += "</html>";
 		
 		return result;
+	}
+	
+	private void cleanPanels() {
+		for (int i = 0; i < 4; i++) {		
+			if (armyPanels[i] != null) {
+				remove(armyPanels[i]);
+				armyPanels[i] = null;
+			}
+		}
 	}
 }
