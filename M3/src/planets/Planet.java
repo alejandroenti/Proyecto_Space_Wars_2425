@@ -52,7 +52,7 @@ public class Planet implements Variables {
 			army[i] = new ArrayList<MilitaryUnit>();
 		}
 		
-		//DatabaseController.instance.newPlanet(this);
+		DatabaseController.instance.newPlanet(this);
 		
 		generateResources();
 	}
@@ -110,8 +110,8 @@ public class Planet implements Variables {
 				metal += PLANET_METAL_GENERATED;
 				deuterium += PLANET_DEUTERIUM_GENERATED;
 				
-				//DatabaseController.instance.updateMetal(planet_id, metal);
-				//DatabaseController.instance.updateDeuterium(planet_id, deuterium);
+				DatabaseController.instance.updateMetal(planet_id, metal);
+				DatabaseController.instance.updateDeuterium(planet_id, deuterium);
 			 }
 		 };
 		 timer.schedule(task, 60000, 60000);
@@ -145,7 +145,7 @@ public class Planet implements Variables {
 			upgradeDefenseTechnologyDeuteriumCost = calculateNewUpgradePrice(upgradeDefenseTechnologyDeuteriumCost, Variables.UPGRADE_PLUS_DEFENSE_TECHNOLOGY_DEUTERIUM_COST);
 			technologyDefense++;
 			
-			//DatabaseController.instance.updateDefenseTechnology(this);
+			DatabaseController.instance.updateDefenseTechnology(this);
 		}
 		catch (ResourceException re) {
 			re.printStackTrace();
@@ -158,7 +158,7 @@ public class Planet implements Variables {
 			upgradeAttackTechnologyDeuteriumCost = calculateNewUpgradePrice(upgradeAttackTechnologyDeuteriumCost, Variables.UPGRADE_PLUS_ATTACK_TECHNOLOGY_DEUTERIUM_COST);
 			technologyAttack++;
 			
-			//DatabaseController.instance.updateAttackTechnology(this);
+			DatabaseController.instance.updateAttackTechnology(this);
 		}
 		catch (ResourceException re) {
 			re.printStackTrace();
