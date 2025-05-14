@@ -168,7 +168,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 				
 				int minutes = (int)(remainingSeconds / 60);
 				int seconds = remainingSeconds % 60;
-				mainPanel.setSecondLine(String.format("%d:%2d", minutes, seconds));
+				mainPanel.setSecondLine(String.format("%02d:%02d", minutes, seconds));
 				mainPanel.repaint();
 			}
 		};
@@ -204,7 +204,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 				
 				int minutes = (int)(remainingSeconds / 60);
 				int seconds = remainingSeconds % 60;
-				mainPanel.setSecondLine(String.format("%d:%2d", minutes, seconds));
+				mainPanel.setSecondLine(String.format("%02d:%02d", minutes, seconds));
 				mainPanel.repaint();
 			}
 		};
