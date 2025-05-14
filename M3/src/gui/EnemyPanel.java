@@ -96,6 +96,14 @@ public class EnemyPanel extends JPanel implements Variables, VariablesWindow {
 		setLocation(posX,POS_Y);
 	}
 	
+	public void resetEnemy() {
+		posX = INIT_POS_X;
+		setLocation(posX,POS_Y);
+		
+		int num = (int)(1+ Math.random() * 9);
+		planetPanel.changeImage(BASE_URL + "planet0" + num + ".png");
+	}
+	
 	public void loadArmy() {
 		
 		for (int i = 0; i < enemyArmy.length; i++) {

@@ -335,8 +335,8 @@ public class InterfaceController implements Variables, VariablesWindow {
         	mainWindow.repaint();
         	
         	// Update position
-        	posX += unitaryDirection[0] * 0.005;
-        	posY += unitaryDirection[1] * 0.005;
+        	posX += unitaryDirection[0] * 0.05;
+        	posY += unitaryDirection[1] * 0.05;
         	
         	// Check if Bullet has impacted in Defender
         	if (attackerArmy == 0) {
