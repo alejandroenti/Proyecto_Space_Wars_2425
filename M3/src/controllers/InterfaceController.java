@@ -2,6 +2,8 @@ package controllers;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JOptionPane;
 
@@ -30,13 +32,13 @@ public class InterfaceController implements Variables, VariablesWindow {
 	
 	public static InterfaceController instance;
 	
-	public InterfaceController(Planet planet, MainWindow mainWindow) {
+	public InterfaceController() {
 		super();
 		
 		InterfaceController.instance = this;
 		
-		this.planet = planet;
-		this.mainWindow = mainWindow;
+		this.planet = new Planet();
+		this.mainWindow = new MainWindow();
 		this.playerPanel = mainWindow.getPlayerPanel();
 		this.enemyPanel = mainWindow.getEnemyPanel();
 		this.battle = new Battle();
@@ -144,8 +146,8 @@ public class InterfaceController implements Variables, VariablesWindow {
 		buyStringContext += message + "\n";
 	}
 	
-	public void printStats() {
-		planet.printStats();
+	public String printStats() {
+		return planet.printStats();
 	}
 	
 	public void startBattle() {
@@ -277,7 +279,7 @@ public class InterfaceController implements Variables, VariablesWindow {
 			finalPosition[0] = (int)(FRAME_WIDTH / 2) + ENEMY_SHIPS_POSITIONS[defenderUnitType][0] + (int)(SHIPS_SIZES[defenderUnitType] / 2);
 			finalPosition[1] = ENEMY_SHIPS_POSITIONS[defenderUnitType][1] + (int)(SHIPS_SIZES[defenderUnitType] / 2);
 			mainWindow.getBullPanel().changeImage(BASE_URL + "bullet_" + attackerUnitType + "_player.png");
-			mainWindow.getBullPanel().rotateImage(INITAL_PLAYER_SHIP_ROTATION);
+			mainWindow.getBullPanel().rotateImage(INITAL_ENEMY_SHIP_ROTATION);
 			mainWindow.getExplosionPanel().changeImage(BASE_URL + "explosion_enemy.png");
 		}
 		else {
@@ -286,7 +288,7 @@ public class InterfaceController implements Variables, VariablesWindow {
 			finalPosition[0] = PLAYER_SHIPS_POSITIONS[defenderUnitType][0] + (int)(SHIPS_SIZES[defenderUnitType] / 2);
 			finalPosition[1] = PLAYER_SHIPS_POSITIONS[defenderUnitType][1] + (int)(SHIPS_SIZES[defenderUnitType] / 2);
 			mainWindow.getBullPanel().changeImage(BASE_URL + "bullet_" + attackerUnitType + "_enemy.png");
-			mainWindow.getBullPanel().rotateImage(INITAL_ENEMY_SHIP_ROTATION);
+			mainWindow.getBullPanel().rotateImage(INITAL_PLAYER_SHIP_ROTATION);
 			mainWindow.getExplosionPanel().changeImage(BASE_URL + "explosion_player.png");
 		}
 		
@@ -333,8 +335,8 @@ public class InterfaceController implements Variables, VariablesWindow {
         	mainWindow.repaint();
         	
         	// Update position
-        	posX += unitaryDirection[0] * 0.005;
-        	posY += unitaryDirection[1] * 0.005;
+        	posX += unitaryDirection[0] * 0.05;
+        	posY += unitaryDirection[1] * 0.05;
         	
         	// Check if Bullet has impacted in Defender
         	if (attackerArmy == 0) {
@@ -377,6 +379,10 @@ public class InterfaceController implements Variables, VariablesWindow {
 	public void collectRubble(int[] wasteMetalDeuterium) {
 		planet.setMetal(planet.getMetal() + wasteMetalDeuterium[0]);
 		planet.setDeuterium(planet.getDeuterium() + wasteMetalDeuterium[1]);
+	}
+	
+	public void showBattleWinner(String message) {
+		mainWindow.showBattleWinner(message);
 	}
 	
 	private void sleepThread(int milisecs) {

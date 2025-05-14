@@ -23,8 +23,8 @@ public interface Variables {
 	};
 	
 	// resources available to create the first enemy fleet
-	public final int DEUTERIUM_BASE_PLANET_ARMY = 260000;
-	public final int METAL_BASE_PLANET_ARMY = 18000;
+	public final int DEUTERIUM_BASE_PLANET_ARMY = 28000;
+	public final int METAL_BASE_PLANET_ARMY = 142000;
 	
 	// percentage increase of resources available to create enemy fleet
 	public final int ENEMY_FLEET_INCREASE = 6;

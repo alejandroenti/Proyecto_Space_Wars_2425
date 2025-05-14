@@ -1,21 +1,27 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import events.MouseButtonsListener;
 import ships.MilitaryUnit;
+import utils.Printing;
+import utils.Variables;
 import utils.VariablesWindow;
 
-public class EnemyPanel extends JPanel implements VariablesWindow {
+public class EnemyPanel extends JPanel implements Variables, VariablesWindow {
 	
 	private final int INIT_POS_X = 1500;
 	private final int POS_Y = 0;
+	private final int MAX_LINE_SIZE = 64;
+	private final int MAX_NUMBER_SIZE = 10;
 	private int posX;
 	private int approaching_speed;
 	
-	private ImagePanel planetPanel, armyPanel;
+	private ImagePanel planetPanel;
 	private ArrayList<MilitaryUnit>[] enemyArmy;
 	private ImagePanel[] armyPanels;
 	private int colorArmy;
@@ -34,6 +40,14 @@ public class EnemyPanel extends JPanel implements VariablesWindow {
 		int num = (int)(1+ Math.random() * 9);
 		planetPanel = new ImagePanel(BASE_URL + "planet0" + num + ".png");
 		planetPanel.setBounds(getWidth() / 2, 0, (int)(FRAME_WIDTH / 2), FRAME_HEIGHT);
+		planetPanel.addMouseListener(new MouseButtonsListener() {
+			public void mouseEntered(MouseEvent e) {
+				planetPanel.setToolTipText(printStats());				
+			}
+			
+			public void mouseExited(MouseEvent e) {
+			}
+		});
 		
 		this.colorArmy = (int)(1 + Math.random() * 5);
 				
@@ -82,6 +96,14 @@ public class EnemyPanel extends JPanel implements VariablesWindow {
 		setLocation(posX,POS_Y);
 	}
 	
+	public void resetEnemy() {
+		posX = INIT_POS_X;
+		setLocation(posX,POS_Y);
+		
+		int num = (int)(1+ Math.random() * 9);
+		planetPanel.changeImage(BASE_URL + "planet0" + num + ".png");
+	}
+	
 	public void loadArmy() {
 		
 		for (int i = 0; i < enemyArmy.length; i++) {
@@ -90,6 +112,16 @@ public class EnemyPanel extends JPanel implements VariablesWindow {
 				ImagePanel unit = new ImagePanel(BASE_URL + "ships_" + i + "_" + colorArmy + ".png");
 				unit.setBounds(ENEMY_SHIPS_POSITIONS[i][0], ENEMY_SHIPS_POSITIONS[i][1], SHIPS_SIZES[i], SHIPS_SIZES[i]);
 				unit.rotateImage(INITAL_ENEMY_SHIP_ROTATION);
+				
+				unit.addMouseListener(new MouseButtonsListener(i) {
+					public void mouseEntered(MouseEvent e) {
+						unit.setToolTipText(getUnitStats(this.getId()));				
+					}
+					
+					public void mouseExited(MouseEvent e) {
+					}
+				});
+				
 				armyPanels[i] = unit;	
 				add(unit);
 			}
@@ -104,6 +136,16 @@ public class EnemyPanel extends JPanel implements VariablesWindow {
 			ImagePanel unitPanel = new ImagePanel(BASE_URL + "ships_" + unitType + "_0.png");
 			unitPanel.setBounds(ENEMY_SHIPS_POSITIONS[unitType][0], ENEMY_SHIPS_POSITIONS[unitType][1], SHIPS_SIZES[unitType], SHIPS_SIZES[unitType]);
 			unitPanel.rotateImage(INITAL_ENEMY_SHIP_ROTATION);
+			
+			unitPanel.addMouseListener(new MouseButtonsListener(unitType) {
+				public void mouseEntered(MouseEvent e) {
+					unitPanel.setToolTipText(getUnitStats(this.getId()));				
+				}
+				
+				public void mouseExited(MouseEvent e) {
+				}
+			});
+			
 			armyPanels[unitType] = unitPanel;
 			add(unitPanel);
 			repaint();
@@ -126,5 +168,36 @@ public class EnemyPanel extends JPanel implements VariablesWindow {
 			enemyArmy[unitType] = null;
 			repaint();
 		}
+	}
+	
+	private String getUnitStats(int unitType) {
+		String result = "<html>";
+		
+		result += "<b>" + Printing.printTitle(MILITARY_UNIT_NAMES[unitType]) + "</b><br><br>";
+		result += Printing.printStringSized("Units: ", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(enemyArmy[unitType].size(), MAX_NUMBER_SIZE) + "<br>";							
+		
+		result += "</html>";
+		
+		return result;
+	}
+	
+	private String printStats() {
+		String result = "<html>";
+		
+		result += "<b>" + Printing.printTitle("Enemy Stats:") + "</b><br><br>";
+		result += "<b>" + Printing.printTitle("fleet".toUpperCase()) + "</b><br><br>";
+		for (int i = 0; i < MilitaryUnitOrder.MISSILELAUNCHER.ordinal(); i++) {
+			if (enemyArmy == null) {
+				result += Printing.printStringSized(MILITARY_UNIT_NAMES[i] + " -> ", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(0, MAX_NUMBER_SIZE) + "<br>";							
+			}
+			else {
+				result += Printing.printStringSized(MILITARY_UNIT_NAMES[i] + " -> ", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(enemyArmy[i].size(), MAX_NUMBER_SIZE) + "<br>";
+				
+			}
+		}
+		
+		result += "</html>";
+		
+		return result;
 	}
 }

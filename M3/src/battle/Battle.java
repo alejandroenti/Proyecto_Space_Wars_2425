@@ -1,7 +1,6 @@
 package battle;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import controllers.DatabaseController;
 import controllers.InterfaceController;
@@ -476,11 +475,13 @@ public class Battle implements Variables {
 			battleDevelopment += Printing.printStringCentred("PLAYER WINS!!", '=', 60) + "\n";
 			
 			InterfaceController.instance.collectRubble(wasteMetalDeuterium);
+			InterfaceController.instance.showBattleWinner("PLAYER ARMY WINS!");
 
 			num_battle = DatabaseController.instance.uploadBattleStats(InterfaceController.instance.getPlanetId(), wasteMetalDeuterium, true);
 		}
 		else {
 			battleDevelopment += Printing.printStringCentred("ENEMY WINS!!", '=', 60) + "\n";
+			InterfaceController.instance.showBattleWinner("ENEMY ARMY WINS!");
 			num_battle = DatabaseController.instance.uploadBattleStats(InterfaceController.instance.getPlanetId(), wasteMetalDeuterium, false);
 
 		}

@@ -41,4 +41,12 @@ public interface VariablesWindow {
 	public final int[] SHIPS_SIZES = {
 			64, 64, 64, 64, 96, 128, 128
 	};
+	
+	public final int [][] MAIN_PANEL_STRING_POSITION = {
+		{ 350, 180 },
+		{ 500, (int)(FRAME_HEIGHT / 2) }
+	};
+	
+	public final int MAIN_PANEL_FONT_SIZE_LARGE = 64;
+	public final int MAIN_PANEL_FONT_SIZE_SMALL = 48;
 }
