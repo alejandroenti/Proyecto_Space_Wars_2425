@@ -329,14 +329,20 @@ public class InterfaceController implements Variables, VariablesWindow {
         double posY = initialPosition[1];
         boolean hit = false;
         
+        long lastTime = System.nanoTime();
+        
         do {
         	// Paint Bullet in the correct position
         	mainWindow.getBullPanel().setBounds((int)posX, (int)posY, 24, 24);        	
         	mainWindow.repaint();
         	
+        	// Calculate Delta time
+        	double delta = (System.nanoTime() - lastTime) / 1000000000.0;
+        	lastTime = System.nanoTime();
+        	
         	// Update position
-        	posX += unitaryDirection[0] * 0.05;
-        	posY += unitaryDirection[1] * 0.05;
+        	posX += unitaryDirection[0] * 100 * delta;
+        	posY += unitaryDirection[1] * 100 * delta;
         	
         	// Check if Bullet has impacted in Defender
         	if (attackerArmy == 0) {
