@@ -37,8 +37,8 @@ public class InterfaceController implements Variables, VariablesWindow {
 		
 		InterfaceController.instance = this;
 		
-		this.planet = new Planet();
 		this.mainWindow = new MainWindow();
+		this.planet = new Planet();
 		this.playerPanel = mainWindow.getPlayerPanel();
 		this.enemyPanel = mainWindow.getEnemyPanel();
 		this.battle = new Battle();
@@ -69,6 +69,10 @@ public class InterfaceController implements Variables, VariablesWindow {
 	
 	public int getPlanetId() {
 		return planet.getPlanet_id();
+	}
+	
+	public String getNamePlanet() {
+		return mainWindow.getNamePlanet();
 	}
 	
 	public int getPlanetDefenseTechnology() {
