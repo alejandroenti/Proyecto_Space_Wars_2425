@@ -164,6 +164,30 @@ body :after {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.texto-con-gif {
+    display: flex;
+    align-items: center; 
+    gap: 120px; 
+}
+
+.texto-con-gif h2 {
+    font-size: 1.5em;
+    color: rgb(255, 255, 255);
+    margin: 0; 
+}
+
+.gif img {
+    width: 350px; 
+    height: auto; 
+    object-fit: contain;
+    border-radius: 12px;
+    max-height: 100%; 
+    transition: transform 0.3s ease;
+}
+
+.gif img:hover {
+    transform: scale(1.1); 
+}
 footer {
     background-color: rgb(44, 73, 105); 
     padding: 20px;
@@ -175,4 +199,76 @@ footer p {
     color: white;
 }
 
-/* Aun falta el media y mejorar cosas */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.2em;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 1.2em;
+        text-align: center;
+    }
+
+    header {
+        flex-direction: column;
+        padding: 10px;
+        text-align: center;
+    }
+
+    header .contenedor {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    header nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    header .logo {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .gif img {
+        width: 220px;
+    }
+
+    .contenido-contenedor {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    #hero {
+        font-size: 0.9em;
+        padding: 30px 15px;
+        margin: 10px;
+    }
+
+    #body frame {
+        width: 100vw;
+        height: 70vw;
+    }
+
+
+    .texto-con-gif {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .texto-con-gif h2 {
+        font-size: 1.2em;
+        padding: 0 10px;
+    }
+
+    .gif img {
+        width: 200px;
+        max-width: 90%;
+    }
+    
+    
+}

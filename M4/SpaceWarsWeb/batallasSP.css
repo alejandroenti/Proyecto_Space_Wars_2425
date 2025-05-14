@@ -5,6 +5,8 @@
 }
 
 h1 {
+    text-align: center;
+    margin: 0;
     color: rgb(203, 209, 235);
     font-size: 3.5em;
     text-shadow: 
@@ -18,7 +20,7 @@ h2{
     margin: 0;
     padding: auto;
     display: flex;
-    text-align: left;
+    text-align: center;
     color: rgb(255, 255, 255);
 }
 
@@ -28,6 +30,33 @@ body {
     background-color: rgb(5, 42, 63);
     color: #fff;
     line-height: 1.6;
+}
+
+body :before,
+body :after { 
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background: linear-gradient(45deg, rgb(5, 42, 63), rgb(146, 154, 161));
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    background-size: 400%;
+    z-index: -1;
+    animation: animate 15s linear infinite alternate both;
+    filter: blur(20px);
+
+  }
+  
+  @keyframes animate {
+    0% { background-position: 0 0; }
+    70% { background-position: 200% 0; }
+    100% { background-position: 0 0; }
+  }
+  
+#body frame {
+    width: 65vw;
+    height: 50vw;
 }
 
 header {
@@ -103,9 +132,48 @@ header a:hover {
     color: rgb(172, 171, 230);
 }
 
+.contenido-contenedor {
+    background-color: rgb(44, 73, 105); 
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
+.buscador{
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    margin-bottom: 20px;
+}
 
+form{
+    display: flex;
+    gap: 10px;
+}
 
+input {
+    padding: 15px 10px;
+    outline: none;
+    flex: 1; /* NOTA: ADAPTA */
+    border: 1px solid #1f1d1d;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.submit {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+.submit .icono {
+    width: 50px; 
+    height: 50px;
+    border-radius: 12px;
+}
 
 footer {
     background-color: rgb(44, 73, 105); 
@@ -116,4 +184,102 @@ footer {
 
 footer p {
     color: white;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+        padding: 0 10px;
+    }
+
+    h2 {
+        font-size: 1.2em;
+        padding: 0 10px;
+    }
+
+    header {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    header .contenedor {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    header .logo {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header .logo img {
+        height: 70px;
+    }
+
+    header .logo h2 {
+        font-size: 1.2em;
+        text-align: center;
+    }
+
+    header nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .contenido-contenedor {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .buscador {
+        width: 100%;
+        margin: 10px auto;
+    }
+
+    form {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    input {
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    .submit .icono {
+        width: 45px;
+        height: 45px;
+    }
+
+    .texto-con-gif {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .texto-con-gif h2 {
+        font-size: 1.1em;
+    }
+
+    .gif img {
+        width: 80%;
+        max-width: 250px;
+        height: auto;
+    }
+
+    #body frame {
+        width: 90vw;
+        height: 60vw;
+    }
+
+    footer {
+        padding: 15px;
+    }
+
+    footer p {
+        font-size: 0.9em;
+    }
 }

@@ -288,3 +288,80 @@ footer {
 footer p {
     color: white;
 }
+
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 1.2em;
+        text-align: center;
+    }
+
+    header .contenedor {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .contenido-contenedor {
+        margin: 20px 10px;
+        padding: 15px;
+    }
+
+    .videos {
+        height: 50vw;
+        padding: 10px;
+        margin: 15px 5px;
+    }
+
+    .videos iframe {
+        width: 100%;
+        height: 100%;
+    }
+
+    .fila.fila-divison2,
+    .fila-naves {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .texto.bloque {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .texto.bloque p {
+        text-align: justify;
+    }
+
+    .imagen-info img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .imagen-nave img {
+        width: 100%;
+        height: auto;
+    }
+
+    .bloque {
+        width: 100%;
+    }
+
+    .texto.bloque2 {
+        width: 100%;
+    }
+
+    .titulo-principal h2 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+}

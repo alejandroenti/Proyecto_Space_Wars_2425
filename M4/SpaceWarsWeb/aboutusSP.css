@@ -18,7 +18,7 @@ h2{
     margin: 0;
     padding: auto;
     display: flex;
-    text-align: left;
+    text-align: center;
     color: rgb(255, 255, 255);
 }
 
@@ -103,12 +103,35 @@ header a:hover {
     color: rgb(172, 171, 230);
 }
 
+.fila{
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; 
+    gap: 20px; 
+    margin: 20px auto; 
+}
+
 .contenido-contenedor {
     background-color: rgb(44, 73, 105); 
     border-radius: 15px;
     padding: 20px;
-    margin: 20px;
+    margin: 20px auto; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1200px; 
+    width: 100%; 
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contenido-contenedor:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgb(224, 229, 238);
+}
+
+.contenido-contenedor:hover .resplandor {
+    opacity: 1;
 }
 
 footer {
@@ -121,3 +144,46 @@ footer {
 footer p {
     color: white;
 }
+
+#int .img-contenedor {
+    background-size: cover;
+    background-position: center center;
+    border-radius: 15px;
+    height: 500px;
+    width: 400px;
+    margin: 50px;
+    display: inline-block; 
+}
+
+#int .img-contenedor2 {
+    background-size: cover;
+    background-position: center center;
+    border-radius: 15px;
+    height: 500px;
+    width: 400px;
+    margin: 50px;
+    display: inline-block; 
+}
+
+#int .img-contenedor3 {
+    background-size: cover;
+    background-position: center center;
+    border-radius: 15px;
+    height: 500px;
+    width: 400px;
+    margin: 50px;
+    display: inline-block;
+}
+
+#int .img-contenedor {
+    background-image: url(./IMAGES/Monica.jpg);
+}
+
+#int .img-contenedor2 {
+    background-image: url(https://preview.redd.it/lvg2otsp4ovd1.jpeg?auto=webp&s=d69db5c0e79cf9262171cba5c4ba626d9aa74977);
+}
+
+#int .img-contenedor3 {
+    background-image: url(https://preview.redd.it/lvg2otsp4ovd1.jpeg?auto=webp&s=d69db5c0e79cf9262171cba5c4ba626d9aa74977);
+}
+
