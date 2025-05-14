@@ -212,4 +212,25 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		timerStartBattle.schedule(taskStartBattle, 6000, 1000);
 		timerTimeStartBattle.schedule(taskTimeStartBattle, 0, 1000);
 	}
+	
+	public void showBattleWinner(String message) {
+		
+		mainPanel.setFirstLine(message);
+		remainingSeconds = 5;
+		Timer timerShowWinner = new Timer();
+		TimerTask taskShowWinner = new TimerTask() {
+			public void run() {
+				remainingSeconds--;
+				
+				if (remainingSeconds <= 0) {
+					mainPanel.setFirstLine("");
+					repaint();
+					timerShowWinner.cancel();
+					return;
+				}
+			}
+		};
+		
+		timerShowWinner.schedule(taskShowWinner, 0, 1000);
+	}
 }

@@ -2,6 +2,8 @@ package controllers;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JOptionPane;
 
@@ -377,6 +379,10 @@ public class InterfaceController implements Variables, VariablesWindow {
 	public void collectRubble(int[] wasteMetalDeuterium) {
 		planet.setMetal(planet.getMetal() + wasteMetalDeuterium[0]);
 		planet.setDeuterium(planet.getDeuterium() + wasteMetalDeuterium[1]);
+	}
+	
+	public void showBattleWinner(String message) {
+		mainWindow.showBattleWinner(message);
 	}
 	
 	private void sleepThread(int milisecs) {
