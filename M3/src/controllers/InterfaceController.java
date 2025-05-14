@@ -279,7 +279,7 @@ public class InterfaceController implements Variables, VariablesWindow {
 			finalPosition[0] = (int)(FRAME_WIDTH / 2) + ENEMY_SHIPS_POSITIONS[defenderUnitType][0] + (int)(SHIPS_SIZES[defenderUnitType] / 2);
 			finalPosition[1] = ENEMY_SHIPS_POSITIONS[defenderUnitType][1] + (int)(SHIPS_SIZES[defenderUnitType] / 2);
 			mainWindow.getBullPanel().changeImage(BASE_URL + "bullet_" + attackerUnitType + "_player.png");
-			mainWindow.getBullPanel().rotateImage(INITAL_PLAYER_SHIP_ROTATION);
+			mainWindow.getBullPanel().rotateImage(INITAL_ENEMY_SHIP_ROTATION);
 			mainWindow.getExplosionPanel().changeImage(BASE_URL + "explosion_enemy.png");
 		}
 		else {
@@ -288,7 +288,7 @@ public class InterfaceController implements Variables, VariablesWindow {
 			finalPosition[0] = PLAYER_SHIPS_POSITIONS[defenderUnitType][0] + (int)(SHIPS_SIZES[defenderUnitType] / 2);
 			finalPosition[1] = PLAYER_SHIPS_POSITIONS[defenderUnitType][1] + (int)(SHIPS_SIZES[defenderUnitType] / 2);
 			mainWindow.getBullPanel().changeImage(BASE_URL + "bullet_" + attackerUnitType + "_enemy.png");
-			mainWindow.getBullPanel().rotateImage(INITAL_ENEMY_SHIP_ROTATION);
+			mainWindow.getBullPanel().rotateImage(INITAL_PLAYER_SHIP_ROTATION);
 			mainWindow.getExplosionPanel().changeImage(BASE_URL + "explosion_player.png");
 		}
 		
