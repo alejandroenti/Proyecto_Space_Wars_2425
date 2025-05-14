@@ -1,6 +1,8 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -12,10 +14,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class ImagePanel extends JPanel {
+import utils.VariablesWindow;
+
+public class ImagePanel extends JPanel implements VariablesWindow {
 
 	private BufferedImage image;
 	private double currentRotation = 0;
+	private String firstLine = "", secondLine = "";
 	
 	public ImagePanel(String urlImage) {
 		super();
@@ -32,6 +37,14 @@ public class ImagePanel extends JPanel {
 	
 	public double getCurrentRotation() {
 		return currentRotation;
+	}
+	
+	public void setFirstLine(String firstLine) {
+		this.firstLine = firstLine;
+	}
+	
+	public void setSecondLine(String secondLine) {
+		this.secondLine = secondLine;
 	}
 	
 	public void rotateImage(double theta) {
@@ -84,6 +97,16 @@ public class ImagePanel extends JPanel {
 		
 		if (image != null) {
 			g.drawImage(image.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH), 0, 0, this);
+		}
+		
+		if (!firstLine.isBlank() || !secondLine.isBlank()) {
+			Graphics2D g2d = (Graphics2D) g;
+			
+			g2d.setFont(new Font("DejaVu Sans Mono", Font.BOLD, MAIN_PANEL_FONT_SIZE_SMALL));
+			g2d.setColor(Color.WHITE);
+			g2d.drawString(firstLine, MAIN_PANEL_STRING_POSITION[0][0], MAIN_PANEL_STRING_POSITION[0][1]);
+			g2d.setFont(new Font("DejaVu Sans Mono", Font.BOLD, MAIN_PANEL_FONT_SIZE_LARGE));
+			g2d.drawString(secondLine, MAIN_PANEL_STRING_POSITION[1][0], MAIN_PANEL_STRING_POSITION[1][1]);
 		}
 	}
 }

@@ -22,6 +22,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 	private ButtonsPanel buttonsPanel;
 	private BufferedImage appLogo;
 	private ArrayList<BufferedImage> explosionSprites;
+	private int remainingSeconds;
 	
 	public MainWindow() {
 		super();
@@ -142,30 +143,73 @@ public class MainWindow extends JFrame implements VariablesWindow {
 	
 	public void approachEnemy() {
 		
-		Timer timer = new Timer();
-		TimerTask task = new TimerTask() {
+		Timer timerApproachEnemy = new Timer();
+		TimerTask taskApproachEnemy = new TimerTask() {
 			public void run() {
 			 enemyPanel.enemyComing();
 			 if (enemyPanel.getPosX() <= (int)(FRAME_WIDTH / 2)) {
-				 timer.cancel();
+				 timerApproachEnemy.cancel();
 				 startBattle();
 			 }
 			}
 		};
 		
-		timer.schedule(task, APPROACH_DELAY, (int)(APPROACH_TIME / APPROACH_STEPS));
+		mainPanel.setFirstLine("Enemy Approaching");
+		remainingSeconds = 18;
+		Timer timerTimeApproachEnemy = new Timer();
+		TimerTask taskTimeApproachEnemy = new TimerTask() {
+			public void run() {
+				remainingSeconds--;
+				
+				if (remainingSeconds <= 0) {
+					timerTimeApproachEnemy.cancel();
+					return;
+				}
+				
+				int minutes = (int)(remainingSeconds / 60);
+				int seconds = remainingSeconds % 60;
+				mainPanel.setSecondLine(String.format("%d:%2d", minutes, seconds));
+				mainPanel.repaint();
+			}
+		};
+		
+		timerApproachEnemy.schedule(taskApproachEnemy, APPROACH_DELAY, (int)(APPROACH_TIME / APPROACH_STEPS));
+		timerTimeApproachEnemy.schedule(taskTimeApproachEnemy, APPROACH_DELAY, 1000);
 		InterfaceController.instance.createEnemyArmy();
 	}
 	
 	public void startBattle() {
-		Timer timer = new Timer();
-		TimerTask task = new TimerTask() {
+		Timer timerStartBattle = new Timer();
+		TimerTask taskStartBattle = new TimerTask() {
 			public void run() {
-				timer.cancel();
+				timerStartBattle.cancel();
 				InterfaceController.instance.startBattle();
 			}
 		};
 		
-		timer.schedule(task, 6000, 1000);
+		mainPanel.setFirstLine("Battle Starts in");
+		remainingSeconds = 6;
+		Timer timerTimeStartBattle = new Timer();
+		TimerTask taskTimeStartBattle = new TimerTask() {
+			public void run() {
+				remainingSeconds--;
+				
+				if (remainingSeconds <= 0) {
+					mainPanel.setFirstLine("");
+					mainPanel.setSecondLine("");
+					repaint();
+					timerTimeStartBattle.cancel();
+					return;
+				}
+				
+				int minutes = (int)(remainingSeconds / 60);
+				int seconds = remainingSeconds % 60;
+				mainPanel.setSecondLine(String.format("%d:%2d", minutes, seconds));
+				mainPanel.repaint();
+			}
+		};
+		
+		timerStartBattle.schedule(taskStartBattle, 6000, 1000);
+		timerTimeStartBattle.schedule(taskTimeStartBattle, 0, 1000);
 	}
 }
