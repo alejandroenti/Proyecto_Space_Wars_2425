@@ -547,13 +547,5 @@ public class Battle implements Variables {
 	public String getBattleDevelopment() {
 		return battleDevelopment;
 	}
-	// Podríamos tener un array de 5 posiciones que cojan los 5 battleDevelopment que haya en la BBDD (solo guardaremos 5 en la BBDD)
-	// Despues cuando hagamos la primera batalla, guardaremos el battleDevelopment en la ultima posicion del array y moveremos todos los battles a una posicion anterior (eliminaremos la primera)
-	// Cuando se apague el juego, tendriamos que guardar en la BBDD los battleDevelopment que haya en el array (sustituyendo los que había en la BBDD)
 	
-	// FUNCIÓN QUE ACTUALICE LA BBDD
-	
-	// FUNCIÓN PARA PASAR EL REPORTE ENTERO (JUNTO CON LAS BATTLEDEVELOPMENT) A XML
-	
-	// FUNCIÓN PARA PASAR EL XML A HTML
 }
