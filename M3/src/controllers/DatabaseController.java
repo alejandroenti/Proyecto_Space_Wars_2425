@@ -8,6 +8,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import planets.Planet;
 import utils.Printing;
 import utils.Variables;
@@ -49,12 +61,12 @@ public class DatabaseController implements Variables{
 	
 	// METODOS PLANET_STATS
 	// Crear planeta
-	public void newPlanet(Planet planet) {
+	public void newPlanet(Planet planet, String namePlanet) {
 		query = "INSERT INTO planet_stats ( name_planet, resource_metal_amount, resource_deuterium_amount, technology_defense_level, technology_attack_level, battles_counter, missile_launcher_remaining, ion_canon_remaining, plasma_canon_remaining, light_hunter_remaining, heavy_hunter_remaining, battleship_remaining, armored_ship_remaining ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		try {
 			ps = conn.prepareStatement(query);
-			ps.setString(1, "Earth");
+			ps.setString(1, namePlanet);
 			ps.setInt(2, planet.getMetal());
 			ps.setInt(3, planet.getDeuterium());
 			ps.setInt(4, planet.getTechnologyDefense());
@@ -640,7 +652,180 @@ public class DatabaseController implements Variables{
 	
 	
 	// CONVERT ResultSet INTO XML
-	
+	public Document convertIntoXML(int planet_id, int num_battle) {
+		// Gather data from the database
+		
+		int[] initialPlanetUnits = getInitialPlanetUnits(planet_id,num_battle);
+		int[] destroyedPlanetUnits = getDestroyedPlanetUnits(planet_id,num_battle);
+		int[] initialEnemyUnits = getInitialEnemyUnits(planet_id,num_battle);
+		int[] destroyedEnemyUnits = getDestroyedEnemyUnits(planet_id, num_battle);
+		
+		int[][] initialCostFleet = calculateInitialCostFleet(initialPlanetUnits, initialEnemyUnits);
+		int[][] resourcesLosses = calculateResourcesLosses(destroyedPlanetUnits, destroyedEnemyUnits);
+		
+		int[] wasteMetalDeuterium = getWasteMetalDeuterium(planet_id,num_battle);
+		
+		// Build the XML document
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder;
+		Document doc = null;
+		
+		try {
+			builder = factory.newDocumentBuilder();
+			doc = builder.newDocument();
+			
+			Element battle_summary = doc.createElement("battle_summary");
+			
+			// PLANET STATS
+			Element planet = doc.createElement("planet");
+			Element planet_troops = doc.createElement("troops");
+			
+			for (int i=0; i < initialPlanetUnits.length; i++) {
+				Element planet_troop = doc.createElement("troop");
+				Element troop_name = doc.createElement("name");
+				troop_name.setTextContent(MILITARY_UNIT_NAMES[i]);
+				Element troop_units = doc.createElement("units");
+				troop_units.setTextContent(String.valueOf(initialPlanetUnits[i]));
+				Element troop_drops = doc.createElement("drops");
+				troop_drops.setTextContent(String.valueOf(destroyedPlanetUnits[i]));
+				
+				planet_troop.appendChild(troop_name);
+				planet_troop.appendChild(troop_units);
+				planet_troop.appendChild(troop_drops);
+				
+				planet_troops.appendChild(planet_troop);
+			}
+			
+			planet.appendChild(planet_troops);
+			
+			Element planet_cost = doc.createElement("cost");
+			
+			Element planet_metal_cost = doc.createElement("metal");
+			planet_metal_cost.setTextContent(String.valueOf(initialCostFleet[0][0]));
+			
+			Element planet_deuterium_cost = doc.createElement("deuterium");
+			planet_deuterium_cost.setTextContent(String.valueOf(initialCostFleet[0][1]));
+			
+			planet_cost.appendChild(planet_metal_cost);
+			planet_cost.appendChild(planet_deuterium_cost);
+			planet.appendChild(planet_cost);
+			
+			Element planet_losses = doc.createElement("losses");
+			
+			Element planet_metal_losses = doc.createElement("metal");
+			planet_metal_losses.setTextContent(String.valueOf(resourcesLosses[0][0]));
+			
+			Element planet_deuterium_losses = doc.createElement("deuterium");
+			planet_deuterium_losses.setTextContent(String.valueOf(resourcesLosses[0][1]));
+			
+			Element planet_weighed_losses = doc.createElement("weighed");
+			planet_weighed_losses.setTextContent(String.valueOf(resourcesLosses[0][2]));
+			
+			planet_losses.appendChild(planet_metal_losses);
+			planet_losses.appendChild(planet_deuterium_losses);
+			planet_losses.appendChild(planet_weighed_losses);
+			planet.appendChild(planet_losses);
+			
+			battle_summary.appendChild(planet);
+			
+			
+			// ENEMY STATS
+			Element enemy = doc.createElement("enemy");
+			Element enemy_troops = doc.createElement("troops");
+			
+			for (int i=0; i < initialEnemyUnits.length; i++) {
+				Element enemy_troop = doc.createElement("troop");
+				Element troop_name = doc.createElement("name");
+				troop_name.setTextContent(MILITARY_UNIT_NAMES[i]);
+				Element troop_units = doc.createElement("units");
+				troop_units.setTextContent(String.valueOf(initialEnemyUnits[i]));
+				Element troop_drops = doc.createElement("drops");
+				troop_drops.setTextContent(String.valueOf(destroyedEnemyUnits[i]));
+				
+				enemy_troop.appendChild(troop_name);
+				enemy_troop.appendChild(troop_units);
+				enemy_troop.appendChild(troop_drops);
+				
+				enemy_troops.appendChild(enemy_troop);
+			}
+			
+			enemy.appendChild(enemy_troops);
+			
+			Element enemy_cost = doc.createElement("cost");
+			
+			Element enemy_metal_cost = doc.createElement("metal");
+			enemy_metal_cost.setTextContent(String.valueOf(initialCostFleet[1][0]));
+			
+			Element enemy_deuterium_cost = doc.createElement("deuterium");
+			enemy_deuterium_cost.setTextContent(String.valueOf(initialCostFleet[1][1]));
+			
+			enemy_cost.appendChild(enemy_metal_cost);
+			enemy_cost.appendChild(enemy_deuterium_cost);
+			enemy.appendChild(enemy_cost);
+			
+			Element enemy_losses = doc.createElement("losses");
+			
+			Element enemy_metal_losses = doc.createElement("metal");
+			enemy_metal_losses.setTextContent(String.valueOf(resourcesLosses[1][0]));
+			
+			Element enemy_deuterium_losses = doc.createElement("deuterium");
+			enemy_deuterium_losses.setTextContent(String.valueOf(resourcesLosses[1][1]));
+			
+			Element enemy_weighed_losses = doc.createElement("weighed");
+			enemy_weighed_losses.setTextContent(String.valueOf(resourcesLosses[1][2]));
+			
+			enemy_losses.appendChild(enemy_metal_losses);
+			enemy_losses.appendChild(enemy_deuterium_losses);
+			enemy_losses.appendChild(enemy_weighed_losses);
+			enemy.appendChild(enemy_losses);
+			
+			battle_summary.appendChild(enemy);
+			
+			// WASTE
+			Element generated_waste = doc.createElement("generated_waste");
+			Element metal_waste = doc.createElement("metal");
+			metal_waste.setTextContent(String.valueOf(wasteMetalDeuterium[0]));
+			
+			Element deuterium_waste = doc.createElement("deuterium");
+			deuterium_waste.setTextContent(String.valueOf(wasteMetalDeuterium[1]));
+			
+			generated_waste.appendChild(metal_waste);
+			generated_waste.appendChild(deuterium_waste);
+			
+			battle_summary.appendChild(generated_waste);
+			
+			// WINNER
+			Element winner = doc.createElement("winner");
+			
+			if (resourcesLosses[0][2] < resourcesLosses[1][2]) {
+				winner.setTextContent("Planet");
+			}else {
+				winner.setTextContent("Enemy");
+			}			
+			
+			battle_summary.appendChild(winner);
+			doc.appendChild(battle_summary);
+			
+			
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+		    TransformerFactory tf = TransformerFactory.newInstance();
+		    Transformer transformer = tf.newTransformer();
+		    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+		    transformer.transform(new DOMSource(doc), new StreamResult(System.out)); // esto es para mostrar por consola, el de abajo es para guardar el xml
+		    //transformer.transform(new DOMSource(doc), new StreamResult(new File("batalla"+num_battle+".xml")));
+		    //añadir ruta completa dentro de File()
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+
+		
+		return doc;
+	}
 	
 	// CONVERT XML INTO HTML
 	

@@ -52,7 +52,8 @@ public class Planet implements Variables {
 			army[i] = new ArrayList<MilitaryUnit>();
 		}
 		
-		DatabaseController.instance.newPlanet(this);
+		System.out.println("Estoy en planet y mi nombre es "+InterfaceController.instance.getNamePlanet());
+		DatabaseController.instance.newPlanet(this,InterfaceController.instance.getNamePlanet());
 		
 		generateResources();
 	}

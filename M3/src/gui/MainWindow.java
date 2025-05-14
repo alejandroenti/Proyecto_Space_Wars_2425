@@ -10,6 +10,7 @@ import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import controllers.InterfaceController;
 import utils.VariablesWindow;
@@ -18,6 +19,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 	
 	private ImagePanel mainPanel, attackerSelectorPanel, defenderSelectorPanel, bulletPanel, explosionPanel;
 	private PlayerPanel playerPanel;
+	private String namePlanet;
 	private EnemyPanel enemyPanel;
 	private ButtonsPanel buttonsPanel;
 	private BufferedImage appLogo;
@@ -28,6 +30,13 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		super();
 		
 		setupFrame();
+		
+		do {
+			namePlanet = JOptionPane.showInputDialog(null, "¿What's the name of your planet?", "Name your planet", JOptionPane.QUESTION_MESSAGE);			
+		} while (namePlanet == null || namePlanet.contentEquals(""));
+		
+		System.out.println("Name planet: " + namePlanet);
+		
 		initMainPanel();
 		
 		this.setVisible(true);
@@ -35,6 +44,10 @@ public class MainWindow extends JFrame implements VariablesWindow {
 	
 	public PlayerPanel getPlayerPanel() {
 		return playerPanel;
+	}
+
+	public String getNamePlanet() {
+		return namePlanet;
 	}
 
 	public EnemyPanel getEnemyPanel() {
