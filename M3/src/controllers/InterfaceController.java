@@ -32,13 +32,13 @@ public class InterfaceController implements Variables, VariablesWindow {
 	
 	public static InterfaceController instance;
 	
-	public InterfaceController(Planet planet, MainWindow mainWindow) {
+	public InterfaceController() {
 		super();
 		
 		InterfaceController.instance = this;
 		
-		this.planet = planet;
-		this.mainWindow = mainWindow;
+		this.planet = new Planet();
+		this.mainWindow = new MainWindow();
 		this.playerPanel = mainWindow.getPlayerPanel();
 		this.enemyPanel = mainWindow.getEnemyPanel();
 		this.battle = new Battle();
@@ -146,8 +146,8 @@ public class InterfaceController implements Variables, VariablesWindow {
 		buyStringContext += message + "\n";
 	}
 	
-	public void printStats() {
-		planet.printStats();
+	public String printStats() {
+		return planet.printStats();
 	}
 	
 	public void startBattle() {

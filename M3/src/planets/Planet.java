@@ -22,8 +22,8 @@ public class Planet implements Variables {
 
 	private final int NUM_MILITARY_UNITS = 7;
 	private final int INIT_TECHNOLOGY_LEVEL = 0;
-	private final int INIT_METAL = 199000;
-	private final int INIT_DEUTERIUM = 55900;
+	private final int INIT_METAL = METAL_BASE_PLANET_ARMY;
+	private final int INIT_DEUTERIUM = DEUTERIUM_BASE_PLANET_ARMY;
 	private final int MAX_LINE_SIZE = 64;
 	private final int MAX_NUMBER_SIZE = 10;
 	
@@ -340,27 +340,29 @@ public class Planet implements Variables {
 		InterfaceController.instance.addBuyInfo("[*] " + unitsAdded + " " + MILITARY_UNIT_NAMES[order] + " added to army!");
 	}
 	
-	public void printStats() {
-		String result = "";
+	public String printStats() {
+		String result = "<html>";
 		
-		result += Printing.printTitle("Planet Stats:");
-		result += Printing.printTitle("technology".toUpperCase());
-		result += Printing.printStringSized("Attack Technology", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(technologyAttack, MAX_NUMBER_SIZE)+"\n";
-		result += Printing.printStringSized("Defense Technology", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(technologyDefense, MAX_NUMBER_SIZE) + "\n\n";
-		result += Printing.printTitle("defenses".toUpperCase());
+		result += "<b>" + Printing.printTitle("Planet Stats:") + "</b><br><br>";
+		result += Printing.printTitle("technology".toUpperCase()) + "</b><br><br>";
+		result += Printing.printStringSized("Attack Technology -> ", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(technologyAttack, MAX_NUMBER_SIZE) + "<br>";
+		result += Printing.printStringSized("Defense Technology -> ", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(technologyDefense, MAX_NUMBER_SIZE) + "<br><br>";
+		result += "<b>" + Printing.printTitle("defenses".toUpperCase()) + "</b><br><br>";
 		for (int i = MilitaryUnitOrder.MISSILELAUNCHER.ordinal(); i <= MilitaryUnitOrder.PLASMACANNON.ordinal(); i++) {
-			result += Printing.printStringSized(MILITARY_UNIT_NAMES[i], MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(army[i].size(), MAX_NUMBER_SIZE) + "\n";			
+			result += Printing.printStringSized(MILITARY_UNIT_NAMES[i] + " -> ", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(army[i].size(), MAX_NUMBER_SIZE) + "<br>";			
 		}
-		result += "\n";
-		result += Printing.printTitle("fleet".toUpperCase());
+		result += "<br>";
+		result += "<b>" + Printing.printTitle("fleet".toUpperCase()) + "</b><br><br>";
 		for (int i = 0; i < MilitaryUnitOrder.MISSILELAUNCHER.ordinal(); i++) {
-			result += Printing.printStringSized(MILITARY_UNIT_NAMES[i], MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(army[i].size(), MAX_NUMBER_SIZE) + "\n";			
+			result += Printing.printStringSized(MILITARY_UNIT_NAMES[i] + " -> ", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(army[i].size(), MAX_NUMBER_SIZE) + "<br>";			
 		}
-		result += "\n";
-		result += Printing.printTitle("resources".toUpperCase());
-		result += Printing.printStringSized("Metal", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(metal, MAX_NUMBER_SIZE)+"\n";
-		result += Printing.printStringSized("Deuterium", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(deuterium, MAX_NUMBER_SIZE) + "\n\n";
+		result += "<br>";
+		result += "<b>" + Printing.printTitle("resources".toUpperCase()) + "</b><br><br>";
+		result += Printing.printStringSized("Metal -> ", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(metal, MAX_NUMBER_SIZE)+  "<br>";
+		result += Printing.printStringSized("Deuterium -> ", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(deuterium, MAX_NUMBER_SIZE);
 		
-		System.out.println(result);
+		result += "</html>";
+		
+		return result;
 	}
 }
