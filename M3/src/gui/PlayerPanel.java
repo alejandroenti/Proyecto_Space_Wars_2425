@@ -62,6 +62,7 @@ public class PlayerPanel extends JPanel implements Variables , VariablesWindow {
 	
 	public void setPlayerArmy(ArrayList<MilitaryUnit>[] playerArmy) {
 		this.playerArmy = playerArmy;
+		cleanPanels();
 		loadArmy();
 	}
 	
@@ -140,5 +141,15 @@ public class PlayerPanel extends JPanel implements Variables , VariablesWindow {
 		result += "</html>";
 		
 		return result;
+	}
+	
+	private void cleanPanels() {
+		for (int i = 0; i < 7; i++) {		
+			if (armyPanels[i] != null) {
+				armyPanel.remove(armyPanels[i]);
+				armyPanels[i] = null;
+			}
+		}
+		repaint();
 	}
 }

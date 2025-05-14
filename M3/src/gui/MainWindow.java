@@ -168,7 +168,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		};
 		
 		mainPanel.setFirstLine("Enemy Approaching");
-		remainingSeconds = 18;
+		remainingSeconds = 16;
 		Timer timerTimeApproachEnemy = new Timer();
 		TimerTask taskTimeApproachEnemy = new TimerTask() {
 			public void run() {
