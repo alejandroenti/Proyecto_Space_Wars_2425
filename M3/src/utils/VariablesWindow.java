@@ -57,6 +57,10 @@ public interface VariablesWindow {
 	// Explosion animation
 	public final int EXPLOSION_PANEL_SIZE = 64;
 	public final int ANIMATION_EXPLOSION_SLEEP = 10;
+	public final int EXPLOSION_SPRITESHEET_ROWS = 6;
+	public final int EXPLOSION_SPRITESHEET_COLS = 8;
+	public final int EXPLOSION_IMAGE_WIDTH = 256;
+	public final int EXPLOSION_IMAGE_HEIGHT = 248;
 	
 	// Bullet Panel
 	public final int BULLET_PANEL_SIZE = 24;
