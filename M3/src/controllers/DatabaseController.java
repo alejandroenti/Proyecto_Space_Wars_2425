@@ -852,7 +852,7 @@ public class DatabaseController implements Variables{
 		ArrayList<ArrayList<Integer>> num_battles = new ArrayList<ArrayList<Integer>>(); 
 		
 		try {
-			rs = stmnt.executeQuery("SELECT planet_id, planet_names FROM planet_stats WHERE battles_counter > 0");
+			rs = stmnt.executeQuery("SELECT planet_id, name_planet FROM planet_stats WHERE battles_counter > 0");
 			
 			while (rs.next()) {
 				planet_ids.add(rs.getInt(1));
@@ -865,7 +865,7 @@ public class DatabaseController implements Variables{
 		for (int i = 0; i < planet_ids.size(); i++) {
 			try {
 				rs = stmnt.executeQuery("SELECT num_battle FROM battle_stats WHERE planet_id = " + planet_ids.get(i));
-				
+				num_battles.add(new ArrayList<Integer>());
 				while (rs.next()) {
 					num_battles.get(i).add(rs.getInt(1));
 				}
