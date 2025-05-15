@@ -6,8 +6,13 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -25,13 +30,10 @@ public class UpdatePanel extends JPanel implements VariablesWindow{
 	
 	private int attackLevel;
 	private int defenseLevel;
-	private String type;
 	
 	
 	UpdatePanel(String type){
 		this.setLayout(new BorderLayout());
-		
-		this.type = type;
 		
 		this.attackLevel = InterfaceController.instance.getPlanetAttackTechnology();
 		this.defenseLevel = InterfaceController.instance.getPlanetDefenseTechnology();
@@ -72,9 +74,16 @@ public class UpdatePanel extends JPanel implements VariablesWindow{
 			}
 		});
 		
-		statsPanel = new StatsPanel(type);
+		try {
+			
+			statsPanel = new StatsPanel(type,ImageIO.read(new File(BASE_URL + "universe_background.jpg")));
+			this.mainPanel.add(statsPanel,BorderLayout.CENTER);
+			
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		
-		this.mainPanel.add(statsPanel,BorderLayout.CENTER);
+		
 		this.mainPanel.add(btnUpdate,BorderLayout.SOUTH);	
 		this.add(mainPanel);
 		
@@ -83,18 +92,23 @@ public class UpdatePanel extends JPanel implements VariablesWindow{
 
 	class StatsPanel extends JPanel{
 		private String type;
+		private BufferedImage image;
 		
-		StatsPanel(String type){
+		StatsPanel(String type, BufferedImage image){
 			this.type = type;
+			this.image = image;
 		}
 		
 		protected void paintComponent(Graphics g) {
 			
 			super.paintComponent(g);
 			
+			g.drawImage(image.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH), 0, 0, this);
+			
 			Graphics2D g2d = (Graphics2D) g;
 			
 			g2d.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 14));
+			g2d.setColor(Color.WHITE);
 			
 			if (type.contentEquals("attack")) {
 				g2d.drawString("ATTACK TECHNOLOGY: ", (int)(getWidth() / 4), (int)(getHeight() / 4) + 6);

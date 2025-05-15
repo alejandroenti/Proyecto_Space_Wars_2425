@@ -34,7 +34,7 @@ public class UpdateWindow extends JFrame implements VariablesWindow{
 
 	private void setupFrame() {
 		
-		this.setTitle(FRAME_TITLE);
+		this.setTitle("Upgrade Technology");
 		this.setSize(FRAME_WIDTH / 2, FRAME_HEIGHT / 2);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -60,7 +60,7 @@ public class UpdateWindow extends JFrame implements VariablesWindow{
 		
 		attackUpdatePanel = new UpdatePanel("attack");
 		
-		mainPanel.add(Box.createHorizontalStrut(20));
+		//mainPanel.add(Box.createHorizontalStrut(20));
 		mainPanel.add(attackUpdatePanel);
 		mainPanel.add(Box.createHorizontalStrut(10));
 		
@@ -70,7 +70,7 @@ public class UpdateWindow extends JFrame implements VariablesWindow{
 		
 		mainPanel.add(Box.createHorizontalStrut(10));
 		mainPanel.add(defenseUpdatePanel);
-		mainPanel.add(Box.createHorizontalStrut(20));
+		//mainPanel.add(Box.createHorizontalStrut(20));
 		
 		defenseUpdatePanel.setLocation(getWidth()/2, 0);
 		
