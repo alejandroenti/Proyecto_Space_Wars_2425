@@ -45,6 +45,13 @@ public interface VariablesWindow {
 			64, 64, 64, 64, 96, 128, 128
 	};
 	
+	// Buttons Panel
+	public final int[] BUTTONS_PANEL_SIZE = { 230, 80 };
+	public final int BUTTONS_PANEL_Y_PADDING = 100;
+	public final int BUTTONS_PANEL_BUTTONS_SIZE = 50;
+	public final int BUTTONS_PANEL_STRUT_LARGE = 30;
+	public final int BUTTONS_PANEL_STRUT_SMALL = 10;
+	
 	// MAIN PANEL Strings
 	public final int [][] MAIN_PANEL_STRING_POSITION = {
 		{ 350, 180 },
