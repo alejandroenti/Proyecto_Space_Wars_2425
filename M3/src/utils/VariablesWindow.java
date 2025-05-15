@@ -84,4 +84,10 @@ public interface VariablesWindow {
 	
 	// Selectors
 	public final int SELECTOR_PANEL_SIZE = 48;
+	
+	// Enemy Panel
+	public final int PLANET_SELECTION_MIN = 1;
+	public final int PLANET_SELECTION_MAX = 9;
+	public final int ARMY_SELECTION_MIN = 1;
+	public final int ARMY_SELECTION_MAX = 5;
 }
