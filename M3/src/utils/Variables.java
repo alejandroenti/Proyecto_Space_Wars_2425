@@ -33,6 +33,14 @@ public interface Variables {
 	public final int PLANET_DEUTERIUM_GENERATED = 1500;
 	public final int PLANET_METAL_GENERATED = 5000;
 	
+	// Armies Lenght
+	public final int PLANET_ARMY_LENGHT = 7;
+	public final int ENEMY_ARMY_LENGHT = 4;
+	
+	// Enemy Base resources
+	public final int ENEMY_BASE_METAL = METAL_BASE_PLANET_ARMY - (int)(METAL_BASE_PLANET_ARMY / 4);
+	public final int ENEMY_BASE_DEUTERIUM = DEUTERIUM_BASE_PLANET_ARMY - (int)(DEUTERIUM_BASE_PLANET_ARMY / 4);
+	
 	// TECHNOLOGY COST
 	public final int UPGRADE_BASE_DEFENSE_TECHNOLOGY_DEUTERIUM_COST = 2000;
 	public final int UPGRADE_BASE_ATTACK_TECHNOLOGY_DEUTERIUM_COST = 2000;

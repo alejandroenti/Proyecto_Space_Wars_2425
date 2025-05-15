@@ -10,6 +10,9 @@ public interface VariablesWindow {
 	public final int FRAME_WIDTH = 1200;
 	public final int FRAME_HEIGHT = 675;
 	
+	// Reset Position
+	public final int[] RESET_POSITION = { -1000, 0 };
+	
 	// timer parameters
 	public final int APPROACH_TIME = 1800;
 	public final int APPROACH_STEPS = 900;
@@ -42,6 +45,7 @@ public interface VariablesWindow {
 			64, 64, 64, 64, 96, 128, 128
 	};
 	
+	// MAIN PANEL Strings
 	public final int [][] MAIN_PANEL_STRING_POSITION = {
 		{ 350, 180 },
 		{ 500, (int)(FRAME_HEIGHT / 2) }
@@ -49,4 +53,18 @@ public interface VariablesWindow {
 	
 	public final int MAIN_PANEL_FONT_SIZE_LARGE = 64;
 	public final int MAIN_PANEL_FONT_SIZE_SMALL = 48;
+	
+	// Explosion animation
+	public final int EXPLOSION_PANEL_SIZE = 64;
+	public final int ANIMATION_EXPLOSION_SLEEP = 10;
+	
+	// Bullet Panel
+	public final int BULLET_PANEL_SIZE = 24;
+	public final int BULLET_SPEED = 500;
+	
+	// Battle
+	public final int BATTLE_SLEEP_TIME = 50;
+	
+	// Selectors
+	public final int SELECTOR_PANEL_SIZE = 48;
 }
