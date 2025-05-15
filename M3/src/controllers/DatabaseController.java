@@ -39,7 +39,9 @@ public class DatabaseController implements Variables{
 	
 	private String query;
 	
-	
+	private ArrayList<Integer> planet_ids;
+	private ArrayList<String> planet_names;
+	private ArrayList<ArrayList<Integer>> num_battles;
 
 	public DatabaseController() {
 		DatabaseController.instance = this;
@@ -59,6 +61,23 @@ public class DatabaseController implements Variables{
 			}
 	}
 	
+	public ArrayList<Integer> getPlanet_ids() {
+		return planet_ids;
+	}
+
+
+
+	public ArrayList<String> getPlanet_names() {
+		return planet_names;
+	}
+
+
+
+	public ArrayList<ArrayList<Integer>> getNum_battles() {
+		return num_battles;
+	}
+
+
 	// METODOS PLANET_STATS
 	// Crear planeta
 	public void newPlanet(Planet planet, String namePlanet) {
@@ -651,7 +670,7 @@ public class DatabaseController implements Variables{
 	}
 	
 	
-	// CONVERT ResultSet INTO XML
+	// CONVERT INTO XML
 	public Document convertIntoXML(int planet_id, int num_battle) {
 		// Gather data from the database
 		
@@ -827,7 +846,39 @@ public class DatabaseController implements Variables{
 		return doc;
 	}
 	
-	// CONVERT XML INTO HTML
+	public void getEveryPlanetIdNamesBattles(){
+		ArrayList<Integer> planet_ids = new ArrayList<Integer>();
+		ArrayList<String> planet_names = new ArrayList<String>();
+		ArrayList<ArrayList<Integer>> num_battles = new ArrayList<ArrayList<Integer>>(); 
+		
+		try {
+			rs = stmnt.executeQuery("SELECT planet_id, planet_names FROM planet_stats WHERE battles_counter > 0");
+			
+			while (rs.next()) {
+				planet_ids.add(rs.getInt(1));
+				planet_names.add(rs.getString(2));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		for (int i = 0; i < planet_ids.size(); i++) {
+			try {
+				rs = stmnt.executeQuery("SELECT num_battle FROM battle_stats WHERE planet_id = " + planet_ids.get(i));
+				
+				while (rs.next()) {
+					num_battles.get(i).add(rs.getInt(1));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		this.planet_ids = planet_ids;
+		this.planet_names = planet_names;
+		this.num_battles = num_battles;
+		
+	}
 	
 	
 }

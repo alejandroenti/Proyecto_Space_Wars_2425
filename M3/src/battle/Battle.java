@@ -147,10 +147,6 @@ public class Battle implements Variables {
 	
 	public void startBattle() {
 		
-		battles++;
-		
-		//DatabaseController.instance.updateBattlesCounter(InterfaceController.instance.getPlanetId(), battles);
-		
 		int order = (int)(Math.random() * 2);
 		
 		int percentageArmyPlanetAlive = (int)((actualNumberUnitsPlanet / initialNumberUnitsPlanet) * 100);
@@ -471,6 +467,9 @@ public class Battle implements Variables {
 		
 		System.out.println("Planet Losses: " + resourcesLosses[0][2] + " vs Enemy Losses: " + resourcesLosses[1][2]);
 		
+		battles++;
+		DatabaseController.instance.updateBattlesCounter(InterfaceController.instance.getPlanetId(), battles);
+		
 		if (resourcesLosses[0][2] <= resourcesLosses[1][2]) {
 			battleDevelopment += Printing.printStringCentred("PLAYER WINS!!", '=', 60) + "\n";
 			
@@ -486,7 +485,7 @@ public class Battle implements Variables {
 
 		}
 		
-		//DatabaseController.instance.updateRemainingUnits(armies, InterfaceController.instance.getPlanetId());
+		DatabaseController.instance.updateRemainingUnits(armies, InterfaceController.instance.getPlanetId());
 		
 
 		DatabaseController.instance.uploadPlanetBattleDefense(InterfaceController.instance.getPlanetId(), num_battle, initialArmies, armies);
