@@ -241,6 +241,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 					timerShowWinner.cancel();
 					
 					enemyPanel.resetEnemy();
+					buttonsPanel.showPanel();
 					approachEnemy();
 					return;
 				}
