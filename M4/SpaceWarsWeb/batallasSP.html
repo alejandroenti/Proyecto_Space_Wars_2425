@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Batallas</title>
+    <link rel="stylesheet" href="batallasSP.css">
+    <link rel="icon" type="image/png" href="https://media.discordapp.net/attachments/1295795340989169816/1370067853239386142/logo_azul-removebg-preview.png?ex=681e269e&is=681cd51e&hm=409c1f84467f257aeff764749f4644e57cccdaa237b1d9aa918f71832892c4ee&=&format=webp&quality=lossless">
+</head>
+<body>
+    <header>
+        <div class="contenedor">
+            <a href="indexSP.html" class="logo">
+                <img src="https://media.discordapp.net/attachments/1295795340989169816/1370067853239386142/logo_azul-removebg-preview.png?ex=681e269e&is=681cd51e&hm=409c1f84467f257aeff764749f4644e57cccdaa237b1d9aa918f71832892c4ee&=&format=webp&quality=lossless" alt="logo">
+                <h2 class="logo-nombre">SPACE WARS</h2>             
+            </a>
+
+            <nav class="menu">
+                <ul>
+                    <a href="tutorialSP.html">Tutorial</a>
+                    <a href="batallasSP.html">Batallas</a> 
+                    <a href="aboutusSP.html">About Us</a>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="buscadorBatallas">
+        <div class="contenedor">
+            <div class="contenido-contenedor">
+                <div class="fila">
+                    <div class="img-contenedor"></div>
+                    <h1> BUSCADOR DE BATALLAS </h1>
+
+                    <div class="buscador">
+                        <form onsubmit="mostrarBatalla(); return false;">
+                            <input type="text" id="numeroBatalla" placeholder="NUMERO DE BATALLA">
+                            <button type="submit" class="submit">
+                                <img src="https://media.istockphoto.com/id/1478642918/es/vector/lupa-ilustraci%C3%B3n-vectorial-del-icono-de-dibujos-animados-ilustraci%C3%B3n-plana-de-lindo-icono-de.jpg?s=612x612&w=0&k=20&c=jwDuc36ldZxYWUMpx0QHNf-kQ6w5RMCVdBA9Oh6K_B8=" alt="Buscar" class="icono">
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="visor-contenedor">
+                        <iframe id="visorBatalla" class="visor-batalla" frameborder="0"></iframe>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="contenedor">
+            <p>&copy; Monica Dominguez - Laura Toro - Alejandro López </p>
+        </div>
+    </footer>
+
+    <script src="batallasSP.js"></script>
+</body>
+</html>

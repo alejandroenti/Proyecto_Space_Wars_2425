@@ -1,0 +1,274 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: rgb(203, 209, 235);
+    font-size: 3.5em;
+    text-shadow: 
+    0px 0px 10px rgb(17, 19, 34),
+    0px 0px 10px rgb(17, 19, 34),
+    0px 0px 10px rgb(17, 19, 34),
+    0px 0px 10px rgb(17, 19, 34);
+}
+
+h2{
+    margin: 0;
+    padding: auto;
+    display: flex;
+    text-align: left;
+    color: rgb(255, 255, 255);
+}
+
+body {
+    position: relative;
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: rgb(5, 42, 63);
+    color: #fff;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+
+header {
+    background-color: rgb(44, 73, 105); 
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    padding: 10px 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header .contenedor {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between; 
+    align-items: center;
+    max-width: 1200px; 
+    width: 100%;
+    margin: 0 auto; 
+    gap: 20px; 
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+header .logo img {
+    height: 100px;
+    transition: transform 0.3s ease;
+}
+
+header .logo img:hover {
+    transform: scale(1.1); 
+}
+
+header .logo h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: rgb(17, 19, 34);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+header nav {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px; 
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+    transition: color 0.3s ease;
+}
+
+header a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-weight: bold;
+    color: rgb(17, 19, 34);
+    border: 2px solid transparent;
+    border-radius: 5px;
+    list-style-type: none;
+    transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+
+header a:hover {
+    color: rgb(172, 171, 230);
+}
+
+#hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    height: 90vh;
+    color: rgb(118, 120, 146);
+    background-image: linear-gradient(0deg,
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.5)), url(https://wallpapers.com/images/hd/earth-thick-clouds-4k-space-9cz439cbas77vab6.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 50px; 
+    padding: 20px;
+
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+body :before,
+body :after { 
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background: linear-gradient(45deg, rgb(5, 42, 63), rgb(146, 154, 161));
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    background-size: 400%;
+    z-index: -1;
+    animation: animate 15s linear infinite alternate both;
+    filter: blur(20px);
+
+  }
+  
+  @keyframes animate {
+    0% { background-position: 0 0; }
+    70% { background-position: 200% 0; }
+    100% { background-position: 0 0; }
+  }
+  
+#body frame {
+    width: 65vw;
+    height: 50vw;
+}
+
+.contenido-contenedor {
+    background-color: rgb(44, 73, 105); 
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.texto-con-gif {
+    display: flex;
+    align-items: center; 
+    gap: 120px; 
+}
+
+.texto-con-gif h2 {
+    font-size: 1.5em;
+    color: rgb(255, 255, 255);
+    margin: 0; 
+}
+
+.gif img {
+    width: 350px; 
+    height: auto; 
+    object-fit: contain;
+    border-radius: 12px;
+    max-height: 100%; 
+    transition: transform 0.3s ease;
+}
+
+.gif img:hover {
+    transform: scale(1.1); 
+}
+footer {
+    background-color: rgb(44, 73, 105); 
+    padding: 20px;
+    margin-top: 50px;
+    text-align: center;
+}
+
+footer p {
+    color: white;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.2em;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 1.2em;
+        text-align: center;
+    }
+
+    header {
+        flex-direction: column;
+        padding: 10px;
+        text-align: center;
+    }
+
+    header .contenedor {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    header nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    header .logo {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .gif img {
+        width: 220px;
+    }
+
+    .contenido-contenedor {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    #hero {
+        font-size: 0.9em;
+        padding: 30px 15px;
+        margin: 10px;
+    }
+
+    #body frame {
+        width: 100vw;
+        height: 70vw;
+    }
+
+
+    .texto-con-gif {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .texto-con-gif h2 {
+        font-size: 1.2em;
+        padding: 0 10px;
+    }
+
+    .gif img {
+        width: 200px;
+        max-width: 90%;
+    }
+    
+    
+}
