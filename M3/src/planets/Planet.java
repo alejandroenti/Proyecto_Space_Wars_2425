@@ -360,7 +360,7 @@ public class Planet implements Variables {
 		String result = "<html>";
 		
 		result += "<b>" + Printing.printTitle(InterfaceController.instance.getNamePlanet() + " Stats:") + "</b><br><br>";
-		result += Printing.printTitle("technology".toUpperCase()) + "</b><br><br>";
+		result += "<b>" + Printing.printTitle("technology".toUpperCase()) + "</b><br><br>";
 		result += Printing.printStringSized("Attack Technology -> ", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(technologyAttack, MAX_NUMBER_SIZE) + "<br>";
 		result += Printing.printStringSized("Defense Technology -> ", MAX_LINE_SIZE - MAX_NUMBER_SIZE) + Printing.printNumberSized(technologyDefense, MAX_NUMBER_SIZE) + "<br><br>";
 		result += "<b>" + Printing.printTitle("defenses".toUpperCase()) + "</b><br><br>";

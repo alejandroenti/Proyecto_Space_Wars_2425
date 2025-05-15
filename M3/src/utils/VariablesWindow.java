@@ -90,4 +90,7 @@ public interface VariablesWindow {
 	public final int PLANET_SELECTION_MAX = 9;
 	public final int ARMY_SELECTION_MIN = 1;
 	public final int ARMY_SELECTION_MAX = 5;
+	
+	// Player Panel
+	public final int[] PLANET_PANEL_POSITION = { (int)(-FRAME_WIDTH / 2), 0 };
 }
