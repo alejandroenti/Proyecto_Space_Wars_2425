@@ -92,7 +92,7 @@ public interface VariablesWindow {
 	public final int ARMY_SELECTION_MAX = 5;
 	
 	// Player Panel
-	public final int[] PLANET_PANEL_POSITION = { (int)(-FRAME_WIDTH / 2), 0 };
+	public final int[] PLANET_PANEL_POSITION = { (int)(-FRAME_WIDTH / 4), 0 };
 	
 	// Unit Panel
 	public final int UNIT_PANEL_X_PADDING = 32;
