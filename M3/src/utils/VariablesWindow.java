@@ -93,4 +93,21 @@ public interface VariablesWindow {
 	
 	// Player Panel
 	public final int[] PLANET_PANEL_POSITION = { (int)(-FRAME_WIDTH / 2), 0 };
+	
+	// Unit Panel
+	public final int UNIT_PANEL_X_PADDING = 32;
+	public final int UNIT_PANEL_UNIT_PANEL_SIZE = 48;
+	public final int UNIT_PANEL_BUTTON_SIZE = 32;
+	public final int[] UNIT_PANEL_RESOURCES_COST_PANEL_SIZE = { 28, 52 };
+	public final int UNIT_PANEL_RESOURCES_COST_PANEL_STRUT = 2;
+	public final int UNIT_PANEL_STRUT_LARGE = 256;
+	public final int UNIT_PANEL_STRUT_SMALL = 16;
+	public final int UNIT_PANEL_STRUT_TINY = 8;
+	public final int UNIT_PANEL_FONT_SIZE = 12;
+	public final int[] UNIT_PANEL_TEXT_POSITION_X = {
+		32,
+		490,
+		440,
+		440
+	};
 }
