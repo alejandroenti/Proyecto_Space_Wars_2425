@@ -1,5 +1,7 @@
 package utils;
 
+import java.awt.Color;
+
 public interface VariablesWindow {
 	// frame parameters
 	public final String FRAME_TITLE = "Space Wars";
@@ -51,6 +53,10 @@ public interface VariablesWindow {
 	public final int BUTTONS_PANEL_BUTTONS_SIZE = 50;
 	public final int BUTTONS_PANEL_STRUT_LARGE = 30;
 	public final int BUTTONS_PANEL_STRUT_SMALL = 10;
+	
+	// Buy Window
+	public final Color BUY_WINDOW_BACKGROUND_COLOR = new Color(24, 21, 20, 225);
+	public final int BUY_WINDOW_STRUT = 16;
 	
 	// MAIN PANEL Strings
 	public final int [][] MAIN_PANEL_STRING_POSITION = {
