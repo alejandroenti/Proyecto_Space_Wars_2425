@@ -20,7 +20,6 @@ import utils.Variables;
 
 public class Planet implements Variables {
 
-	private final int NUM_MILITARY_UNITS = 7;
 	private final int INIT_TECHNOLOGY_LEVEL = 0;
 	private final int INIT_METAL = METAL_BASE_PLANET_ARMY;
 	private final int INIT_DEUTERIUM = DEUTERIUM_BASE_PLANET_ARMY;
@@ -46,9 +45,9 @@ public class Planet implements Variables {
 		this.deuterium = INIT_DEUTERIUM;
 		this.upgradeDefenseTechnologyDeuteriumCost = Variables.UPGRADE_BASE_DEFENSE_TECHNOLOGY_DEUTERIUM_COST;
 		this.upgradeAttackTechnologyDeuteriumCost = Variables.UPGRADE_BASE_ATTACK_TECHNOLOGY_DEUTERIUM_COST;
-		this.army = new ArrayList[NUM_MILITARY_UNITS];
+		this.army = new ArrayList[PLANET_ARMY_LENGHT];
 		
-		for (int i = 0; i < NUM_MILITARY_UNITS; i++) {
+		for (int i = 0; i < PLANET_ARMY_LENGHT; i++) {
 			army[i] = new ArrayList<MilitaryUnit>();
 		}
 		
@@ -58,9 +57,6 @@ public class Planet implements Variables {
 		generateResources();
 	}
 	
-	public int getNUM_MILITARY_UNITS() {
-		return NUM_MILITARY_UNITS;
-	}
 	public int getTechnologyDefense() {
 		return technologyDefense;
 	}
@@ -120,6 +116,7 @@ public class Planet implements Variables {
 	
 	public void generateInitShips() {
 
+		// Generate Initial Ships, 1 of every type
 		newLightHunter(1);
 		newHeavytHunter(1);
 		newBattleShip(1);
@@ -130,6 +127,8 @@ public class Planet implements Variables {
 	}
 	
 	private void substractMaterials(int metalQuantity, int deuteriumQuantity) throws ResourceException {
+		
+		// Check if can buy
 		if (metal < metalQuantity) throw new ResourceException();
 		if (deuterium < deuteriumQuantity) throw new ResourceException();
 		metal -= metalQuantity;
@@ -165,6 +164,19 @@ public class Planet implements Variables {
 			re.printStackTrace();
 		}
 	}
+	
+	/*
+	 * Add new Unit/s:
+	 * 	- Get the index of arrays
+	 * 	- Calculate unitary metal and deuterium cost
+	 * 	- Calculate armour and damage, rely on attack and defense technology level
+	 * 		+ Base Stat + (Tech * Plus) * Base Stat / 100 --> Porcentual upgrade
+	 * 	- Iterate:
+	 * 		+ Substract materials
+	 * 		+ Add unit to army
+	 * 		+ Update buy counter
+	 * 		+ If there is an exception, pass info and break for loop
+	 */
 	
 	public void newLightHunter(int n) {
 		
@@ -342,6 +354,9 @@ public class Planet implements Variables {
 	}
 	
 	public String printStats() {
+		
+		// Print Planet Stats for ToolTip
+		
 		String result = "<html>";
 		
 		result += "<b>" + Printing.printTitle("Planet Stats:") + "</b><br><br>";
