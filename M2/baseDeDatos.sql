@@ -191,6 +191,57 @@ INSERT INTO battle_log (planet_id, num_battle, log_entry) VALUES
 SELECT * FROM battle_log;
 
 
+-- VISTA (¿)
+CREATE OR REPLACE VIEW vista_resumen_batalla AS
+SELECT 
+    bs.planet_id,
+    bs.num_battle,
+    
+    -- Recursos adquiridos
+    bs.resource_metal_acquired AS metal_recolectado,
+    bs.resource_deuterium_acquired AS deuterio_recolectado,
+    
+    -- Desechos generados
+    bs.waste_metal_generated AS desperdicio_metal,
+    bs.waste_deuterium_generated AS desperdicio_deuterio,
+    
+    -- Defensa construida y destruida
+    pbd.missile_launcher_built,
+    pbd.missile_launcher_destroyed,
+    pbd.ion_cannon_built,
+    pbd.ion_cannon_destroyed,
+    pbd.plasma_canon_built,
+    pbd.plasma_canon_destroyed,
+
+    -- Ejército del planeta
+    pba.light_hunter_built,
+    pba.light_hunter_destroyed AS pbaLHD,
+    pba.heavy_hunter_built,
+    pba.heavy_hunter_destroyed,
+    pba.battleship_built,
+    pba.battleship_destroyed,
+    pba.armored_ship_built,
+    pba.armored_ship_destroyed,
+
+    -- Ejército enemigo
+    ea.light_hunter_threat,
+    ea.light_hunter_destroyed,
+    ea.heavy_hunter_threat,
+    ea.heavy_hunter_destroyed,
+    ea.battleship_threat,
+    ea.battleship_destroyed,
+    ea.armored_ship_threat,
+    ea.armored_ship_destroyed,
+
+    -- Resultado
+    'Battle Won by Planet, We Collect Rubble' AS resultado_batalla
+
+FROM 
+    battle_stats bs
+JOIN planet_battle_defense pbd ON bs.planet_id = pbd.planet_id AND bs.num_battle = pbd.num_battle
+JOIN planet_battle_army pba ON bs.planet_id = pba.planet_id AND bs.num_battle = pba.num_battle
+JOIN enemy_army ea ON bs.planet_id = ea.planet_id AND bs.num_battle = ea.num_battle;
+
 
 
 

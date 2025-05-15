@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<battle_summary>
+    <planet>
+        <troops>
+            <troop>
+                <name>Light Hunter</name>
+                <units>6</units>
+                <drops>4</drops>
+            </troop>
+            <troop>
+                <name>Heavy Hunter</name>
+                <units>3</units>
+                <drops>3</drops>
+            </troop>
+            <troop>
+                <name>Battle Ship</name>
+                <units>1</units>
+                <drops>0</drops>
+            </troop>
+            <troop>
+                <name>Armored Ship</name>
+                <units>1</units>
+                <drops>0</drops>
+            </troop>
+            <troop>
+                <name>Missile Launcher</name>
+                <units>1</units>
+                <drops>0</drops>
+            </troop>
+            <troop>
+                <name>Ion Cannon</name>
+                <units>1</units>
+                <drops>0</drops>
+            </troop>
+            <troop>
+                <name>Plasma Cannon</name>
+                <units>1</units>
+                <drops>1</drops>
+            </troop>
+        </troops>
+
+        <cost>
+            <metal>233254</metal>
+            <deuterium>1234</deuterium>
+        </cost>
+
+        <losses>
+            <metal>72363248</metal>
+            <deuterium>127863</deuterium>
+            <weighed>12763</weighed>
+        </losses>
+    </planet>
+
+    <enemy>
+        <troops>
+            <troop>
+                <name>Light Hunter</name>
+                <units>6</units>
+                <drops>6</drops>
+            </troop>
+            <troop>
+                <name>Heavy Hunter</name>
+                <units>3</units>
+                <drops>3</drops>
+            </troop>
+            <troop>
+                <name>Battle Ship</name>
+                <units>1</units>
+                <drops>1</drops>
+            </troop>
+            <troop>
+                <name>Armored Ship</name>
+                <units>0</units>
+                <drops>0</drops>
+            </troop>
+        </troops>
+
+        <cost>
+            <metal>17269</metal>
+            <deuterium>182</deuterium>
+        </cost>
+
+        <losses>
+            <metal>123451</metal>
+            <deuterium>123</deuterium>
+            <weighted>726351</weighted>
+        </losses>
+    </enemy>
+
+    <generated_waste>
+        <metal>1000102</metal>
+        <deuterium>17634</deuterium>
+    </generated_waste>
+
+    <winner>Player Wins</winner>
+</battle_summary>
