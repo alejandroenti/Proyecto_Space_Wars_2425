@@ -25,15 +25,20 @@ public class PlayerPanel extends JPanel implements Variables , VariablesWindow {
 	public PlayerPanel(){
 		super();
 		
+		// Setup panel
 		setLayout(null);
 		setSize((int)(FRAME_WIDTH / 2), FRAME_HEIGHT);
 		setOpaque(false);
 		setLocation(0,0);
 		
-		this.armyPanels = new ImagePanel[7];
+		// Initialize army panels array
+		this.armyPanels = new ImagePanel[PLANET_ARMY_LENGHT];
 		
+		// Initialize planet panel with its image
 		planetPanel = new ImagePanel(BASE_URL + "planet00.png");
-		planetPanel.setBounds((int)(-getWidth() / 2), 0, (int)(FRAME_WIDTH / 2), FRAME_HEIGHT);
+		planetPanel.setBounds(PLANET_PANEL_POSITION[0], PLANET_PANEL_POSITION[1], (int)(FRAME_WIDTH / 2), FRAME_HEIGHT);
+		
+		// Add listener to get its info for ToolTip
 		planetPanel.addMouseListener(new MouseButtonsListener() {
 			public void mouseEntered(MouseEvent e) {
 				planetPanel.setToolTipText(InterfaceController.instance.printStats());				
@@ -43,6 +48,7 @@ public class PlayerPanel extends JPanel implements Variables , VariablesWindow {
 			}
 		});
 		
+		// Initialize army Panel - Necessary for defense units ToolTip
 		armyPanel = new JPanel();
 		armyPanel.setLayout(null);
 		armyPanel.setBounds(0, 0, (int)(FRAME_WIDTH / 2), FRAME_HEIGHT);
@@ -61,15 +67,29 @@ public class PlayerPanel extends JPanel implements Variables , VariablesWindow {
 	}
 	
 	public void setPlayerArmy(ArrayList<MilitaryUnit>[] playerArmy) {
+		/*
+		 * - Set new army
+		 * - Clean older Unit Panels
+		 * - Load the panels with new army
+		 */
 		this.playerArmy = playerArmy;
 		cleanPanels();
 		loadArmy();
 	}
 	
 	public void loadArmy() {
-		
+		/*
+		 * For every army unit:
+		 * 	- Check if there is any unit:
+		 * 		+ Initialize a panel with its unit image
+		 * 		+ Set its size
+		 * 		+ Rotate image
+		 * 		+ Add listener to get units on ToolTip
+		 * 		+ Add to panel to armyPanels on its unit type
+		 * 		+ Add panel to Army Panel
+		 * Repaint Player Panel
+		 */		
 		for (int i = 0; i < playerArmy.length; i++) {
-			
 			if (playerArmy[i].size() > 0) {
 				ImagePanel unit = new ImagePanel(BASE_URL + "ships_" + i + "_0.png");
 				unit.setBounds(PLAYER_SHIPS_POSITIONS[i][0], PLAYER_SHIPS_POSITIONS[i][1], SHIPS_SIZES[i], SHIPS_SIZES[i]);
@@ -94,6 +114,15 @@ public class PlayerPanel extends JPanel implements Variables , VariablesWindow {
 	
 	public void addUnit(int unitType, MilitaryUnit unit) {
 		
+		/*
+		 * - Check if there is no other unit in this unit type:
+		 * 		+ Generate new Image Panel with the unit type
+		 * 		+ Size it and rotate it
+		 * 		+ Add it to armyPanels
+		 * 		+ Add listener to get units on ToolTip
+		 * 		+ Add unit to army Panel
+		 * - Add unit to army
+		 */
 		if (playerArmy[unitType].size() == 0) {
 			ImagePanel unitPanel = new ImagePanel(BASE_URL + "ships_" + unitType + "_0.png");
 			unitPanel.setBounds(PLAYER_SHIPS_POSITIONS[unitType][0], PLAYER_SHIPS_POSITIONS[unitType][1], SHIPS_SIZES[unitType], SHIPS_SIZES[unitType]);
@@ -118,6 +147,7 @@ public class PlayerPanel extends JPanel implements Variables , VariablesWindow {
 	
 	public void removeUnit(int unitType, MilitaryUnit unit) {
 		
+		// Iterate for army unit type to eliminate unit
 		for (int i = 0; i < playerArmy[unitType].size(); i++) {
 			if (playerArmy[unitType].get(i) == unit) {
 				playerArmy[unitType].remove(i);
@@ -125,6 +155,7 @@ public class PlayerPanel extends JPanel implements Variables , VariablesWindow {
 			}
 		}
 		
+		// If there is no other unit, remove image from panel and army panels
 		if (playerArmy[unitType].size() <= 0) {
 			armyPanel.remove(armyPanels[unitType]);
 			armyPanels[unitType] = null;

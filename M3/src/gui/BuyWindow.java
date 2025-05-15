@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -37,6 +36,7 @@ public class BuyWindow extends JFrame implements Variables, VariablesWindow {
 
 	private void setupFrame() {
 		
+		// Setup Window
 		this.setTitle(FRAME_TITLE);
 		this.setSize(FRAME_WIDTH / 2, FRAME_HEIGHT);
 		this.setLocationRelativeTo(null);
@@ -56,13 +56,15 @@ public class BuyWindow extends JFrame implements Variables, VariablesWindow {
 	}
 	
 	private void initMainPanel() {
-
+		
+		// Setup MainPanel
 		mainPanel = new JPanel();
-		mainPanel.setBackground(new Color(24, 21, 20, 225));
+		mainPanel.setBackground(BUY_WINDOW_BACKGROUND_COLOR);
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		
-		mainPanel.add(Box.createVerticalStrut(16));
+		mainPanel.add(Box.createVerticalStrut(BUY_WINDOW_STRUT));
 		
+		// Initialize array of Unit panels and to the units and Main Panel with an Strut panel
 		this.unitPanels = new ArrayList<UnitPanel>();
 		
 		for (int i = 0; i < MILITARY_UNIT_NAMES.length; i++) {
@@ -74,6 +76,7 @@ public class BuyWindow extends JFrame implements Variables, VariablesWindow {
 			mainPanel.add(Box.createVerticalStrut(16));
 		}
 		
+		// Initialize and add listener to button Buy
 		btnBuy = new JButton("Buy");
 		btnBuy.setAlignmentX(CENTER_ALIGNMENT);
 		btnBuy.addMouseListener(new MouseButtonsListener() {
@@ -83,6 +86,14 @@ public class BuyWindow extends JFrame implements Variables, VariablesWindow {
 			}
 			
 			public void mouseClicked(MouseEvent e) {
+				/*
+				 * On click:
+				 * 	- Generate two ArrayList to store the Unit Type and the Quantity to buy
+				 * 	- Iterate over every panel and check the units to buy is greater than 0
+				 * 		+ IF TRUE - Add unit and quantity to their arraylist
+				 * 	- Pass the arraylists to InterfaceController and apply the buy
+				 * 	- Close the Window
+				 */
 				ArrayList<Integer> units = new ArrayList<Integer>();
 				ArrayList<Integer> quantity = new ArrayList<Integer>();
 				for (UnitPanel unit : unitPanels) {					
@@ -97,7 +108,7 @@ public class BuyWindow extends JFrame implements Variables, VariablesWindow {
 		});
 		
 		mainPanel.add(btnBuy);
-		mainPanel.add(Box.createVerticalStrut(16));
+		mainPanel.add(Box.createVerticalStrut(BUY_WINDOW_STRUT));
 		
 		this.add(mainPanel);
 	}

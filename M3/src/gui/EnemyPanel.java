@@ -27,19 +27,27 @@ public class EnemyPanel extends JPanel implements Variables, VariablesWindow {
 	private int colorArmy;
 	
 	public EnemyPanel () {
+		// Setup approaching spped and Init Position Variable
 		approaching_speed = (INIT_POS_X - (int)(FRAME_WIDTH / 2)) / APPROACH_STEPS;
 		posX = INIT_POS_X;
 		
+		// Setup Panel
 		setLayout(null);
 		setSize((int)(FRAME_WIDTH / 2), FRAME_HEIGHT);
 		setOpaque(false);
 		setLocation(posX, POS_Y);
 		
-		armyPanels = new ImagePanel[4];
+		// Initialize Panels of Enemy Army
+		armyPanels = new ImagePanel[ENEMY_ARMY_LENGHT];
 		
-		int num = (int)(1+ Math.random() * 9);
+		// Chose a random planet
+		int num = (int)(PLANET_SELECTION_MIN + Math.random() * PLANET_SELECTION_MAX);
+		
+		// Initialize planet panel with the planet chosen above
 		planetPanel = new ImagePanel(BASE_URL + "planet0" + num + ".png");
 		planetPanel.setBounds(getWidth() / 2, 0, (int)(FRAME_WIDTH / 2), FRAME_HEIGHT);
+		
+		// Add listener to update ToolTip text with current information
 		planetPanel.addMouseListener(new MouseButtonsListener() {
 			public void mouseEntered(MouseEvent e) {
 				planetPanel.setToolTipText(printStats());				
@@ -49,7 +57,8 @@ public class EnemyPanel extends JPanel implements Variables, VariablesWindow {
 			}
 		});
 		
-		this.colorArmy = (int)(1 + Math.random() * 5);
+		// Choose a random color army
+		this.colorArmy = (int)(ARMY_SELECTION_MIN + Math.random() * ARMY_SELECTION_MAX);
 				
 		add(planetPanel);
 	}
@@ -83,6 +92,11 @@ public class EnemyPanel extends JPanel implements Variables, VariablesWindow {
 	}
 	
 	public void setEnemyArmy(ArrayList<MilitaryUnit>[] enemyArmy) {
+		/*
+		 * - Set new army
+		 * - Clean older Unit Panels
+		 * - Load the panels with new army
+		 */
 		this.enemyArmy = enemyArmy;
 		cleanPanels();
 		loadArmy();
@@ -98,19 +112,34 @@ public class EnemyPanel extends JPanel implements Variables, VariablesWindow {
 	}
 	
 	public void resetEnemy() {
+		
+		// Reset position to Initial
 		posX = INIT_POS_X;
 		setLocation(posX,POS_Y);
 		
-		int num = (int)(1+ Math.random() * 9);
+		// Choose a new planet
+		int num = (int)(PLANET_SELECTION_MIN + Math.random() * PLANET_SELECTION_MAX);
 		planetPanel.changeImage(BASE_URL + "planet0" + num + ".png");
 		
-		colorArmy = (int)(1 + Math.random() * 5);
+		// Choose a new color army
+		colorArmy = (int)(ARMY_SELECTION_MIN + Math.random() * ARMY_SELECTION_MAX);
 	}
 	
 	public void loadArmy() {
 		
+		/*
+		 * For every army unit:
+		 * 	- Check if there is any unit:
+		 * 		+ Initialize a panel with its unit image
+		 * 		+ Set its size
+		 * 		+ Rotate image
+		 * 		+ Add listener to get units on ToolTip
+		 * 		+ Add to panel to armyPanels on its unit type
+		 * 		+ Add panel to Enemy Panel
+		 * Repaint Enemy Panel
+		 */
+		
 		for (int i = 0; i < enemyArmy.length; i++) {
-			
 			if (enemyArmy[i].size() > 0) {
 				ImagePanel unit = new ImagePanel(BASE_URL + "ships_" + i + "_" + colorArmy + ".png");
 				unit.setBounds(ENEMY_SHIPS_POSITIONS[i][0], ENEMY_SHIPS_POSITIONS[i][1], SHIPS_SIZES[i], SHIPS_SIZES[i]);
@@ -132,33 +161,10 @@ public class EnemyPanel extends JPanel implements Variables, VariablesWindow {
 		
 		repaint();
 	}
-	
-	public void addUnit(int unitType, MilitaryUnit unit) {
-		
-		if (enemyArmy[unitType].size() == 0) {
-			ImagePanel unitPanel = new ImagePanel(BASE_URL + "ships_" + unitType + "_0.png");
-			unitPanel.setBounds(ENEMY_SHIPS_POSITIONS[unitType][0], ENEMY_SHIPS_POSITIONS[unitType][1], SHIPS_SIZES[unitType], SHIPS_SIZES[unitType]);
-			unitPanel.rotateImage(INITAL_ENEMY_SHIP_ROTATION);
-			
-			unitPanel.addMouseListener(new MouseButtonsListener(unitType) {
-				public void mouseEntered(MouseEvent e) {
-					unitPanel.setToolTipText(getUnitStats(this.getId()));				
-				}
-				
-				public void mouseExited(MouseEvent e) {
-				}
-			});
-			
-			armyPanels[unitType] = unitPanel;
-			add(unitPanel);
-			repaint();
-		}
-		
-		enemyArmy[unitType].add(unit);
-	}
-	
+
 	public void removeUnit(int unitType, MilitaryUnit unit) {
 		
+		// Iterate for army unit type to eliminate unit
 		for (int i = 0; i < enemyArmy[unitType].size(); i++) {
 			if (enemyArmy[unitType].get(i) == unit) {
 				enemyArmy[unitType].remove(i);
@@ -166,6 +172,7 @@ public class EnemyPanel extends JPanel implements Variables, VariablesWindow {
 			}
 		}
 		
+		// If there is no other unit, remove image from panel and army panels
 		if (enemyArmy[unitType].size() <= 0) {
 			remove(armyPanels[unitType]);
 			enemyArmy[unitType] = null;
@@ -205,7 +212,7 @@ public class EnemyPanel extends JPanel implements Variables, VariablesWindow {
 	}
 	
 	private void cleanPanels() {
-		for (int i = 0; i < 4; i++) {		
+		for (int i = 0; i < ENEMY_ARMY_LENGHT; i++) {		
 			if (armyPanels[i] != null) {
 				remove(armyPanels[i]);
 				armyPanels[i] = null;

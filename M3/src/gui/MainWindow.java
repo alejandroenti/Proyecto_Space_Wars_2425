@@ -31,6 +31,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		
 		setupFrame();
 		
+		// Demand Planet Name
 		do {
 			namePlanet = JOptionPane.showInputDialog(null, "¿What's the name of your planet?", "Name your planet", JOptionPane.QUESTION_MESSAGE);			
 		} while (namePlanet == null || namePlanet.contentEquals(""));
@@ -80,6 +81,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 
 	private void setupFrame() {
 		
+		// Setup Window
 		this.setTitle(FRAME_TITLE);
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		this.setLocationRelativeTo(null);
@@ -101,37 +103,37 @@ public class MainWindow extends JFrame implements VariablesWindow {
 	private void initMainPanel() {
 		
 		/*
-		 * Hacemos el Layout del Panel Principal completamente flexible y
-		 * posicionamos de manera absoluta en cuanto a la Ventana Principal
+		 * Made MainPanel's layout null for maximum flexibility.
+		 * We can position freely any component with absolute positions
 		 * 
 		 */
 		mainPanel = new ImagePanel(BACKGROUND_IMAGE);
 		mainPanel.setLayout(null);
 
+		// Initialize every panel
 		playerPanel = new PlayerPanel();
 		enemyPanel = new EnemyPanel();
 		buttonsPanel = new ButtonsPanel();
 		
 		attackerSelectorPanel = new ImagePanel(BASE_URL + "selector_attacker.png");
-		attackerSelectorPanel.setMaximumSize(new Dimension(48, 48));
-		attackerSelectorPanel.setLocation(-1000, 0);
+		attackerSelectorPanel.setMaximumSize(new Dimension(SELECTOR_PANEL_SIZE, SELECTOR_PANEL_SIZE));
+		attackerSelectorPanel.setLocation(RESET_POSITION[0], RESET_POSITION[1]);
 		
 		defenderSelectorPanel = new ImagePanel(BASE_URL + "selector_defender.png");
-		defenderSelectorPanel.setMaximumSize(new Dimension(48, 48));
-		defenderSelectorPanel.setLocation(-1000, 0);
+		defenderSelectorPanel.setMaximumSize(new Dimension(SELECTOR_PANEL_SIZE, SELECTOR_PANEL_SIZE));
+		defenderSelectorPanel.setLocation(RESET_POSITION[0], RESET_POSITION[1]);
 		
-		bulletPanel = new ImagePanel(BASE_URL + "selector_attacker.png");
-		bulletPanel.setMaximumSize(new Dimension(24, 24));
-		bulletPanel.setLocation(-1000, 0);
+		bulletPanel = new ImagePanel(BASE_URL + "bullet_0_player.png");
+		bulletPanel.setMaximumSize(new Dimension(BULLET_PANEL_SIZE, BULLET_PANEL_SIZE));
+		bulletPanel.setLocation(RESET_POSITION[0], RESET_POSITION[1]);
 		
+		// Load animation spritesheet and split it on different images
 		try {
 			BufferedImage img = ImageIO.read(new File(BASE_URL + "SpriteExplosion.png"));
 			explosionSprites = new ArrayList<BufferedImage>();
-			//BufferedImage sprite = img.getSubimage(x, y, width, height);
-			// cargamos las 48 imágenes de la hoja de sprites en un arrayList
-			for (int j = 0; j<6; j++) {
-				for (int i = 0; i < 8; i++) {
-					explosionSprites.add(img.getSubimage(256*i, j*248, 256, 248 ));
+			for (int j = 0; j < EXPLOSION_SPRITESHEET_ROWS; j++) {
+				for (int i = 0; i < EXPLOSION_SPRITESHEET_COLS; i++) {
+					explosionSprites.add(img.getSubimage(EXPLOSION_IMAGE_WIDTH * i, j * EXPLOSION_IMAGE_HEIGHT, EXPLOSION_IMAGE_WIDTH, EXPLOSION_IMAGE_HEIGHT));
 				}
 			}
 		} catch (IOException e) {
@@ -140,9 +142,10 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		}
 		
 		explosionPanel = new ImagePanel(explosionSprites.get(0));
-		explosionPanel.setMaximumSize(new Dimension(48, 48));
-		explosionPanel.setLocation(-1000, 0);
+		explosionPanel.setMaximumSize(new Dimension(EXPLOSION_PANEL_SIZE, EXPLOSION_PANEL_SIZE));
+		explosionPanel.setLocation(RESET_POSITION[0], RESET_POSITION[1]);
 		
+		// Adding panels to MainPanel
 		mainPanel.add(explosionPanel);
 		mainPanel.add(defenderSelectorPanel);
 		mainPanel.add(attackerSelectorPanel);
@@ -156,6 +159,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 	
 	public void approachEnemy() {
 		
+		// Task for approach enemyPanel to its position on X (FRAME_WIDTH / 2)
 		Timer timerApproachEnemy = new Timer();
 		TimerTask taskApproachEnemy = new TimerTask() {
 			public void run() {
@@ -167,6 +171,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 			}
 		};
 		
+		// Task for change timer text on Main Panel
 		mainPanel.setFirstLine("Enemy Approaching");
 		remainingSeconds = 16;
 		Timer timerTimeApproachEnemy = new Timer();
@@ -179,6 +184,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 					return;
 				}
 				
+				// Convert from seconds to MM:SS
 				int minutes = (int)(remainingSeconds / 60);
 				int seconds = remainingSeconds % 60;
 				mainPanel.setSecondLine(String.format("%02d:%02d", minutes, seconds));
@@ -186,12 +192,15 @@ public class MainWindow extends JFrame implements VariablesWindow {
 			}
 		};
 		
+		// Start timers and create Enemy Army
 		timerApproachEnemy.schedule(taskApproachEnemy, APPROACH_DELAY, (int)(APPROACH_TIME / APPROACH_STEPS));
 		timerTimeApproachEnemy.schedule(taskTimeApproachEnemy, APPROACH_DELAY, 1000);
 		InterfaceController.instance.createEnemyArmy();
 	}
 	
 	public void startBattle() {
+		
+		// Delayed task for start the battle
 		Timer timerStartBattle = new Timer();
 		TimerTask taskStartBattle = new TimerTask() {
 			public void run() {
@@ -200,6 +209,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 			}
 		};
 		
+		// Task for update Main Panel timer text
 		mainPanel.setFirstLine("Battle Starts in");
 		remainingSeconds = 6;
 		Timer timerTimeStartBattle = new Timer();
@@ -228,6 +238,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 	
 	public void showBattleWinner(String message) {
 		
+		// Task for show Battle Winner and start a new one
 		mainPanel.setFirstLine(message);
 		remainingSeconds = 5;
 		Timer timerShowWinner = new Timer();
@@ -241,6 +252,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 					timerShowWinner.cancel();
 					
 					enemyPanel.resetEnemy();
+					buttonsPanel.showPanel();
 					approachEnemy();
 					return;
 				}
