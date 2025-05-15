@@ -35,7 +35,6 @@ public class Battle implements Variables {
 	}
 
 	public void createBattle(ArrayList<MilitaryUnit>[] planetArmy, ArrayList<MilitaryUnit>[] enemyArmy) {
-		this.num_battle = 0;
 		
 		this.planetArmy = planetArmy;
 		this.enemyArmy = enemyArmy;
