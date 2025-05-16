@@ -16,12 +16,16 @@ public interface VariablesWindow {
 	public final int[] RESET_POSITION = { -1000, 0 };
 	
 	// timer parameters
+	public final int EVERY_SEC = 1000;
+	
 	public final int APPROACH_TIME = 180000;
 	public final int APPROACH_STEPS = 900;
 	public final int APPROACH_DELAY = 0;
 	
 	public final int APPROACH_SECONDS = 180;
-	public final int BATTLE_STARTS_IN = 10;
+	public final int BATTLE_STARTS_IN = 60;
+	public final int BATTLE_STARTS_IN_MILISECS = BATTLE_STARTS_IN * EVERY_SEC;
+	public final int SHOW_WINNERS = 5 * EVERY_SEC;
 	
 	// Ships Initial Rotation
 	public final int INITAL_PLAYER_SHIP_ROTATION = 270;
