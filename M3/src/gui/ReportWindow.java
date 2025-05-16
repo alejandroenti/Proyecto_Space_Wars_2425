@@ -75,6 +75,7 @@ public class ReportWindow extends JFrame implements Variables, VariablesWindow {
 		this.report.setLineWrap(true);
 		this.report.setWrapStyleWord(true);
 		this.report.setText(DatabaseController.instance.getBattleSummary(planetId, battleId) + "\n\n" + DatabaseController.instance.getBattleLog(planetId, battleId));
+		this.report.setCaretPosition(0);
 		
 		// Setup ScrollPane
 		this.scrollPane = new JScrollPane(this.report);
