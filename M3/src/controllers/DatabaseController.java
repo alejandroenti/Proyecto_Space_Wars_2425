@@ -81,9 +81,10 @@ public class DatabaseController implements Variables{
 	// METODOS PLANET_STATS
 	// Crear planeta
 	public void newPlanet(Planet planet, String namePlanet) {
-		query = "INSERT INTO planet_stats ( name_planet, resource_metal_amount, resource_deuterium_amount, technology_defense_level, technology_attack_level, battles_counter, missile_launcher_remaining, ion_canon_remaining, plasma_canon_remaining, light_hunter_remaining, heavy_hunter_remaining, battleship_remaining, armored_ship_remaining ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		try {
+			query = "INSERT INTO planet_stats ( name_planet, resource_metal_amount, resource_deuterium_amount, technology_defense_level, technology_attack_level, battles_counter, missile_launcher_remaining, ion_canon_remaining, plasma_canon_remaining, light_hunter_remaining, heavy_hunter_remaining, battleship_remaining, armored_ship_remaining ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
 			ps = conn.prepareStatement(query);
 			ps.setString(1, namePlanet);
 			ps.setInt(2, planet.getMetal());
@@ -115,9 +116,10 @@ public class DatabaseController implements Variables{
 	
 	// Actualizamos metal
 	public void updateMetal(int planet_id, int metal_quantity) {
-		query = "UPDATE planet_stats SET resource_metal_amount = ? WHERE planet_id = ?";
 		
 		try {
+			query = "UPDATE planet_stats SET resource_metal_amount = ? WHERE planet_id = ?";
+
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, metal_quantity);
 			ps.setInt(2, planet_id);
@@ -130,9 +132,10 @@ public class DatabaseController implements Variables{
 	
 	// Actualizamos deuterio
 	public void updateDeuterium(int planet_id, int deuterium_quantity) {
-		query = "UPDATE planet_stats SET resource_deuterium_amount = ? WHERE planet_id = ?";
 		
 		try {
+			query = "UPDATE planet_stats SET resource_deuterium_amount = ? WHERE planet_id = ?";
+
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, deuterium_quantity);
 			ps.setInt(2, planet_id);
@@ -145,9 +148,10 @@ public class DatabaseController implements Variables{
 	
 	// Actualizamos tecnología defensa
 	public void updateDefenseTechnology(Planet planet) {
-		query = "UPDATE planet_stats SET technology_defense_level = ? WHERE planet_id = ?";
 		
 		try {
+			query = "UPDATE planet_stats SET technology_defense_level = ? WHERE planet_id = ?";
+
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, planet.getTechnologyDefense());
 			ps.setInt(2, planet.getPlanet_id());
@@ -160,9 +164,10 @@ public class DatabaseController implements Variables{
 	
 	// Actualizamos tecnología ataque
 	public void updateAttackTechnology(Planet planet) {
-		query = "UPDATE planet_stats SET technology_attack_level = ? WHERE planet_id = ?";
 		
 		try {
+			query = "UPDATE planet_stats SET technology_attack_level = ? WHERE planet_id = ?";
+
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, planet.getTechnologyAttack());
 			ps.setInt(2, planet.getPlanet_id());
@@ -188,9 +193,10 @@ public class DatabaseController implements Variables{
 	
 	// Actualizamos unidades restantes
 	public void updateRemainingUnits(ArrayList[][] armies, int planet_id) {
-		query = "UPDATE planet_stats SET missile_launcher_remaining = ?, ion_canon_remaining = ?, plasma_canon_remaining = ?, light_hunter_remaining = ?, heavy_hunter_remaining = ?, battleship_remaining = ?, armored_ship_remaining = ? WHERE planet_id = ?";
 		
 		try {
+			query = "UPDATE planet_stats SET missile_launcher_remaining = ?, ion_canon_remaining = ?, plasma_canon_remaining = ?, light_hunter_remaining = ?, heavy_hunter_remaining = ?, battleship_remaining = ?, armored_ship_remaining = ? WHERE planet_id = ?";
+
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, armies[0][4].size());
 			ps.setInt(2, armies[0][5].size());
@@ -269,13 +275,16 @@ public class DatabaseController implements Variables{
 					line = battleDevelopment.substring(last_new_line+1, i);
 				}
 				
-				query = "INSERT INTO battle_log (planet_id, num_battle, log_entry) VALUES (?,?,?)";
 				
 				try {
+					query = "INSERT INTO battle_log (planet_id, num_battle, log_entry) VALUES (?,?,?)";
 					ps = conn.prepareStatement(query);
 					ps.setInt(1, planet_id);
 					ps.setInt(2, num_battle);
 					ps.setString(3, line);
+					
+					//System.out.println("UploadBattleLog: " + "INSERT INTO battle_log (planet_id, num_battle, log_entry) VALUES (" + planet_id + "," + num_battle + "," + line + ")");
+					
 					ps.executeUpdate();
 					
 				} catch (SQLException e) {
@@ -292,10 +301,10 @@ public class DatabaseController implements Variables{
 	// Creamos una entrada para las defensas del planeta en la batalla (al final de la batalla)
 	public void uploadPlanetBattleDefense(int planet_id, int num_battle, int[][] initialArmies, ArrayList[][] armies) {
 		
-		query = "INSERT INTO planet_battle_defense (planet_id, num_battle, missile_launcher_built, missile_launcher_destroyed, ion_cannon_built, ion_cannon_destroyed, plasma_canon_built, plasma_canon_destroyed) VALUES (?,?,?,?,?,?,?,?)";
-		
 
 		try {
+			query = "INSERT INTO planet_battle_defense (planet_id, num_battle, missile_launcher_built, missile_launcher_destroyed, ion_cannon_built, ion_cannon_destroyed, plasma_canon_built, plasma_canon_destroyed) VALUES (?,?,?,?,?,?,?,?)";
+
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, planet_id);
 			ps.setInt(2, num_battle);
@@ -317,10 +326,10 @@ public class DatabaseController implements Variables{
 	// Creamos una entrada para la flota del planeta en la batalla (al final de la batalla)
 	public void uploadPlanetBattleArmy(int planet_id, int num_battle, int[][] initialArmies, ArrayList[][] armies) {
 		
-		query = "INSERT INTO planet_battle_army (planet_id, num_battle, light_hunter_built, light_hunter_destroyed, heavy_hunter_built, heavy_hunter_destroyed, battleship_built, battleship_destroyed, armored_ship_built, armored_ship_destroyed) VALUES (?,?,?,?,?,?,?,?,?,?)";
 		
-
 		try {
+			query = "INSERT INTO planet_battle_army (planet_id, num_battle, light_hunter_built, light_hunter_destroyed, heavy_hunter_built, heavy_hunter_destroyed, battleship_built, battleship_destroyed, armored_ship_built, armored_ship_destroyed) VALUES (?,?,?,?,?,?,?,?,?,?)";
+
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, planet_id);
 			ps.setInt(2, num_battle);
@@ -343,10 +352,10 @@ public class DatabaseController implements Variables{
 	// METODOS ENEMY_ARMY
 	public void uploadEnemyArmy(int planet_id, int num_battle, int[][] initialArmies, ArrayList[][] armies) {
 		
-		query = "INSERT INTO enemy_army (planet_id, num_battle, light_hunter_threat, light_hunter_destroyed, heavy_hunter_threat, heavy_hunter_destroyed, battleship_threat, battleship_destroyed, armored_ship_threat, armored_ship_destroyed) VALUES (?,?,?,?,?,?,?,?,?,?)";
 		
-
 		try {
+			query = "INSERT INTO enemy_army (planet_id, num_battle, light_hunter_threat, light_hunter_destroyed, heavy_hunter_threat, heavy_hunter_destroyed, battleship_threat, battleship_destroyed, armored_ship_threat, armored_ship_destroyed) VALUES (?,?,?,?,?,?,?,?,?,?)";
+
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, planet_id);
 			ps.setInt(2, num_battle);
@@ -376,6 +385,8 @@ public class DatabaseController implements Variables{
 				battle_log += rs.getString(1) + "\n";
 			}
 			
+			//System.out.println("Query salida Battle Log: " + "SELECT log_entry FROM battle_log WHERE planet_id = " + planet_id + " AND num_battle = " + num_battle);
+			
 		} catch (SQLException e) {
 			System.err.println("getBattleLog() failed!");
 			e.printStackTrace();
@@ -401,14 +412,16 @@ public class DatabaseController implements Variables{
 	public int[] getInitialPlanetUnits(int planet_id, int num_battle) {
 		int[] initialPlanetUnits = new int[7];
 		
-		query = "SELECT light_hunter_built, heavy_hunter_built, battleship_built, armored_ship_built FROM planet_battle_army WHERE planet_id = ? AND num_battle = ?";
 		
 		try {
+			query = "SELECT light_hunter_built, heavy_hunter_built, battleship_built, armored_ship_built FROM planet_battle_army WHERE planet_id = ? AND num_battle = ?";
+
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, planet_id);
 			ps.setInt(2, num_battle);
 			rs = ps.executeQuery();
 			
+			//System.out.println("INITIAL PLANET UNITS: "+ "SELECT light_hunter_built, heavy_hunter_built, battleship_built, armored_ship_built FROM planet_battle_army WHERE planet_id = " + planet_id + " AND num_battle = " + num_battle);
 			rs.next();
 			initialPlanetUnits[0] = rs.getInt(1);
 			initialPlanetUnits[1] = rs.getInt(2);
@@ -420,14 +433,16 @@ public class DatabaseController implements Variables{
 			e.printStackTrace();
 		}
 		
-		query = "SELECT missile_launcher_built, ion_cannon_built, plasma_canon_built FROM planet_battle_defense WHERE planet_id = ? AND num_battle = ?";
 		
 		try {
+			query = "SELECT missile_launcher_built, ion_cannon_built, plasma_canon_built FROM planet_battle_defense WHERE planet_id = ? AND num_battle = ?";
+
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, planet_id);
 			ps.setInt(2, num_battle);
 			rs = ps.executeQuery();
 			
+			//System.out.println("INITIAL PLANET UNITS: "+ "SELECT missile_launcher_built, ion_cannon_built, plasma_canon_built FROM planet_battle_army WHERE planet_id = " + planet_id + " AND num_battle = " + num_battle);
 			rs.next();
 			initialPlanetUnits[4] = rs.getInt(1);
 			initialPlanetUnits[5] = rs.getInt(2);
@@ -444,9 +459,10 @@ public class DatabaseController implements Variables{
 	public int[] getDestroyedPlanetUnits(int planet_id, int num_battle) {
 		int[] destroyedPlanetUnits = new int[7];
 		
-		query = "SELECT light_hunter_destroyed, heavy_hunter_destroyed, battleship_destroyed, armored_ship_destroyed FROM planet_battle_army WHERE planet_id = ? AND num_battle = ?";
 		
 		try {
+			query = "SELECT light_hunter_destroyed, heavy_hunter_destroyed, battleship_destroyed, armored_ship_destroyed FROM planet_battle_army WHERE planet_id = ? AND num_battle = ?";
+
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, planet_id);
 			ps.setInt(2, num_battle);
@@ -463,9 +479,10 @@ public class DatabaseController implements Variables{
 			e.printStackTrace();
 		}
 		
-		query = "SELECT missile_launcher_destroyed, ion_cannon_destroyed, plasma_canon_destroyed FROM planet_battle_defense WHERE planet_id = ? AND num_battle = ?";
 		
 		try {
+			query = "SELECT missile_launcher_destroyed, ion_cannon_destroyed, plasma_canon_destroyed FROM planet_battle_defense WHERE planet_id = ? AND num_battle = ?";
+
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, planet_id);
 			ps.setInt(2, num_battle);
@@ -487,9 +504,10 @@ public class DatabaseController implements Variables{
 	public int[] getInitialEnemyUnits(int planet_id, int num_battle) {
 		int[] initialEnemyUnits = new int[4];
 		
-		query = "SELECT light_hunter_threat, heavy_hunter_threat, battleship_threat, armored_ship_threat FROM enemy_army WHERE planet_id = ? AND num_battle = ?";
 		
 		try {
+			query = "SELECT light_hunter_threat, heavy_hunter_threat, battleship_threat, armored_ship_threat FROM enemy_army WHERE planet_id = ? AND num_battle = ?";
+
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, planet_id);
 			ps.setInt(2, num_battle);
@@ -512,9 +530,10 @@ public class DatabaseController implements Variables{
 	public int[] getDestroyedEnemyUnits(int planet_id, int num_battle) {
 		int[] destroyedEnemyUnits = new int[4];
 		
-		query = "SELECT light_hunter_destroyed, heavy_hunter_destroyed, battleship_destroyed, armored_ship_destroyed FROM enemy_army WHERE planet_id = ? AND num_battle = ?";
 		
 		try {
+			query = "SELECT light_hunter_destroyed, heavy_hunter_destroyed, battleship_destroyed, armored_ship_destroyed FROM enemy_army WHERE planet_id = ? AND num_battle = ?";
+
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, planet_id);
 			ps.setInt(2, num_battle);
@@ -593,9 +612,10 @@ public class DatabaseController implements Variables{
 	public int[] getWasteMetalDeuterium(int planet_id, int num_battle) {
 		int[] wasteMetalDeuterium = new int[2];
 		
-		query = "SELECT waste_metal_generated, waste_deuterium_generated FROM battle_stats WHERE planet_id = ? AND num_battle = ?";
 		
 		try {
+			query = "SELECT waste_metal_generated, waste_deuterium_generated FROM battle_stats WHERE planet_id = ? AND num_battle = ?";
+
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, planet_id);
 			ps.setInt(2, num_battle);
@@ -658,12 +678,11 @@ public class DatabaseController implements Variables{
 		battle_summary += String.format("%-15s%15d", "Metal:", wasteMetalDeuterium[0])+"\n";
 		battle_summary += String.format("%-15s%15d", "Deuterium:", wasteMetalDeuterium[1])+"\n";
 		
-		if (resourcesLosses[0][2] <= resourcesLosses[1][2]) {
+		if (resourcesLosses[0][2] < resourcesLosses[1][2]) {
 			battle_summary += "\n" + "Battle winned by PLANET. We collect rubble." + "\n";
 		}
 		else {
 			battle_summary += "\n" + "Battle winned by ENEMY. We do not collect rubble." + "\n";
-			battle_summary += "\n" + Printing.printStringCentred("ENEMY WINS!!", '=', 60);
 		}
 		
 		return battle_summary;
