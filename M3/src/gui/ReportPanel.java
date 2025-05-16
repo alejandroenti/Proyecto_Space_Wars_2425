@@ -1,14 +1,10 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-
-import javax.swing.BoxLayout;
 
 import events.MouseButtonsListener;
 
@@ -21,13 +17,14 @@ public class ReportPanel extends ImagePanel {
 	public ReportPanel(int planetId, String planetName, int battleNum) {
 		super(BASE_URL + "background_unit_panel.png");
 		
-		this.setBackground(Color.RED);
 		this.setMaximumSize(new Dimension(500, 200));
 	
+		// Initialize report variables
 		this.planetId = planetId;
 		this.planetName = planetName;
 		this.battleNum = battleNum;
 		
+		// Add listener to open Report Window
 		this.addMouseListener(new MouseButtonsListener() {
 			public void mouseEntered(MouseEvent e) {
 			}

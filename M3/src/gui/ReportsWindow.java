@@ -44,6 +44,7 @@ public class ReportsWindow extends JFrame implements VariablesWindow {
 
 	private void setupFrame() {
 		
+		// Setup Window
 		this.setTitle("Choose Report");
 		this.setSize(FRAME_WIDTH / 2, FRAME_HEIGHT / 2);
 		this.setLocationRelativeTo(null);
@@ -64,12 +65,19 @@ public class ReportsWindow extends JFrame implements VariablesWindow {
 	
 	private void initMainPanel() {
 		
+		// Update local reports from database
 		DatabaseController.instance.getEveryPlanetIdNamesBattles();
 		
+		// Initialize Main Panel
 		mainPanel = new JPanel();
 		mainPanel.setBackground(Color.BLACK); 
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		
+		/*
+		 * Initialize reports variables
+		 * 	1. Stores panels
+		 * 	2. Stores all reports
+		 */
 		this.reportPanels = new ReportPanel[REPORTS_PER_PAGE];
 		this.reports = new ArrayList<Report>();
 		
@@ -84,12 +92,14 @@ public class ReportsWindow extends JFrame implements VariablesWindow {
 			}
 		}
 		
+		// Initialize Data Panel
 		dataPanel = new JPanel();
 		dataPanel.setBackground(Color.YELLOW);
 		dataPanel.setMaximumSize(new Dimension(getWidth(), getHeight() - 20));
 		dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
 		dataPanel.setAlignmentX(CENTER_ALIGNMENT);
 		
+		// Initialize Button Panel
 		buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.X_AXIS));
 		previousBtn = new JButton("previous");
@@ -97,6 +107,7 @@ public class ReportsWindow extends JFrame implements VariablesWindow {
 		nextBtn = new JButton("next");
 		buttonsPanel.add(nextBtn);
 		
+		// Add listeners to panels
 		previousBtn.addMouseListener(new MouseButtonsListener() {
 			public void mouseEntered(MouseEvent e) {
 			}
@@ -129,6 +140,7 @@ public class ReportsWindow extends JFrame implements VariablesWindow {
 			}
 		});
 		
+		// Load reports on the first page and configure buttons
 		loadReports();
 		UpdateButtons();
 		
@@ -139,6 +151,11 @@ public class ReportsWindow extends JFrame implements VariablesWindow {
 	}
 
 	private void UpdateButtons() {
+		
+		/*
+		 * Check if we are not on first or last page.
+		 * 		IF: disable the button
+		 */
 		
 		if (page == 0) {
 			previousBtn.setEnabled(false);
@@ -156,6 +173,8 @@ public class ReportsWindow extends JFrame implements VariablesWindow {
 	}
 	
 	private void cleanPanels() {
+		
+		// Delete current showed panels
 		for (int i = 0; i < REPORTS_PER_PAGE; i++) {
 			if (reportPanels[i] != null) {
 				dataPanel.remove(reportPanels[i]);
