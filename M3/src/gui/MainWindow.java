@@ -173,7 +173,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		
 		// Task for change timer text on Main Panel
 		mainPanel.setFirstLine("Enemy Approaching");
-		remainingSeconds = 16;
+		remainingSeconds = APPROACH_SECONDS;
 		Timer timerTimeApproachEnemy = new Timer();
 		TimerTask taskTimeApproachEnemy = new TimerTask() {
 			public void run() {
@@ -211,7 +211,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		
 		// Task for update Main Panel timer text
 		mainPanel.setFirstLine("Battle Starts in");
-		remainingSeconds = 6;
+		remainingSeconds = BATTLE_STARTS_IN;
 		Timer timerTimeStartBattle = new Timer();
 		TimerTask taskTimeStartBattle = new TimerTask() {
 			public void run() {
@@ -240,7 +240,8 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		
 		// Task for show Battle Winner and start a new one
 		mainPanel.setFirstLine(message);
-		remainingSeconds = 5;
+		repaint();
+		remainingSeconds = BATTLE_STARTS_IN;
 		Timer timerShowWinner = new Timer();
 		TimerTask taskShowWinner = new TimerTask() {
 			public void run() {
