@@ -25,7 +25,7 @@ public interface VariablesWindow {
 	public final int APPROACH_SECONDS = 180;
 	public final int BATTLE_STARTS_IN = 60;
 	public final int BATTLE_STARTS_IN_MILISECS = BATTLE_STARTS_IN * EVERY_SEC;
-	public final int SHOW_WINNERS = 5 * EVERY_SEC;
+	public final int SHOW_WINNERS = 5;
 	
 	// Ships Initial Rotation
 	public final int INITAL_PLAYER_SHIP_ROTATION = 270;
