@@ -194,7 +194,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		
 		// Start timers and create Enemy Army
 		timerApproachEnemy.schedule(taskApproachEnemy, APPROACH_DELAY, (int)(APPROACH_TIME / APPROACH_STEPS));
-		timerTimeApproachEnemy.schedule(taskTimeApproachEnemy, APPROACH_DELAY, 1000);
+		timerTimeApproachEnemy.schedule(taskTimeApproachEnemy, APPROACH_DELAY, EVERY_SEC);
 		InterfaceController.instance.createEnemyArmy();
 	}
 	
@@ -232,8 +232,8 @@ public class MainWindow extends JFrame implements VariablesWindow {
 			}
 		};
 		
-		timerStartBattle.schedule(taskStartBattle, 6000, 1000);
-		timerTimeStartBattle.schedule(taskTimeStartBattle, 0, 1000);
+		timerStartBattle.schedule(taskStartBattle, BATTLE_STARTS_IN_MILISECS, EVERY_SEC);
+		timerTimeStartBattle.schedule(taskTimeStartBattle, 0, EVERY_SEC);
 	}
 	
 	public void showBattleWinner(String message) {
@@ -241,7 +241,7 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		// Task for show Battle Winner and start a new one
 		mainPanel.setFirstLine(message);
 		repaint();
-		remainingSeconds = BATTLE_STARTS_IN;
+		remainingSeconds = SHOW_WINNERS;
 		Timer timerShowWinner = new Timer();
 		TimerTask taskShowWinner = new TimerTask() {
 			public void run() {
@@ -263,6 +263,6 @@ public class MainWindow extends JFrame implements VariablesWindow {
 			}
 		};
 		
-		timerShowWinner.schedule(taskShowWinner, 0, 1000);
+		timerShowWinner.schedule(taskShowWinner, APPROACH_DELAY, EVERY_SEC);
 	}
 }
