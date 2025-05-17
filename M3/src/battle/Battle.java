@@ -541,7 +541,8 @@ public class Battle implements Variables {
 			DatabaseController.instance.uploadEnemyArmy(InterfaceController.instance.getPlanetId(), num_battle, initialArmies, armies);
 			DatabaseController.instance.uploadBattleLog(InterfaceController.instance.getPlanetId(), num_battle, battleDevelopment);
 			
-			DatabaseController.instance.convertIntoXML(InterfaceController.instance.getPlanetId(),num_battle);
+			saved_xml = DatabaseController.instance.convertIntoXML(InterfaceController.instance.getPlanetId(),num_battle);
+			new XSLTransformer(saved_xml, num_battle);
 			
 			System.out.println(DatabaseController.instance.getBattleLog(InterfaceController.instance.getPlanetId(), num_battle));
 			System.out.println(DatabaseController.instance.getBattleSummary(InterfaceController.instance.getPlanetId(), num_battle));
