@@ -27,18 +27,18 @@ import utils.Variables.MilitaryUnitOrder;
 
 public class DatabaseController implements Variables{
 	public static DatabaseController instance;
-
+	
+	// Connection data
 	private String urlDatos = "jdbc:mysql://planet-wars.clmmsosyssic.eu-north-1.rds.amazonaws.com:3306/SpaceWars?serverTimezone=UTC";
 	private String usuario = "admin";
 	private String pass = "proyecto2025";
 	private Connection conn;
 	
+	// Declaring variables that will be used later
 	private PreparedStatement ps;
 	private Statement stmnt;
 	private ResultSet rs;
-	
 	private String query;
-	
 	private ArrayList<Integer> planet_ids;
 	private ArrayList<String> planet_names;
 	private ArrayList<ArrayList<Integer>> num_battles;
@@ -46,6 +46,7 @@ public class DatabaseController implements Variables{
 	public DatabaseController() {
 		DatabaseController.instance = this;
 		
+		// Connecting to the Database
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -78,8 +79,8 @@ public class DatabaseController implements Variables{
 	}
 
 
-	// METODOS PLANET_STATS
-	// Crear planeta
+	// Methods to insert and update data from planet_stats
+	// Insert a new planet
 	public void newPlanet(Planet planet, String namePlanet) {
 		
 		try {
@@ -114,7 +115,7 @@ public class DatabaseController implements Variables{
 		
 	}
 	
-	// Actualizamos metal
+	// Update the planet's metal amount
 	public void updateMetal(int planet_id, int metal_quantity) {
 		
 		try {
@@ -130,7 +131,7 @@ public class DatabaseController implements Variables{
 		}
 	}
 	
-	// Actualizamos deuterio
+	// Update the planet's deuterium amount
 	public void updateDeuterium(int planet_id, int deuterium_quantity) {
 		
 		try {
@@ -146,7 +147,7 @@ public class DatabaseController implements Variables{
 		}
 	}
 	
-	// Actualizamos tecnología defensa
+	// Update the planet's defense technology level
 	public void updateDefenseTechnology(Planet planet) {
 		
 		try {
@@ -162,7 +163,7 @@ public class DatabaseController implements Variables{
 		}
 	}
 	
-	// Actualizamos tecnología ataque
+	// Update the planet's attack technology level
 	public void updateAttackTechnology(Planet planet) {
 		
 		try {
@@ -178,7 +179,7 @@ public class DatabaseController implements Variables{
 		}
 	}
 	
-	// Incrementamos el battles_counter
+	// Increasing the battles' counter
 	public void updateBattlesCounter(int planet_id, int battles) {
 		try {			
 			
@@ -191,7 +192,7 @@ public class DatabaseController implements Variables{
 	}
 	
 	
-	// Actualizamos unidades restantes
+	// Update remaining units
 	public void updateRemainingUnits(ArrayList[][] armies, int planet_id) {
 		
 		try {
@@ -214,7 +215,8 @@ public class DatabaseController implements Variables{
 		}
 	}
 	
-	// METODOS BATTLE_STATS
+	// Method to insert data into battle_stats once a battle has finished
+	// This method return the battle id: num_battle that we need for subsequent methods
 	public int uploadBattleStats(int planet_id, int[] wasteMetalDeuterium, boolean win) {
 		int num_battle = 0;
 		
@@ -262,7 +264,7 @@ public class DatabaseController implements Variables{
 		return num_battle;
 	}
 	
-	// METODOS BATTLE_LOG
+	// Method to insert the String battleDevelopment line by line into battle_log
 	public void uploadBattleLog(int planet_id, int num_battle, String battleDevelopment) {		
 		String line = "";
 		int last_new_line = 0;
@@ -297,8 +299,7 @@ public class DatabaseController implements Variables{
 		}
 	}
 	
-	// METODOS PLANET_BATTLE_DEFENSE
-	// Creamos una entrada para las defensas del planeta en la batalla (al final de la batalla)
+	// Method to insert into planet_battle_defense the data related to the defense of the planet in a battle that has finished
 	public void uploadPlanetBattleDefense(int planet_id, int num_battle, int[][] initialArmies, ArrayList[][] armies) {
 		
 
@@ -322,8 +323,7 @@ public class DatabaseController implements Variables{
 		}
 	}
 	
-	// METODOS PLANET_BATTLE_ARMY
-	// Creamos una entrada para la flota del planeta en la batalla (al final de la batalla)
+	// Method to insert into planet_battle_army the data related to the army of the planet in a battle that has finished
 	public void uploadPlanetBattleArmy(int planet_id, int num_battle, int[][] initialArmies, ArrayList[][] armies) {
 		
 		
@@ -349,7 +349,7 @@ public class DatabaseController implements Variables{
 		}
 	}
 	
-	// METODOS ENEMY_ARMY
+	// Method to insert into enemy_army the initial and destroyed quantities of each type of ship in a battle (we insert it at the end of a battle)
 	public void uploadEnemyArmy(int planet_id, int num_battle, int[][] initialArmies, ArrayList[][] armies) {
 		
 		
@@ -375,7 +375,8 @@ public class DatabaseController implements Variables{
 		}
 	}
 	
-	// METODOS REPORT
+	// Methods to get the necessary data to generate a battle's report
+	// Getting the battle_log from the database
 	public String getBattleLog(int planet_id, int num_battle) {
 		String battle_log = "";
 		
@@ -395,6 +396,7 @@ public class DatabaseController implements Variables{
 		return battle_log;
 	}
 	
+	// Getting the battles' counter of a planet
 	public int getBattlesCounter(int planet_id) {
 		int battles_counter = 0;
 		
@@ -409,6 +411,7 @@ public class DatabaseController implements Variables{
 		return battles_counter;
 	}
 	
+	// Getting the initial units of a planet's army (both regular and defense fleets)
 	public int[] getInitialPlanetUnits(int planet_id, int num_battle) {
 		int[] initialPlanetUnits = new int[7];
 		
@@ -456,6 +459,7 @@ public class DatabaseController implements Variables{
 		return initialPlanetUnits;
 	}
 	
+	// Getting the destroyed units of a planet's army (both regular and defense fleets)
 	public int[] getDestroyedPlanetUnits(int planet_id, int num_battle) {
 		int[] destroyedPlanetUnits = new int[7];
 		
@@ -501,6 +505,7 @@ public class DatabaseController implements Variables{
 		return destroyedPlanetUnits;
 	}
 	
+	// Getting the initial units of the enemy's army
 	public int[] getInitialEnemyUnits(int planet_id, int num_battle) {
 		int[] initialEnemyUnits = new int[4];
 		
@@ -527,6 +532,7 @@ public class DatabaseController implements Variables{
 		return initialEnemyUnits;
 	}
 	
+	// Getting the destroyed units of the enemy's army
 	public int[] getDestroyedEnemyUnits(int planet_id, int num_battle) {
 		int[] destroyedEnemyUnits = new int[4];
 		
@@ -553,6 +559,7 @@ public class DatabaseController implements Variables{
 		return destroyedEnemyUnits;
 	}
 	
+	// Calculating the cost of the enemy's and planet's fleets
 	public int[][] calculateInitialCostFleet(int[] initialPlanetUnits, int[] initialEnemyUnits){
 		int[][] initialCostFleet = new int[2][2];
 		
@@ -580,6 +587,7 @@ public class DatabaseController implements Variables{
 		return initialCostFleet;
 	}
 	
+	// Calculating the value of the losses that the planet and enemy have suffered
 	public int[][] calculateResourcesLosses(int[] destroyedPlanetUnits, int[] destroyedEnemyUnits){
 		int[][] resourcesLosses = new int[2][3];
 		
@@ -609,6 +617,7 @@ public class DatabaseController implements Variables{
 		return resourcesLosses;
 	}
 	
+	// Getting the waste in metal and deuterium that was generated in a battle
 	public int[] getWasteMetalDeuterium(int planet_id, int num_battle) {
 		int[] wasteMetalDeuterium = new int[2];
 		
@@ -633,8 +642,10 @@ public class DatabaseController implements Variables{
 		return wasteMetalDeuterium;
 	}
 	
+	// Getting a battle's summary (using the previous methods to gather the needed data)
 	public String getBattleSummary(int planet_id, int num_battle) {
 		
+		// Getting the data
 		String battle_summary = "";
 		int battles_counter = getBattlesCounter(planet_id);
 		int[] initialPlanetUnits = getInitialPlanetUnits(planet_id,num_battle);
@@ -648,6 +659,7 @@ public class DatabaseController implements Variables{
 		int[] wasteMetalDeuterium = getWasteMetalDeuterium(planet_id,num_battle);
 		
 		
+		// Formatting the data
 		battle_summary = "BATTLE NUMBER: " + battles_counter + "\n" + "\n" + "BATTLE STATISTICS" + "\n" + "\n";
 		
 		battle_summary += String.format("%-27s%10s%10s      %-27s%10s%10s", "PLANET ARMY", "Units", "Drops", "ENEMY ARMY","Units","Drops") + "\n" + "\n";
@@ -689,10 +701,9 @@ public class DatabaseController implements Variables{
 	}
 	
 	
-	// CONVERT INTO XML
+	// Method to generate a XML version of a battle's summary
 	public Document convertIntoXML(int planet_id, int num_battle) {
 		// Gather data from the database
-		
 		int[] initialPlanetUnits = getInitialPlanetUnits(planet_id,num_battle);
 		int[] destroyedPlanetUnits = getDestroyedPlanetUnits(planet_id,num_battle);
 		int[] initialEnemyUnits = getInitialEnemyUnits(planet_id,num_battle);
@@ -849,6 +860,7 @@ public class DatabaseController implements Variables{
 			e.printStackTrace();
 		}
 		
+		// Obtaining a xml document to save
 		try {
 		    TransformerFactory tf = TransformerFactory.newInstance();
 		    Transformer transformer = tf.newTransformer();
@@ -865,6 +877,7 @@ public class DatabaseController implements Variables{
 		return doc;
 	}
 	
+	// Getting the planet ids, names and battles to put in the reportsWindow
 	public void getEveryPlanetIdNamesBattles(){
 		ArrayList<Integer> planet_ids = new ArrayList<Integer>();
 		ArrayList<String> planet_names = new ArrayList<String>();

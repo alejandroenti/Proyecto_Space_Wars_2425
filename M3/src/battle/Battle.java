@@ -2,6 +2,8 @@ package battle;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import controllers.DatabaseController;
 import controllers.InterfaceController;
 import ships.MilitaryUnit;
@@ -10,10 +12,11 @@ import utils.Variables;
 
 public class Battle implements Variables {
 	
-	private int battles; // Podemos recuperar este número de la base de datos (permitiremos mostrar el report resumen de la batalla que quieras pero el battleDevelopment solo de las ultimas 5 batallas)
-	private int num_battle;
-	private int defeats;
+	private int battles; // Number of accumulated battles in the current planet
+	private int num_battle; // Id of the battle
+	private int defeats; // Number of accumulated defeats
 	
+	// Generating the variables that will store the information of the current battle
 	private ArrayList<MilitaryUnit>[] planetArmy, enemyArmy;
 	private ArrayList[][] armies;
 	private String battleDevelopment;
@@ -36,33 +39,40 @@ public class Battle implements Variables {
 		return battles;
 	}
 
+	
+	public int getDefeats() {
+		return defeats;
+	}
+
 	public void createBattle(ArrayList<MilitaryUnit>[] planetArmy, ArrayList<MilitaryUnit>[] enemyArmy) {
 		
 		this.planetArmy = planetArmy;
 		this.enemyArmy = enemyArmy;
 		
-		// Juntamos en una variable ambos ejércitos
+		// Storing in a matrix of ArrayList both the planet's and enemy's armies
 		this.armies = new ArrayList[2][7];
 		this.armies[0] = planetArmy;
 		this.armies[1] = enemyArmy;
 		
 		this.battleDevelopment = "";
 		
-		// Calculamos los costes de cada ejército
+		// Calculating the cost of both fleets
 		this.initialCostFleet = new int[2][2];
 		calculateInitialCostFleet();
 		
-		// Calculamos las unidades iniciales de cada ejército
+		// Calculating the initial units of each army
 		this.initialNumberUnitsPlanet = calculateUnitNumber(0);
 		this.initialNumberUnitsEnemy = calculateUnitNumber(1);
 		this.actualNumberUnitsPlanet = this.initialNumberUnitsPlanet;
 		this.actualNumberUnitsEnemy = this.initialNumberUnitsEnemy;
 		
+		// Initializing empty arrays and matrixes to store the battle's waste, drops and losses
 		this.wasteMetalDeuterium = new int[2];
 		this.planetDrops = new int[2];
 		this.enemyDrops = new int[2];
 		this.resourcesLosses = new int[2][3];
 		
+		// Calculating initial armies and initializing actual armies with the initial armies
 		this.initialArmies = new int[2][7];
 		calculateInitialArmy();
 		this.actualArmyPlanet = initialArmies[0];
@@ -151,8 +161,12 @@ public class Battle implements Variables {
 		int order = (int)(Math.random() * 2);
 		
 		battleDevelopment = Printing.printStringCentred("THE BATTLE STARTS", '*', 60) + "\n";
+		
 
 		if (initialNumberUnitsPlanet != 0) {
+						
+			resetUnitsArmor(armies);
+			
 			int percentageArmyPlanetAlive = (int)((actualNumberUnitsPlanet / initialNumberUnitsPlanet) * 100);
 			int percentageArmyEnemyAlive = (int)((actualNumberUnitsEnemy / initialNumberUnitsEnemy) * 100);
 			
@@ -533,13 +547,27 @@ public class Battle implements Variables {
 //			System.out.println(getBattleReport(battles));
 		}
 		
-		
 		if (defeats == 3) {
+			
 			System.err.println("=============DERROTA=============");
+			
+			JOptionPane.showMessageDialog(null, InterfaceController.instance.getNamePlanet()+" has been conquered!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+			
+			System.exit(0);
 		}
 	}
 	
 	// FUNCIÓN RESETEAR ARMADURA UNIDADES PLANETA
+	public void resetUnitsArmor(ArrayList[][] armies) {
+		for (int i = 0; i < armies[0].length; i++) {
+			for (int j = 0; j < armies[0][i].size(); j++) {
+				if (armies[0][i].get(j) != null) {
+					((MilitaryUnit) armies[0][i].get(j)).resetArmor();
+				}
+			}
+		}
+	}
+	
 	
 	// FUNCIÓN REPORTE DE LA BATALLA
 	// Reporte resumen

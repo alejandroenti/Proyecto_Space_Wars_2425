@@ -48,6 +48,10 @@ public class InterfaceController implements Variables, VariablesWindow {
 		playerPanel.setPlayerArmy(planet.getArmy());
 	}
 	
+	public int getDefeats() {
+		return battle.getDefeats();
+	}
+	
 	public ArrayList<MilitaryUnit>[] getPlanetArmy() {
 		return planet.getArmy();
 	}
