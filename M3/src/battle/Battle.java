@@ -9,12 +9,14 @@ import controllers.InterfaceController;
 import ships.MilitaryUnit;
 import utils.Printing;
 import utils.Variables;
+import xslt.XSLTransformer;
 
 public class Battle implements Variables {
 	
 	private int battles; // Number of accumulated battles in the current planet
 	private int num_battle; // Id of the battle
 	private int defeats; // Number of accumulated defeats
+	private String saved_xml;
 	
 	// Generating the variables that will store the information of the current battle
 	private ArrayList<MilitaryUnit>[] planetArmy, enemyArmy;
@@ -511,7 +513,8 @@ public class Battle implements Variables {
 			DatabaseController.instance.uploadEnemyArmy(InterfaceController.instance.getPlanetId(), num_battle, initialArmies, armies);
 			DatabaseController.instance.uploadBattleLog(InterfaceController.instance.getPlanetId(), num_battle, battleDevelopment);
 			
-			DatabaseController.instance.convertIntoXML(InterfaceController.instance.getPlanetId(),num_battle);
+			saved_xml = DatabaseController.instance.convertIntoXML(InterfaceController.instance.getPlanetId(),num_battle);
+			new XSLTransformer(saved_xml, num_battle);
 			
 			System.out.println(DatabaseController.instance.getBattleLog(InterfaceController.instance.getPlanetId(), num_battle));
 			System.out.println(DatabaseController.instance.getBattleSummary(InterfaceController.instance.getPlanetId(), num_battle));

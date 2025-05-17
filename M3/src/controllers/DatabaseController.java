@@ -20,6 +20,8 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import java.io.File;
+
 import planets.Planet;
 import utils.Printing;
 import utils.Variables;
@@ -702,7 +704,7 @@ public class DatabaseController implements Variables{
 	
 	
 	// Method to generate a XML version of a battle's summary
-	public Document convertIntoXML(int planet_id, int num_battle) {
+	public String convertIntoXML(int planet_id, int num_battle) {
 		// Gather data from the database
 		int[] initialPlanetUnits = getInitialPlanetUnits(planet_id,num_battle);
 		int[] destroyedPlanetUnits = getDestroyedPlanetUnits(planet_id,num_battle);
@@ -866,15 +868,13 @@ public class DatabaseController implements Variables{
 		    Transformer transformer = tf.newTransformer();
 		    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-		    transformer.transform(new DOMSource(doc), new StreamResult(System.out)); // esto es para mostrar por consola, el de abajo es para guardar el xml
-		    //transformer.transform(new DOMSource(doc), new StreamResult(new File("batalla"+num_battle+".xml")));
-		    //añadir ruta completa dentro de File()
+		    transformer.transform(new DOMSource(doc), new StreamResult(new File("./src/xml_archives/"+"battle"+num_battle+".xml")));
+		    
 		} catch (Exception e) {
 		    e.printStackTrace();
 		}
-
 		
-		return doc;
+		return "./src/xml_archives/"+"battle"+num_battle+".xml";
 	}
 	
 	// Getting the planet ids, names and battles to put in the reportsWindow

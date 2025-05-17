@@ -19,7 +19,7 @@ public class XSLTransformer {
 		
 		this.xslFile = "./src/xslt/xslExample.xsl";
 		this.inputFile = inputFile;
-		this.outputFile = "./src/xslt/" + numBattle + ".html";
+		this.outputFile = "./src/html_archives/battle" + numBattle + ".html";
 		
 		this.xslCode = new StreamSource(new File(this.xslFile));
 		this.input = new StreamSource(new File(this.inputFile));
@@ -30,10 +30,8 @@ public class XSLTransformer {
 			this.trans = tf.newTransformer(this.xslCode);
 			trans.transform(input, output);
 		} catch (TransformerConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
