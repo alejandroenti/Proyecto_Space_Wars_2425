@@ -22,14 +22,14 @@ public interface Variables {
 			"Plasma Cannon"
 	};
 	
-	// resources available to create the first enemy fleet
+	// Resources available to create the first enemy fleet
 	public final int DEUTERIUM_BASE_PLANET_ARMY = 28000;
 	public final int METAL_BASE_PLANET_ARMY = 142000;
 	
-	// percentage increase of resources available to create enemy fleet
+	// Percentage increase of resources available to create enemy fleet
 	public final int ENEMY_FLEET_INCREASE = 6;
 	
-	// resources increment every minute
+	// Resources increment every minute
 	public final int PLANET_DEUTERIUM_GENERATED = 1500;
 	public final int PLANET_METAL_GENERATED = 5000;
 	
@@ -65,7 +65,7 @@ public interface Variables {
 	public final int METAL_COST_IONCANNON = 4000;
 	public final int METAL_COST_PLASMACANNON = 50000;
 	
-	// array units costs
+	// Array units costs
 	public final int[] METAL_COST_UNITS =
 	{METAL_COST_LIGHTHUNTER,METAL_COST_HEAVYHUNTER,METAL_COST_BATTLESHIP,METAL_COST_ARMOREDSHIP,METAL_COST_MISSILELAUNCHER,METAL_COST_IONCANNON,METAL_COST_PLASMACANNON};
 	public final int[] DEUTERIUM_COST_UNITS =
@@ -96,18 +96,18 @@ public interface Variables {
 	public final int ARMOR_IONCANNON = 1200;
 	public final int ARMOR_PLASMACANNON = 7000;
 	
-	//fleet armor increase percentage per tech level
+	// Fleet armor increase percentage per tech level
 	public final int PLUS_ARMOR_LIGHTHUNTER_BY_TECHNOLOGY = 5;
 	public final int PLUS_ARMOR_HEAVYHUNTER_BY_TECHNOLOGY = 5;
 	public final int PLUS_ARMOR_BATTLESHIP_BY_TECHNOLOGY = 5;
 	public final int PLUS_ARMOR_ARMOREDSHIP_BY_TECHNOLOGY = 5;
 	
-	// defense armor increase percentage per tech level
+	// Defense armor increase percentage per tech level
 	public final int PLUS_ARMOR_MISSILELAUNCHER_BY_TECHNOLOGY = 5;
 	public final int PLUS_ARMOR_IONCANNON_BY_TECHNOLOGY = 5;
 	public final int PLUS_ARMOR_PLASMACANNON_BY_TECHNOLOGY = 5;
 	
-	// fleet attack power increase percentage per tech level
+	// Fleet attack power increase percentage per tech level
 	public final int PLUS_ATTACK_LIGHTHUNTER_BY_TECHNOLOGY = 5;
 	public final int PLUS_ATTACK_HEAVYHUNTER_BY_TECHNOLOGY = 5;
 	public final int PLUS_ATTACK_BATTLESHIP_BY_TECHNOLOGY = 5;
@@ -118,7 +118,7 @@ public interface Variables {
 	public final int PLUS_ATTACK_IONCANNON_BY_TECHNOLOGY = 5;
 	public final int PLUS_ATTACK_PLASMACANNON_BY_TECHNOLOGY = 5;
 	
-	// fleet probability of generating waste
+	// Fleet probability of generating waste
 	public final int CHANCE_GENERATING_WASTE_LIGHTHUNTER = 55;
 	public final int CHANCE_GENERATING_WASTE_HEAVYHUNTER = 65;
 	public final int CHANCE_GENERATING_WASTE_BATTLESHIP = 80;
@@ -129,13 +129,13 @@ public interface Variables {
 	public final int CHANCE_GENERATING_WASTE_IONCANNON = 65;
 	public final int CHANCE_GENERATING_WASTE_PLASMACANNON = 75;
 	
-	// fleet chance to attack again
+	// Fleet chance to attack again
 	public final int CHANCE_ATTACK_AGAIN_LIGHTHUNTER = 3;
 	public final int CHANCE_ATTACK_AGAIN_HEAVYHUNTER = 7;
 	public final int CHANCE_ATTACK_AGAIN_BATTLESHIP = 45;
 	public final int CHANCE_ATTACK_AGAIN_ARMOREDSHIP = 70;
 	
-	//Defense chance to attack again
+	// Defense chance to attack again
 	public final int CHANCE_ATTACK_AGAIN_MISSILELAUNCHER = 5;
 	public final int CHANCE_ATTACK_AGAIN_IONCANNON = 12;
 	public final int CHANCE_ATTACK_AGAIN_PLASMACANNON = 30;
@@ -149,7 +149,7 @@ public interface Variables {
 	// CHANCE GENERATE ENEMY ARMY
 	public final int[] CHANGE_GENERATE_ENEMY_UNIT = { 35, 25, 20, 20 };
 	
-	// percentage of waste that will be generated with respect to the cost of the units
+	// Percentage of waste that will be generated with respect to the cost of the units
 	public final int PERCENTAGE_WASTE = 70;
 	
 	// INCREMENT OF ENEMY RESOURCE

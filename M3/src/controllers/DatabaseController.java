@@ -725,6 +725,7 @@ public class DatabaseController implements Variables{
 			builder = factory.newDocumentBuilder();
 			doc = builder.newDocument();
 			
+			// Root element
 			Element battle_summary = doc.createElement("battle_summary");
 			
 			// PLANET STATS
@@ -866,9 +867,9 @@ public class DatabaseController implements Variables{
 		try {
 		    TransformerFactory tf = TransformerFactory.newInstance();
 		    Transformer transformer = tf.newTransformer();
-		    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-		    transformer.transform(new DOMSource(doc), new StreamResult(new File("./src/xml_archives/"+"battle"+num_battle+".xml")));
+		    transformer.setOutputProperty(OutputKeys.INDENT, "yes"); // Will generate an indentated xml
+		    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2"); // The indentation will be of 2 spaces
+		    transformer.transform(new DOMSource(doc), new StreamResult(new File("./src/xml_archives/"+"battle"+num_battle+".xml"))); // Specifies the path where the battle's xml will be saved
 		    
 		} catch (Exception e) {
 		    e.printStackTrace();

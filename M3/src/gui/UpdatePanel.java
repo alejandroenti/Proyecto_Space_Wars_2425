@@ -31,8 +31,9 @@ public class UpdatePanel extends JPanel implements VariablesWindow{
 	private int attackLevel;
 	private int defenseLevel;
 	
-	
+	// There is an update panel for defense technology and another for attack technology
 	UpdatePanel(String type){
+		// The layout is BorderLayout to position the button at the bottom and the content at the center easily
 		this.setLayout(new BorderLayout());
 		
 		this.attackLevel = InterfaceController.instance.getPlanetAttackTechnology();
@@ -49,6 +50,8 @@ public class UpdatePanel extends JPanel implements VariablesWindow{
 			public void mouseExited(MouseEvent e) {
 			}
 			
+			// If the update button is clicked and you have the needed resources the technology levels are upgraded and the number on screen is repainted
+			// If the button is clicked but there are not enough resources, a JOptionPane appears to alert the user
 			public void mouseClicked(MouseEvent e) {
 				
 				if (type.contentEquals("attack")) {
@@ -90,6 +93,7 @@ public class UpdatePanel extends JPanel implements VariablesWindow{
 	}
 	
 
+	// This panel obtains the painted information on the current technology levels
 	class StatsPanel extends JPanel{
 		private String type;
 		private BufferedImage image;

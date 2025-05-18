@@ -3,7 +3,7 @@ package utils;
 import java.awt.Color;
 
 public interface VariablesWindow {
-	// frame parameters
+	// Frame parameters
 	public final String FRAME_TITLE = "Space Wars";
 	public final String FRAME_TITLE_BUY = "Space Wars - Buy Units";
 	public final String URL_LOGO = "./src/art/logo.png";
@@ -15,7 +15,7 @@ public interface VariablesWindow {
 	// Reset Position
 	public final int[] RESET_POSITION = { -1000, 0 };
 	
-	// timer parameters
+	// Timer parameters
 
 	public final int EVERY_SEC = 1000;
 	
@@ -119,4 +119,6 @@ public interface VariablesWindow {
 		440,
 		440
 	};
+	
+	
 }

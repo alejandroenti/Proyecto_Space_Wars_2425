@@ -27,7 +27,7 @@ public class EnemyPanel extends JPanel implements Variables, VariablesWindow {
 	private int colorArmy;
 	
 	public EnemyPanel () {
-		// Setup approaching spped and Init Position Variable
+		// Setup approaching speed and Init Position Variable
 		approaching_speed = (INIT_POS_X - (int)(FRAME_WIDTH / 2)) / APPROACH_STEPS;
 		posX = INIT_POS_X;
 		
@@ -40,7 +40,7 @@ public class EnemyPanel extends JPanel implements Variables, VariablesWindow {
 		// Initialize Panels of Enemy Army
 		armyPanels = new ImagePanel[ENEMY_ARMY_LENGHT];
 		
-		// Chose a random planet
+		// Choose a random planet
 		int num = (int)(PLANET_SELECTION_MIN + Math.random() * PLANET_SELECTION_MAX);
 		
 		// Initialize planet panel with the planet chosen above
