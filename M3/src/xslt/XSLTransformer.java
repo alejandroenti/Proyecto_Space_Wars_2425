@@ -14,6 +14,7 @@ public class XSLTransformer {
 	private TransformerFactory tf;
 	private Transformer trans;
 	
+	// This method uses a xsl file to convert xml into html 
 	public XSLTransformer(String inputFile, int numBattle) {
 		super();
 		

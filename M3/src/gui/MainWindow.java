@@ -31,10 +31,17 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		
 		setupFrame();
 		
-		// Demand Planet Name
+		// Demand Planet Name (the JOptionPane will appear again until something is written and OK is pressed or close/cancel are pressed)
 		do {
-			namePlanet = JOptionPane.showInputDialog(null, "¿What's the name of your planet?", "Name your planet", JOptionPane.QUESTION_MESSAGE);			
-		} while (namePlanet == null || namePlanet.contentEquals(""));
+			namePlanet = JOptionPane.showInputDialog(null, "¿What's the name of your planet?", "Name your planet", JOptionPane.QUESTION_MESSAGE);	
+			
+			// If either X or cancel are pressed, the program is terminated
+			if (namePlanet == null) {
+				System.exit(0);
+			}
+			
+		} while (namePlanet.contentEquals(""));
+		
 		
 		System.out.println("Name planet: " + namePlanet);
 		
@@ -105,8 +112,8 @@ public class MainWindow extends JFrame implements VariablesWindow {
 		/*
 		 * Made MainPanel's layout null for maximum flexibility.
 		 * We can position freely any component with absolute positions
-		 * 
 		 */
+		
 		mainPanel = new ImagePanel(BACKGROUND_IMAGE);
 		mainPanel.setLayout(null);
 

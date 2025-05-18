@@ -6,7 +6,7 @@ import controllers.InterfaceController;
 public class Main {
 	
 	public static void main(String[] args) {
-		// Creamos planeta e interfaz gráfica
+		// Instancing and constructing both controllers (which will initialize the program)
 		DatabaseController db_controller = new DatabaseController();
 		InterfaceController controller = new InterfaceController();
 	}

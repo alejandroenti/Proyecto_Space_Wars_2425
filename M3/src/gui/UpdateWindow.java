@@ -32,6 +32,7 @@ public class UpdateWindow extends JFrame implements VariablesWindow{
 		this.setVisible(true);
 	}
 
+	// Setting up the JFrame
 	private void setupFrame() {
 		
 		this.setTitle("Upgrade Technology");
@@ -52,6 +53,10 @@ public class UpdateWindow extends JFrame implements VariablesWindow{
         }
 	}
 	
+	/*
+	 * The window will have a black JPanel as background
+	 * The JPanel's layout is BoxLayout (X_AXIS, to position the attack and defense update panels side by side)
+	 */
 	private void initMainPanel() {
 
 		mainPanel = new JPanel();
@@ -60,19 +65,14 @@ public class UpdateWindow extends JFrame implements VariablesWindow{
 		
 		attackUpdatePanel = new UpdatePanel("attack");
 		
-		//mainPanel.add(Box.createHorizontalStrut(20));
 		mainPanel.add(attackUpdatePanel);
 		mainPanel.add(Box.createHorizontalStrut(10));
-		
-		attackUpdatePanel.setLocation(0, 0);
 		
 		defenseUpdatePanel = new UpdatePanel("defense");
 		
 		mainPanel.add(Box.createHorizontalStrut(10));
 		mainPanel.add(defenseUpdatePanel);
-		//mainPanel.add(Box.createHorizontalStrut(20));
 		
-		defenseUpdatePanel.setLocation(getWidth()/2, 0);
 		
 		this.add(mainPanel);
 	}

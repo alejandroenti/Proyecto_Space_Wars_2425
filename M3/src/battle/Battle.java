@@ -94,16 +94,16 @@ public class Battle implements Variables {
 	private void calculateInitialCostFleet() {
 		
 		/*
-		 * 1. Recorremos cada uno de los ejercitos
-		 * 2. Sumamos el valor en metal y deuterio de cada unidad
-		 * 3. Añadimos a la matriz de costes iniciales
+		 * 1. Each army and type of ship is iterated over
+		 * 2. The metal and deuterium costs of each unit are added
+		 * 3. The cost of the initial armies are put in the matrix
 		 */
 		
 		int metal = 0, deuterium = 0;
 		
 		for (int i = 0; i < armies.length; i++) {
 			for (int j = 0; j < armies[i].length; j++) {
-				// Comprobamos que haya alguna unidad para calcular su coste
+				// Checking if there are units of a certain type of ship in the army we are considering and, if there are, we calculate their cost 
 				if (armies[i][j].size() > 0) { 
 					metal += ((MilitaryUnit) armies[i][j].get(0)).getMetalCost() * armies[i][j].size();
 					deuterium += ((MilitaryUnit) armies[i][j].get(0)).getDeuteriumCost() * armies[i][j].size();
@@ -118,6 +118,7 @@ public class Battle implements Variables {
 		}
 	}
 	
+	// We calculate the number of units there is in an army
 	private int calculateUnitNumber(int armyNumber) {
 		int total = 0;
 		
@@ -133,6 +134,7 @@ public class Battle implements Variables {
 		return total;
 	}
 	
+	// The number of initial units of each type of ship for each army is calculated and stored in a matrix
 	private void calculateInitialArmy() {
 		
 		for (int i = 0; i < armies.length; i++) {
@@ -142,6 +144,7 @@ public class Battle implements Variables {
 		}
 	}
 	
+	// The number of current units of each type of ship for each army is calculated and stored in a matrix
 	private int[] calculateActualArmy(int armyNumber) {
 		
 		int[] actualArmy = new int[7];
@@ -158,21 +161,23 @@ public class Battle implements Variables {
 		return actualArmy;
 	}
 	
+	// Method that contains the battle
 	public void startBattle() {
 		
-		int order = (int)(Math.random() * 2);
+		int order = (int)(Math.random() * 2); // Whether the planet or enemy start is decided randomly
 		
 		battleDevelopment = Printing.printStringCentred("THE BATTLE STARTS", '*', 60) + "\n";
 		
 
-		if (initialNumberUnitsPlanet != 0) {
+		if (initialNumberUnitsPlanet != 0) { // Checking the planet has at least one unit (if not we skip the bulk of the battle and go to its ending
 						
-			resetUnitsArmor(armies);
+			resetUnitsArmor(armies); // The armor for the units that the planet has left are reseted
 			
+			// The percentage of alive army is calculated (if an army is below 20% of its initial army, the battle ends)
 			int percentageArmyPlanetAlive = (int)((actualNumberUnitsPlanet / initialNumberUnitsPlanet) * 100);
 			int percentageArmyEnemyAlive = (int)((actualNumberUnitsEnemy / initialNumberUnitsEnemy) * 100);
 			
-			
+			// Repeat this block until one of the armies is at less than 20% its initial size (each time it starts again is because the attacker changes)
 			do {
 				battleDevelopment += Printing.printStringCentred("CHANGE ATTACKER", '*', 60) + "\n";
 				
@@ -185,6 +190,7 @@ public class Battle implements Variables {
 				
 				int[] probabilities;
 				
+				// When the attacker is the planet and the enemy defends:
 				if (order % 2 == 0) {
 					int numAttacker = 0, numDefender = 1;
 					int numRandom;
@@ -192,10 +198,13 @@ public class Battle implements Variables {
 					probabilities[0] = CHANCE_ATTACK_PLANET_UNITS[0];
 					int shipRandom = 0;
 					
+					// The probability a unit type has to attack is between the percentage in the previous array position an the percentage in the unit's type array position
 					for (int i = 1; i < probabilities.length; i++) {
 						probabilities[i] = probabilities[i - 1] + CHANCE_ATTACK_PLANET_UNITS[i];
 					}
 					
+					// We choose a random number that will determine which group will attack (if the group is empty, we repeat this block until we have a group that is not empty)
+					// If the group is not empty, a random ship will be chosen
 					do {
 						numRandom = (int)(1 + Math.random() * 100);
 						if (numRandom < probabilities[MilitaryUnitOrder.LIGHTHUNTER.ordinal()] && armies[numAttacker][MilitaryUnitOrder.LIGHTHUNTER.ordinal()].size() > 0) {
@@ -244,10 +253,13 @@ public class Battle implements Variables {
 					
 					InterfaceController.instance.selectAttacker(numAttacker, attackerType);
 					
+					// A random enemy group is chosen randomly, if it is not empty, a random ship is chosen
+					// This block is repeated while a random number is below or equal to the chance to attack again of the attacker's ship
 					do {
 						numRandom = (int)(1 + Math.random() * 100);
 						probabilities = new int[4];
-											
+								
+						// In the defender's case, the probabilities are calculated by the proportion of each group
 						probabilities[0] = (int)(100 * armies[numDefender][0].size() / actualNumberUnitsEnemy);
 						
 						for (int i = 1; i < probabilities.length; i++) {
@@ -284,6 +296,7 @@ public class Battle implements Variables {
 						
 						InterfaceController.instance.selectDefender(numDefender, defenderType);
 						
+						// The attack occurs
 						battleDevelopment += "Attacks Planet: " + attacker_name + " attacks " + defender_name + "\n";
 						battleDevelopment += attacker_name + " generates the damage = " + attacker.attack() + "\n";
 						defender.takeDamage(attacker.attack());
@@ -291,6 +304,7 @@ public class Battle implements Variables {
 						
 						InterfaceController.instance.shootBullet(numAttacker, attackerType, defenderType);
 						
+						// If the defender loses its armor after the attack, it is randomly decided whether it generates waste and if it does, it is added to the wasteMetalDeuterium array
 						if (defender.getActualArmor() <= 0) {
 							numRandom = (int)(1 + Math.random() * 100);
 							
@@ -299,17 +313,20 @@ public class Battle implements Variables {
 								wasteMetalDeuterium[1] += defender.getDeuteriumCost() * PERCENTAGE_WASTE / 100;
 							}
 							
+							// The value in metal and deuterium of the lost ship is added to enemyDrops
 							enemyDrops[0] += defender.getMetalCost();
 							enemyDrops[1] += defender.getDeuteriumCost();
 							
+							// The ship is eliminated from the armies matrix
 							armies[numDefender][defenderType].remove(defender);
 							InterfaceController.instance.removeEnemyArmyUnit(defenderType, defender);
 							
-							// For any reason, when an enemy ArrayList arrives to 0, it converts in null, we create another empty ArrayList
+							// When the ArrayList arrives to 0, it converts to null, we create another empty ArrayList
 							if (armies[numDefender][defenderType] == null) {
 								armies[numDefender][defenderType] = new ArrayList<MilitaryUnit>();
 							}
-
+							
+							// We update the defender's unit number, actual army and alive enemy army percentage
 							actualNumberUnitsEnemy = calculateUnitNumber(numDefender);
 							actualArmyEnemy = calculateActualArmy(numDefender);
 							
@@ -328,7 +345,7 @@ public class Battle implements Variables {
 					
 					
 								
-				}
+				} // When the enemy is the attacker and the planet defends
 				else {
 					int numAttacker = 1, numDefender = 0;
 					int numRandom;
@@ -337,10 +354,13 @@ public class Battle implements Variables {
 					probabilities = new int[4];
 					probabilities[0] = CHANCE_ATTACK_ENEMY_UNITS[0];
 					
+					// The probability a unit type has to attack is between the percentage in the previous array position an the percentage in the unit's type array position
 					for (int i = 1; i < probabilities.length; i++) {
 						probabilities[i] = probabilities[i - 1] + CHANCE_ATTACK_ENEMY_UNITS[i];
 					}
 					
+					// We choose a random number that will determine which enemy group will attack (if the group is empty, we repeat this block until we have a group that is not empty)
+					// If the group is not empty, a random ship will be chosen
 					do {	
 						
 						numRandom = (int)(1 + Math.random() * 100);
@@ -373,12 +393,15 @@ public class Battle implements Variables {
 					
 					InterfaceController.instance.selectAttacker(numAttacker, attackerType);
 					
+					// A random planet group is chosen randomly, if it is not empty, a random ship is chosen
+					// This block is repeated while a random number is below or equal to the chance to attack again of the attacker's ship
 					do {
 						numRandom = (int)(1 + Math.random() * 100);
 
 						probabilities = new int[7];
 						probabilities[0] = (int)(100 * armies[numDefender][0].size() / actualNumberUnitsPlanet);
 						
+						// In the defender's case, the probabilities are calculated by the proportion of each group
 						for (int i = 1; i < probabilities.length; i++) {
 							probabilities[i] = probabilities[i - 1] + (int)(100 * armies[numDefender][i].size() / actualNumberUnitsPlanet);
 						}
@@ -432,6 +455,7 @@ public class Battle implements Variables {
 						
 						InterfaceController.instance.selectDefender(numDefender, defenderType);
 						
+						// The attack occurs
 						battleDevelopment += "Attacks fleet enemy: " + attacker_name + " attacks " + defender_name + "\n";
 						battleDevelopment += attacker_name + " generates the damage = " + attacker.attack() + "\n";
 						defender.takeDamage(attacker.attack());
@@ -439,6 +463,7 @@ public class Battle implements Variables {
 							
 						InterfaceController.instance.shootBullet(numAttacker, attackerType, defenderType);
 						
+						// If the defender loses its armor after the attack, it is randomly decided whether it generates waste and if it does, it is added to the wasteMetalDeuterium array
 						if (defender.getActualArmor() <= 0) {
 							numRandom = (int)(1 + Math.random() * 100);
 							
@@ -447,13 +472,20 @@ public class Battle implements Variables {
 								wasteMetalDeuterium[1] += defender.getDeuteriumCost() * PERCENTAGE_WASTE / 100;
 							}
 							
+							// The value in metal and deuterium of the lost ship is added to planetDrops
 							planetDrops[0] += defender.getMetalCost();
 							planetDrops[1] += defender.getDeuteriumCost();
 							
-							
-							armies[numDefender][defenderType].remove(defender); // A veces peta 
+							// The ship is eliminated from the armies matrix
+							armies[numDefender][defenderType].remove(defender); 
 							InterfaceController.instance.removePlanetArmyUnit(defenderType, defender);
-
+							
+							// When the ArrayList arrives to 0, it converts to null, we create another empty ArrayList
+							if (armies[numDefender][defenderType] == null) {
+								armies[numDefender][defenderType] = new ArrayList<MilitaryUnit>();
+							}
+							
+							// We update the defender's unit number, actual army and alive planet army percentage
 							actualNumberUnitsPlanet = calculateUnitNumber(numDefender);
 							actualArmyPlanet = calculateActualArmy(numDefender);
 							
@@ -471,11 +503,12 @@ public class Battle implements Variables {
 					} while (numRandom <= attacker.getChanceAttackAgain());
 					
 				}	
-				order++;			
+				order++; // The attacker is changed			
 			} while (percentageArmyPlanetAlive >= 20 && percentageArmyEnemyAlive >= 20);
 			
 			InterfaceController.instance.hideSelectors();
 			
+			// We determine the resources' losses in metal, deuterium and weighed resources' losses
 			resourcesLosses[0][0] = planetDrops[0];
 			resourcesLosses[0][1] = planetDrops[1];
 			resourcesLosses[0][2] = planetDrops[0] + 5 * planetDrops[1];
@@ -486,9 +519,12 @@ public class Battle implements Variables {
 			
 			System.out.println("Planet Losses: " + resourcesLosses[0][2] + " vs Enemy Losses: " + resourcesLosses[1][2]);
 			
+			// The number of battles that have happened in the planet is updated
 			battles++;
 			DatabaseController.instance.updateBattlesCounter(InterfaceController.instance.getPlanetId(), battles);
 			
+			// Whichever army has less weighed resources' losses, wins
+			// If the planet wins, it recovers the waste generated
 			if (resourcesLosses[0][2] < resourcesLosses[1][2]) {
 				battleDevelopment += Printing.printStringCentred("PLAYER WINS!!", '=', 60) + "\n";
 				
@@ -502,17 +538,19 @@ public class Battle implements Variables {
 				InterfaceController.instance.showBattleWinner("ENEMY ARMY WINS!");
 				num_battle = DatabaseController.instance.uploadBattleStats(InterfaceController.instance.getPlanetId(), wasteMetalDeuterium, false);
 				
-				defeats++;
+				defeats++; // If the planet looses, the defeats variable is updated
 			}
 			
+			// The database data is updated
 			DatabaseController.instance.updateRemainingUnits(armies, InterfaceController.instance.getPlanetId());
 			
-
+			// The planet's and enemy's armies are uploaded into the database
 			DatabaseController.instance.uploadPlanetBattleDefense(InterfaceController.instance.getPlanetId(), num_battle, initialArmies, armies);
 			DatabaseController.instance.uploadPlanetBattleArmy(InterfaceController.instance.getPlanetId(), num_battle, initialArmies, armies);
 			DatabaseController.instance.uploadEnemyArmy(InterfaceController.instance.getPlanetId(), num_battle, initialArmies, armies);
 			DatabaseController.instance.uploadBattleLog(InterfaceController.instance.getPlanetId(), num_battle, battleDevelopment);
 			
+			// An xml file is generated with this data and then converted into html
 			saved_xml = DatabaseController.instance.convertIntoXML(InterfaceController.instance.getPlanetId(),num_battle);
 			new XSLTransformer(saved_xml, num_battle);
 			
@@ -521,8 +559,10 @@ public class Battle implements Variables {
 			
 //			System.out.println(getBattleDevelopment());
 //			System.out.println(getBattleReport(battles));
-		}
+
+		} // If the planet's units were 0 at the beginning of the battle, we skip directly to this block
 		else {
+			// The number of battles that have happened in the planet is updated
 			battles++;
 			DatabaseController.instance.updateBattlesCounter(InterfaceController.instance.getPlanetId(), battles);
 			
@@ -531,16 +571,18 @@ public class Battle implements Variables {
 			InterfaceController.instance.showBattleWinner("ENEMY ARMY WINS!");
 			num_battle = DatabaseController.instance.uploadBattleStats(InterfaceController.instance.getPlanetId(), wasteMetalDeuterium, false);
 				
-			defeats++;
+			defeats++; // The defeats variable is updated
 			
+			// The database data is updated
 			DatabaseController.instance.updateRemainingUnits(armies, InterfaceController.instance.getPlanetId());
 			
-
+			// The planet's and enemy's armies are uploaded into the database
 			DatabaseController.instance.uploadPlanetBattleDefense(InterfaceController.instance.getPlanetId(), num_battle, initialArmies, armies);
 			DatabaseController.instance.uploadPlanetBattleArmy(InterfaceController.instance.getPlanetId(), num_battle, initialArmies, armies);
 			DatabaseController.instance.uploadEnemyArmy(InterfaceController.instance.getPlanetId(), num_battle, initialArmies, armies);
 			DatabaseController.instance.uploadBattleLog(InterfaceController.instance.getPlanetId(), num_battle, battleDevelopment);
 			
+			// An xml file is generated with this data and then converted into html
 			saved_xml = DatabaseController.instance.convertIntoXML(InterfaceController.instance.getPlanetId(),num_battle);
 			new XSLTransformer(saved_xml, num_battle);
 			
@@ -550,7 +592,9 @@ public class Battle implements Variables {
 //			System.out.println(getBattleDevelopment());
 //			System.out.println(getBattleReport(battles));
 		}
+
 		
+		// If the planet has been defeated 3 times, the game is over
 		if (defeats == 3) {
 			
 			System.err.println("=============DERROTA=============");
@@ -561,7 +605,7 @@ public class Battle implements Variables {
 		}
 	}
 	
-	// FUNCIÓN RESETEAR ARMADURA UNIDADES PLANETA
+	// This method resets the armor of the remaining planet's ships
 	public void resetUnitsArmor(ArrayList[][] armies) {
 		for (int i = 0; i < armies[0].length; i++) {
 			for (int j = 0; j < armies[0][i].size(); j++) {
@@ -573,8 +617,8 @@ public class Battle implements Variables {
 	}
 	
 	
-	// FUNCIÓN REPORTE DE LA BATALLA
-	// Reporte resumen
+	// These methods print the battle summary and battleDevelopment (using the attributes of this class, not the database data)
+	// Summary report
 	public String getBattleReport(int battles) {
 		String summary = "BATTLE NUMBER: " + battles + "\n" + "\n" + "BATTLE STATISTICS" + "\n" + "\n";
 		
@@ -616,7 +660,7 @@ public class Battle implements Variables {
 		
 	}
 	
-	// Reporte BattleDevelopment
+	// battleDevelopment report
 	public String getBattleDevelopment() {
 		return battleDevelopment;
 	}
