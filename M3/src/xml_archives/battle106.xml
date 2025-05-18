@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<battle_summary>
+  <planet>
+    <troops>
+      <troop>
+        <name>Light Hunter</name>
+        <units>0</units>
+        <drops>0</drops>
+      </troop>
+      <troop>
+        <name>Heavy Hunter</name>
+        <units>0</units>
+        <drops>0</drops>
+      </troop>
+      <troop>
+        <name>Battle Ship</name>
+        <units>1</units>
+        <drops>0</drops>
+      </troop>
+      <troop>
+        <name>Armored Ship</name>
+        <units>1</units>
+        <drops>0</drops>
+      </troop>
+      <troop>
+        <name>Missile Launcher</name>
+        <units>0</units>
+        <drops>0</drops>
+      </troop>
+      <troop>
+        <name>Ion Cannon</name>
+        <units>0</units>
+        <drops>0</drops>
+      </troop>
+      <troop>
+        <name>Plasma Cannon</name>
+        <units>1</units>
+        <drops>0</drops>
+      </troop>
+    </troops>
+    <cost>
+      <metal>125000</metal>
+      <deuterium>27000</deuterium>
+    </cost>
+    <losses>
+      <metal>0</metal>
+      <deuterium>0</deuterium>
+      <weighed>0</weighed>
+    </losses>
+  </planet>
+  <enemy>
+    <troops>
+      <troop>
+        <name>Light Hunter</name>
+        <units>10</units>
+        <drops>9</drops>
+      </troop>
+      <troop>
+        <name>Heavy Hunter</name>
+        <units>7</units>
+        <drops>6</drops>
+      </troop>
+      <troop>
+        <name>Battle Ship</name>
+        <units>0</units>
+        <drops>0</drops>
+      </troop>
+      <troop>
+        <name>Armored Ship</name>
+        <units>1</units>
+        <drops>0</drops>
+      </troop>
+    </troops>
+    <cost>
+      <metal>105500</metal>
+      <deuterium>15850</deuterium>
+    </cost>
+    <losses>
+      <metal>66000</metal>
+      <deuterium>750</deuterium>
+      <weighed>69750</weighed>
+    </losses>
+  </enemy>
+  <generated_waste>
+    <metal>24500</metal>
+    <deuterium>245</deuterium>
+  </generated_waste>
+  <winner>Planet</winner>
+</battle_summary>

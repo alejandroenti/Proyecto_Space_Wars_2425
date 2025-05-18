@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<battle_summary>
+  <planet>
+    <troops>
+      <troop>
+        <name>Light Hunter</name>
+        <units>0</units>
+        <drops>0</drops>
+      </troop>
+      <troop>
+        <name>Heavy Hunter</name>
+        <units>0</units>
+        <drops>0</drops>
+      </troop>
+      <troop>
+        <name>Battle Ship</name>
+        <units>0</units>
+        <drops>0</drops>
+      </troop>
+      <troop>
+        <name>Armored Ship</name>
+        <units>1</units>
+        <drops>0</drops>
+      </troop>
+      <troop>
+        <name>Missile Launcher</name>
+        <units>0</units>
+        <drops>0</drops>
+      </troop>
+      <troop>
+        <name>Ion Cannon</name>
+        <units>0</units>
+        <drops>0</drops>
+      </troop>
+      <troop>
+        <name>Plasma Cannon</name>
+        <units>1</units>
+        <drops>1</drops>
+      </troop>
+    </troops>
+    <cost>
+      <metal>80000</metal>
+      <deuterium>20000</deuterium>
+    </cost>
+    <losses>
+      <metal>50000</metal>
+      <deuterium>5000</deuterium>
+      <weighed>75000</weighed>
+    </losses>
+  </planet>
+  <enemy>
+    <troops>
+      <troop>
+        <name>Light Hunter</name>
+        <units>3</units>
+        <drops>3</drops>
+      </troop>
+      <troop>
+        <name>Heavy Hunter</name>
+        <units>1</units>
+        <drops>1</drops>
+      </troop>
+      <troop>
+        <name>Battle Ship</name>
+        <units>2</units>
+        <drops>1</drops>
+      </troop>
+      <troop>
+        <name>Armored Ship</name>
+        <units>0</units>
+        <drops>0</drops>
+      </troop>
+    </troops>
+    <cost>
+      <metal>105500</metal>
+      <deuterium>14200</deuterium>
+    </cost>
+    <losses>
+      <metal>60500</metal>
+      <deuterium>7200</deuterium>
+      <weighed>96500</weighed>
+    </losses>
+  </enemy>
+  <generated_waste>
+    <metal>75250</metal>
+    <deuterium>8505</deuterium>
+  </generated_waste>
+  <winner>Planet</winner>
+</battle_summary>
