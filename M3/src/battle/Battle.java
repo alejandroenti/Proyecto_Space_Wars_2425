@@ -559,6 +559,7 @@ public class Battle implements Variables {
 			
 //			System.out.println(getBattleDevelopment());
 //			System.out.println(getBattleReport(battles));
+
 		} // If the planet's units were 0 at the beginning of the battle, we skip directly to this block
 		else {
 			// The number of battles that have happened in the planet is updated
@@ -591,6 +592,7 @@ public class Battle implements Variables {
 //			System.out.println(getBattleDevelopment());
 //			System.out.println(getBattleReport(battles));
 		}
+
 		
 		// If the planet has been defeated 3 times, the game is over
 		if (defeats == 3) {
