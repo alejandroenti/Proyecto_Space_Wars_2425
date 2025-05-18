@@ -19,7 +19,7 @@ public class XSLTransformer {
 	public XSLTransformer(String inputFile, int numBattle) {
 		super();
 		
-		this.xslFile = "./src/xslt/xslExample.xsl";
+		this.xslFile = "./src/xslt/xslConverter.xsl";
 		this.inputFile = inputFile;
 		this.outputFile = Paths.get(System.getProperty("user.dir")).getParent().resolve("M4").resolve("SpaceWarsWeb").toAbsolutePath() + "\\" + numBattle + ".html";
 				
