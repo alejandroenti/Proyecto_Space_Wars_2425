@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -18,9 +17,8 @@ import javax.swing.JPanel;
 import controllers.InterfaceController;
 import events.MouseButtonsListener;
 import utils.Variables;
-import utils.VariablesWindow;
 
-public class UnitPanel extends ImagePanel implements Variables, VariablesWindow {
+public class UnitPanel extends ImagePanel implements Variables{
 	
 	private ImagePanel unitPanel;
 	private ImageButton btnAddUnit, btnRemoveUnit;

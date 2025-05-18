@@ -13,7 +13,7 @@ import javax.swing.BoxLayout;
 import events.MouseButtonsListener;
 import utils.VariablesWindow;
 
-public class ButtonsPanel extends ImagePanel implements VariablesWindow{
+public class ButtonsPanel extends ImagePanel {
 	
 	private ImageButton btnBuy, btnUpdate, btnReports;
 	private BufferedImage backgroundImage;
