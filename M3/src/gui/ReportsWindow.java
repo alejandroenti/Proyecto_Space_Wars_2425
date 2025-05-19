@@ -94,7 +94,7 @@ public class ReportsWindow extends JFrame implements VariablesWindow {
 		
 		// Initialize Data Panel
 		dataPanel = new JPanel();
-		dataPanel.setBackground(Color.YELLOW);
+		dataPanel.setBackground(Color.BLACK);
 		dataPanel.setMaximumSize(new Dimension(getWidth(), getHeight() - 20));
 		dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
 		dataPanel.setAlignmentX(CENTER_ALIGNMENT);
