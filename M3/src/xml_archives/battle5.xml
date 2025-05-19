@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<battle_summary>
+  <planet>
+    <troops>
+      <troop>
+        <name>Light Hunter</name>
+        <units>0</units>
+        <drops>0</drops>
+      </troop>
+      <troop>
+        <name>Heavy Hunter</name>
+        <units>0</units>
+        <drops>0</drops>
+      </troop>
+      <troop>
+        <name>Battle Ship</name>
+        <units>1</units>
+        <drops>1</drops>
+      </troop>
+      <troop>
+        <name>Armored Ship</name>
+        <units>1</units>
+        <drops>1</drops>
+      </troop>
+      <troop>
+        <name>Missile Launcher</name>
+        <units>0</units>
+        <drops>0</drops>
+      </troop>
+      <troop>
+        <name>Ion Cannon</name>
+        <units>0</units>
+        <drops>0</drops>
+      </troop>
+      <troop>
+        <name>Plasma Cannon</name>
+        <units>1</units>
+        <drops>1</drops>
+      </troop>
+    </troops>
+    <cost>
+      <metal>125000</metal>
+      <deuterium>27000</deuterium>
+    </cost>
+    <losses>
+      <metal>125000</metal>
+      <deuterium>27000</deuterium>
+      <weighed>260000</weighed>
+    </losses>
+  </planet>
+  <enemy>
+    <troops>
+      <troop>
+        <name>Light Hunter</name>
+        <units>12</units>
+        <drops>8</drops>
+      </troop>
+      <troop>
+        <name>Heavy Hunter</name>
+        <units>6</units>
+        <drops>3</drops>
+      </troop>
+      <troop>
+        <name>Battle Ship</name>
+        <units>0</units>
+        <drops>0</drops>
+      </troop>
+      <troop>
+        <name>Armored Ship</name>
+        <units>1</units>
+        <drops>0</drops>
+      </troop>
+    </troops>
+    <cost>
+      <metal>105000</metal>
+      <deuterium>15900</deuterium>
+    </cost>
+    <losses>
+      <metal>43500</metal>
+      <deuterium>550</deuterium>
+      <weighed>46250</weighed>
+    </losses>
+  </enemy>
+  <generated_waste>
+    <metal>102900</metal>
+    <deuterium>19075</deuterium>
+  </generated_waste>
+  <winner>Enemy</winner>
+</battle_summary>
