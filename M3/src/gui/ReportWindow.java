@@ -42,7 +42,7 @@ public class ReportWindow extends JFrame implements VariablesWindow {
 		
 		// Setup Window
 		this.setTitle("Report");
-		this.setSize(FRAME_WIDTH - (int)(FRAME_WIDTH / 7), FRAME_HEIGHT / 2);
+		this.setSize(FRAME_WIDTH - (int)(FRAME_WIDTH / 10), FRAME_HEIGHT / 2);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
