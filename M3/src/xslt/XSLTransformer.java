@@ -4,6 +4,7 @@ import javax.xml.transform.*;
 import javax.xml.transform.stream.*;
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 public class XSLTransformer {
@@ -18,10 +19,10 @@ public class XSLTransformer {
 	public XSLTransformer(String inputFile, int numBattle) {
 		super();
 		
-		this.xslFile = "./src/xslt/xslExample.xsl";
+		this.xslFile = "./src/xslt/xslConverter.xsl";
 		this.inputFile = inputFile;
-		this.outputFile = "./src/html_archives/battle" + numBattle + ".html";
-		
+		this.outputFile = Paths.get(System.getProperty("user.dir")).getParent().resolve("M4").resolve("SpaceWarsWeb").toAbsolutePath() + "\\" + numBattle + ".html";
+				
 		this.xslCode = new StreamSource(new File(this.xslFile));
 		this.input = new StreamSource(new File(this.inputFile));
 		this.output = new StreamResult(new File(this.outputFile));

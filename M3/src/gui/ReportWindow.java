@@ -14,10 +14,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import controllers.DatabaseController;
-import utils.Variables;
 import utils.VariablesWindow;
 
-public class ReportWindow extends JFrame implements Variables, VariablesWindow {
+public class ReportWindow extends JFrame implements VariablesWindow {
 
 	private JPanel mainPanel;
 	private BufferedImage appLogo;
